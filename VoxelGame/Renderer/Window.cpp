@@ -24,7 +24,6 @@ void Window::Init()
 
 void Window::SwapBuffers()
 {
-	std::cout << window << "\n";
 	glfwSwapBuffers(window);
 
 }

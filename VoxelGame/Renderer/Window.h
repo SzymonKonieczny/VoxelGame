@@ -9,6 +9,7 @@ public :
 	void SwapBuffers();
 	void PullEvents();
 	void Shutdown();
-	GLFWwindow* window;
+	GLFWwindow* GetHandle() { return window; }
 private:
+	GLFWwindow* window;
 };

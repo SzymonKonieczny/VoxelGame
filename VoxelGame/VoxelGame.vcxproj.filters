@@ -30,6 +30,9 @@
     <ClCompile Include="Renderer\Shader.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\Buffers.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer\Renderer.h">
@@ -51,6 +54,9 @@
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\VertexArray.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Buffers.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
   </ItemGroup>

@@ -3,7 +3,6 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include "Renderer/Renderer.h"
-#include "Renderer/Shader.h"
 int main()
 {
 	
@@ -34,55 +33,33 @@ int main()
 
 
 	Shader prog = Shader(std::string(vertexShaderSource), std::string(fragmentShaderSource));
-	
-
-	unsigned int VBO,VAO; 
-
+		unsigned int VAO; 
 	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-
 
 	glBindVertexArray(VAO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
-
-	glBufferData(GL_VERTEX_ARRAY, sizeof(verts), verts, GL_STATIC_DRAW);
-
-
+	VertexBuffer VBO = VertexBuffer(verts, sizeof(verts));
+	VBO.Bind();
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*) 0);
 	glEnableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	VBO.Unbind();
 	glBindVertexArray(0);
 
 
-
-
-
-	
-
-	while (!glfwWindowShouldClose(Renderer::window.window))
+	while (!glfwWindowShouldClose(Renderer::window.GetHandle()))
 	{
-		// Specify the color of the background
+
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
-		// Clean the back buffer and assign the new color to it
 		glClear(GL_COLOR_BUFFER_BIT);
-		// Tell OpenGL which Shader Program we want to use
 		prog.Bind();
-		// Bind the VAO so OpenGL knows to use it
 		glBindVertexArray(VAO);
-		// Draw the triangle using the GL_TRIANGLES primitive
 		glDrawArrays(GL_TRIANGLES, 0, 3);
-		// Swap the back buffer with the front buffer
 		Renderer::window.SwapBuffers();
-		// Take care of all GLFW events
-		//Renderer::window.PullEvents();
+		Renderer::window.PullEvents();
 	}
 
 
 
-
-	int a = 0;
-	std::cin >> a;
 
 	Renderer::Shutdown();
 	return 0;

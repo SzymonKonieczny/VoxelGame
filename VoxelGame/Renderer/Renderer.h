@@ -2,6 +2,11 @@
 #include "Window.h"
 #include "RendererCommad.h"
 #include "Camera.h"
+#include "VertexArray.h"
+#include "Buffers.h"
+#include "Shader.h"
+
+
 #include <iostream>
 class Renderer {
 public:

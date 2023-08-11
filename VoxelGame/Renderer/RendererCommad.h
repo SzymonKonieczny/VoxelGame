@@ -3,6 +3,7 @@
 
 class RendererCommand {
 
+public:
 	static void Init()
 	{
 

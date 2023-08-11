@@ -147,11 +147,13 @@
   <ItemGroup>
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Renderer\Buffers.cpp" />
     <ClCompile Include="Renderer\Renderer.cpp" />
     <ClCompile Include="Renderer\Shader.cpp" />
     <ClCompile Include="Renderer\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Renderer\Buffers.h" />
     <ClInclude Include="Renderer\Camera.h" />
     <ClInclude Include="Renderer\Mesh.h" />
     <ClInclude Include="Renderer\Renderer.h" />
