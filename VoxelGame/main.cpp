@@ -5,13 +5,35 @@
 #include "Renderer/Renderer.h"
 int main()
 {
+
+
+
+
+	/*
 	
+	
+	
+		TO DO BOARD:
+		 zrzucic Vertex Array Object na VertexArray.h/cpp
+		 Textury
+		Framebuffery
+	
+	
+	*/
 	std::cout << "Hello swiat xd\n";
 	Renderer::Init();
 	GLfloat verts[3 * 3] = {
 	0.0f,0.0f,0.0f,
 	0.0f,0.5f,0.0f,
 	0.5f,0.5f,0.0f,
+	};
+	struct Vert {
+		glm::vec3 pos;
+	};
+	std::vector<Vert> vertvec = {
+		{{1.0f,0.0f,0.0f}},
+		{{0.5f,0.5f,0.0f}},
+		{{0.0f,0.5f,0.0f}}
 	};
 
 	glViewport(0, 0, 800, 800);
@@ -45,6 +67,7 @@ int main()
 	VBO.Unbind();
 	glBindVertexArray(0);
 
+	VBO.UpdateVerticies((float*)vertvec.data(), vertvec.size() * sizeof(Vert));
 
 	while (!glfwWindowShouldClose(Renderer::window.GetHandle()))
 	{

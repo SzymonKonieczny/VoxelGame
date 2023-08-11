@@ -6,7 +6,7 @@ public:
 	VertexBuffer(unsigned int size);
 	VertexBuffer(float* vertices, unsigned int size);
 	 ~VertexBuffer();
-	 void UpdateVerticies(float* vertices, unsigned int size)
+	 void UpdateVerticies(float* vertices, unsigned int size);
 	 void Bind() const ;
 	 void Unbind() const ;
 
