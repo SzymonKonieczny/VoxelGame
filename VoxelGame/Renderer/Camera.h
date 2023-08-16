@@ -11,6 +11,10 @@ public:
 
 	glm::vec3 GetPosition() { return m_Position; };
 	glm::vec3 GetRotation() { return m_Rotation; };
+	glm::mat4& GetViewMatrix() { return m_ViewMatrix; };
+	glm::mat4& GetProjectionMatrix() { return m_ProjectionMatrix; };
+
+	
 
 private:
 	void UpdateMatricies();
@@ -18,7 +22,7 @@ private:
 	glm::vec3 m_Position = { 0.f,0.f,0.f };
 	glm::vec3 m_Rotation = { 0.f,0.f,0.f };
 
-	glm::vec4 m_ViewMatrix; //Move the world so it matches where the camera should be (inversed)
-	glm::vec4 m_ProjectionMatrix; //Prespective
+	glm::mat4 m_ViewMatrix; //Move the world so it matches where the camera should be (inversed)
+	glm::mat4 m_ProjectionMatrix; //Prespective
 
 };
