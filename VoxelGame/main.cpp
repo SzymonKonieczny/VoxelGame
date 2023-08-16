@@ -2,7 +2,7 @@
 #include <Windows.h>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include "Renderer/Renderer.h"
+#include "Game/Renderer.h"
 int main()
 {
 
@@ -60,7 +60,8 @@ int main()
 	BufferLayout Layout = {
 		{ShaderDataType::Float3,"aPos"}
 	};
-	VAO.UpdateVertexData(verts, sizeof(verts));
+	VAO.UpdateVertexData((float*)vertvec.data(), sizeof(Vert)* vertvec.size());
+	std::cout << "sizeof verts :" << sizeof(Vert) * vertvec.size() << "\n";
 	VAO.SetLayout(Layout);
 	
 
