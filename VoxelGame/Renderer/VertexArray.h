@@ -1,18 +1,29 @@
 #pragma once
+#include "Buffers.h"
+#include <glad/glad.h>
+#include <memory>
 class VertexArray {
 public:
+	VertexArray();
 	VertexArray(unsigned int size);
 	VertexArray(float* vertices, unsigned int size);
 	virtual ~VertexArray();
+	void SetIndexBuffer(std::shared_ptr < IndexBuffer>& indexBuffer);
+
+	void SetVertexBuffer( std::shared_ptr<VertexBuffer>& vertexBuffer);
 
 	 void Bind() const ;
 	 void Unbind() const ;
 
 	 void SetData(const void* data, unsigned int size) ;
 
-	// const BufferLayout& GetLayout() const  { return m_Layout; }
-	// void SetLayout(const BufferLayout& layout)  { m_Layout = layout; }
+	const BufferLayout& GetLayout() const  { return m_Vertexbuffer->GetLayout(); }
+	void SetLayout(const BufferLayout& layout)  { m_Vertexbuffer->SetLayout(layout); UpdateVertexBufferLayoutAttributes();
+	}
 private:
+	void UpdateVertexBufferLayoutAttributes();
 	unsigned int m_ID;
-	//BufferLayout m_Layout;
+
+	std::shared_ptr<IndexBuffer> m_Inderbuffer;
+	std::shared_ptr<VertexBuffer> m_Vertexbuffer;
 };

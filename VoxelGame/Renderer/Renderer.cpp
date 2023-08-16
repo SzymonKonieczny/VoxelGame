@@ -18,6 +18,7 @@ void Renderer::Shutdown()
 
 void Renderer::OnWindowResize(uint32_t width, uint32_t height)
 {
+
 }
 
 void Renderer::BeginScene(Camera& camera)
