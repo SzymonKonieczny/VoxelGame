@@ -11,7 +11,9 @@ public:
 	void SetIndexBuffer(std::shared_ptr < IndexBuffer>& indexBuffer);
 
 	void SetVertexBuffer( std::shared_ptr<VertexBuffer>& vertexBuffer);
+	void SetVertexBuffer(VertexBuffer* vertexBuffer);
 
+	void UpdateVertexData(float* vertices, unsigned int size);
 	 void Bind() const ;
 	 void Unbind() const ;
 

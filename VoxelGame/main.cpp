@@ -56,32 +56,13 @@ int main()
 
 	Shader prog = Shader(std::string(vertexShaderSource), std::string(fragmentShaderSource));
 	VertexArray VAO;
-	VAO.Bind();
-	VertexBuffer VBO;
-
-	VBO.UpdateVerticies(verts, sizeof(verts));
-	std::shared_ptr<VertexBuffer> p;
-	p.reset(&VBO);
-	
+	VAO.SetVertexBuffer(new VertexBuffer());
 	BufferLayout Layout = {
 		{ShaderDataType::Float3,"aPos"}
 	};
-	//VAO.SetLayout(Layout);
-	VBO.SetLayout(Layout);
-	VAO.SetVertexBuffer(p);
-	//	unsigned int VAO; 
-	//glGenVertexArrays(1, &VAO);
-	//
-	//glBindVertexArray(VAO);
-	//
-	//VertexBuffer VBO = VertexBuffer(verts, sizeof(verts));
-	//VBO.Bind();
-	//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*) 0);
-	//glEnableVertexAttribArray(0);
-	//VBO.Unbind();
-	//glBindVertexArray(0);
-	//
-	//VBO.UpdateVerticies((float*)vertvec.data(), vertvec.size() * sizeof(Vert));
+	VAO.UpdateVertexData(verts, sizeof(verts));
+	VAO.SetLayout(Layout);
+	
 
 	while (!glfwWindowShouldClose(Renderer::window.GetHandle()))
 	{

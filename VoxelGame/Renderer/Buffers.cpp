@@ -5,11 +5,7 @@ VertexBuffer::VertexBuffer()
 	glGenBuffers(1, &m_ID);
 	Bind();
 }
-VertexBuffer::VertexBuffer(unsigned int size)
-{
-	glGenBuffers(1, &m_ID);
-	Bind();
-}
+
 
 VertexBuffer::VertexBuffer(float* vertices, unsigned int size)
 {

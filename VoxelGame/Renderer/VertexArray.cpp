@@ -111,10 +111,25 @@ void VertexArray::SetVertexBuffer(std::shared_ptr<VertexBuffer>& vertexBuffer)
 {
 
 
-	glBindVertexArray(m_ID);
+	Bind();
 	vertexBuffer->Bind();
 	m_Vertexbuffer = vertexBuffer;
 	UpdateVertexBufferLayoutAttributes();
+}
+
+void VertexArray::SetVertexBuffer(VertexBuffer* vertexBuffer)
+{
+
+
+	m_Vertexbuffer.reset(vertexBuffer);
+	Bind();
+	m_Vertexbuffer->Bind();
+	UpdateVertexBufferLayoutAttributes();
+}
+
+void VertexArray::UpdateVertexData(float* vertices, unsigned int size)
+{
+	m_Vertexbuffer->UpdateVerticies(vertices, size);
 }
 
 

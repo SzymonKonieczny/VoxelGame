@@ -29,4 +29,9 @@ public:
 
 	}
 
+	static void DrawNotIndexed()//Mesh
+	{
+
+	}
+
 };
