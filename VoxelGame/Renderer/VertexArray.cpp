@@ -126,7 +126,15 @@ void VertexArray::SetVertexBuffer(VertexBuffer* vertexBuffer)
 	m_Vertexbuffer->Bind();
 	UpdateVertexBufferLayoutAttributes();
 }
+void VertexArray::SetIndexBuffer(IndexBuffer* indexBuffer)
+{
 
+
+	m_Inderbuffer.reset(indexBuffer);
+	Bind();
+	m_Inderbuffer->Bind();
+	UpdateVertexBufferLayoutAttributes();
+}
 void VertexArray::UpdateVertexData(float* vertices, unsigned int size)
 {
 	m_Vertexbuffer->UpdateVerticies(vertices, size);

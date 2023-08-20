@@ -9,6 +9,8 @@ public:
 	VertexArray(float* vertices, unsigned int size);
 	virtual ~VertexArray();
 	void SetIndexBuffer(std::shared_ptr < IndexBuffer>& indexBuffer);
+	void SetIndexBuffer(IndexBuffer* indexBuffer);
+
 
 	void SetVertexBuffer( std::shared_ptr<VertexBuffer>& vertexBuffer);
 	void SetVertexBuffer(VertexBuffer* vertexBuffer);
@@ -20,8 +22,8 @@ public:
 	 void SetData(const void* data, unsigned int size) ;
 
 	const BufferLayout& GetLayout() const  { return m_Vertexbuffer->GetLayout(); }
-	void SetLayout(const BufferLayout& layout)  { m_Vertexbuffer->SetLayout(layout); UpdateVertexBufferLayoutAttributes();
-	}
+	void SetLayout(const BufferLayout& layout)  { m_Vertexbuffer->SetLayout(layout); UpdateVertexBufferLayoutAttributes();}
+
 private:
 	void UpdateVertexBufferLayoutAttributes();
 	unsigned int m_ID;

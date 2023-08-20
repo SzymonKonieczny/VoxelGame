@@ -1,6 +1,7 @@
 #include "Renderer.h"
 Window Renderer::window; //constructor static call
 glm::mat4 Renderer::ViewProjectionMatrix;
+std::list<Mesh> Renderer::Meshes;
 void Renderer::Init()
 {
 	window.Init();
@@ -29,8 +30,10 @@ void Renderer::BeginScene(Camera& camera)
 
 void Renderer::EndScene()
 {
+
 }
 
-void Renderer::Submit()
+void Renderer::Submit(Mesh& m)
 {
+	Meshes.push_back(m);
 }

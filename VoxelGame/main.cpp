@@ -64,15 +64,23 @@ int main()
 	std::cout << "sizeof verts :" << sizeof(Vert) * vertvec.size() << "\n";
 	VAO.SetLayout(Layout);
 	
-
+	Mesh m;
+	m.Verticies = {
+	0.0f,0.0f,0.0f,
+	0.0f,0.5f,0.0f,
+	0.5f,0.5f,0.0f,
+	};
+	m.UpdateGLObjs();
+	m.VertexArray.SetLayout(Layout);
+	m.SetShader(new Shader(std::string(vertexShaderSource), std::string(fragmentShaderSource)));
 	while (!glfwWindowShouldClose(Renderer::window.GetHandle()))
 	{
 
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-		prog.Bind();
-		VAO.Bind();
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+
+		RendererCommand::DrawNotIndexed(m);
+
 		Renderer::window.SwapBuffers();
 		Renderer::window.PullEvents();
 	}

@@ -5,6 +5,7 @@ class Texture {
 public:
 	Texture(std::string path);
 
+
 	void Bind(unsigned int slot = 0);
 	void Unbind();
 

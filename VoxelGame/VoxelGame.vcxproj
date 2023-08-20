@@ -151,6 +151,7 @@
     <ClCompile Include="Renderer\Buffers.cpp" />
     <ClCompile Include="Game\Renderer.cpp" />
     <ClCompile Include="Renderer\Framebuffer.cpp" />
+    <ClCompile Include="Renderer\Mesh.cpp" />
     <ClCompile Include="Renderer\Shader.cpp" />
     <ClCompile Include="Renderer\Texture.cpp" />
     <ClCompile Include="Renderer\VertexArray.cpp" />

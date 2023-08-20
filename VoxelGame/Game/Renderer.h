@@ -5,8 +5,9 @@
 #include "../Renderer/VertexArray.h"
 #include "../Renderer/Buffers.h"
 #include "../Renderer/Shader.h"
+#include "../Renderer/Mesh.h"
 
-
+#include <list>
 #include <iostream>
 class Renderer {
 public:
@@ -19,14 +20,13 @@ public:
 	static void BeginScene(Camera& camera);
 	static void EndScene();
 
-	static void Submit();//MeshIndexed
-//	static void Submit();//MeshUnindexed
+	static void Submit(Mesh& m);//MeshIndexed
 
 	
 	static Window window;
 	
 private:
-	
+	static std::list<Mesh> Meshes;
 	static glm::mat4 ViewProjectionMatrix;
 	
 };
