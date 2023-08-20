@@ -14,20 +14,20 @@ class Mesh
 {
 public:
 	Mesh(MeshType type = MeshType::Unindexed);
-	MeshType getType() { return Type; }
+	MeshType getType() { return m_Type; }
 	unsigned int getCount();
 	std::vector<float> Verticies;
 	std::vector<unsigned int> Indicies;
 	void Bind();
 	void UpdateGLObjs();
-	void SetShader( Shader* shader) { Shader.reset(shader); };
-	void SetShader(std::shared_ptr<Shader> shader) { Shader = shader; };
+	void SetShader( Shader* shader) { m_Shader.reset(shader); };
+	void SetShader(std::shared_ptr<Shader> shader) { m_Shader = shader; };
 
-
-	VertexArray VertexArray;
+	VertexArray& GetVertexArray() { return *m_VertexArray.get(); }
 private:
-	std::shared_ptr<Shader> Shader;
-	std::shared_ptr<Texture> Texture;
+	std::shared_ptr < VertexArray> m_VertexArray;
+	std::shared_ptr<Shader> m_Shader;
+	std::shared_ptr<Texture> m_Texture;
 	bool hasTexture = false;
-	MeshType Type;
+	MeshType m_Type;
 };

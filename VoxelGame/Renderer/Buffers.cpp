@@ -16,6 +16,8 @@ VertexBuffer::VertexBuffer(float* vertices, unsigned int size)
 
 VertexBuffer::~VertexBuffer()
 {
+	std::cout << "Deleting vert buffer id "<< m_ID<<"\n";
+
 	glDeleteBuffers(1, &m_ID);
 }
 

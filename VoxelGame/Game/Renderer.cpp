@@ -30,10 +30,23 @@ void Renderer::BeginScene(Camera& camera)
 
 void Renderer::EndScene()
 {
-
+	for (auto& m : Meshes)
+	{
+		switch (m.getType())
+		{
+		case MeshType::Indexed:
+			RendererCommand::DrawIndexed(m);
+			break;
+		case MeshType::Unindexed:
+			RendererCommand::DrawNotIndexed(m);
+			break;
+		}
+	}
+	Meshes.clear();
 }
 
 void Renderer::Submit(Mesh& m)
 {
 	Meshes.push_back(m);
+	//RendererCommand::DrawNotIndexed(m);
 }

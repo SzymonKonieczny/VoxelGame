@@ -24,8 +24,8 @@ public:
 	const BufferLayout& GetLayout() const  { return m_Vertexbuffer->GetLayout(); }
 	void SetLayout(const BufferLayout& layout)  { m_Vertexbuffer->SetLayout(layout); UpdateVertexBufferLayoutAttributes();}
 
-private:
 	void UpdateVertexBufferLayoutAttributes();
+private:
 	unsigned int m_ID;
 
 	std::shared_ptr<IndexBuffer> m_Inderbuffer;

@@ -1,25 +1,28 @@
 #include "Mesh.h"
-
+#include <iostream>
 Mesh::Mesh(MeshType type)
 {
-	Type = type;
-	VertexArray.SetVertexBuffer(new VertexBuffer());
+	m_VertexArray.reset(new VertexArray());
+	m_Type = type;
+	m_VertexArray->SetVertexBuffer(new VertexBuffer());
 	if (type == MeshType::Indexed)
 	{
-		VertexArray.SetIndexBuffer(new IndexBuffer());
+		m_VertexArray->SetIndexBuffer(new IndexBuffer());
 	}
+	std::cout << "Mesh constructed\n";
 }
 
 unsigned int Mesh::getCount()
 {
-	switch (Type)
+	switch (m_Type)
 	{
 	case MeshType::Indexed:
 		Indicies.size();
 
 		break;
 	case MeshType::Unindexed:
-		return Verticies.size() / VertexArray.GetLayout().GetElements().size();
+		int test = m_VertexArray->GetLayout().GetStride()/sizeof(float);
+		return Verticies.size() / test;
 
 		break;
 	}
@@ -27,12 +30,12 @@ unsigned int Mesh::getCount()
 
 void Mesh::Bind()
 {
-	VertexArray.Bind();
-	Shader->Bind();
-	if (hasTexture) Texture->Bind();
+	m_VertexArray->Bind();
+	m_Shader->Bind();
+	if (hasTexture) m_Texture->Bind();
 }
 
 void Mesh::UpdateGLObjs()
 {
-	VertexArray.UpdateVertexData(Verticies.data(), Verticies.size() * sizeof(float));
+	m_VertexArray->UpdateVertexData(Verticies.data(), Verticies.size() * sizeof(float));
 }
