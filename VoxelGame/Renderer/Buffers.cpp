@@ -41,7 +41,8 @@ void VertexBuffer::Unbind() const
 void VertexBuffer::SetData(const void* data, unsigned int size)
 {
 	std::cout << "using an unimplemented function VertexBuffer::SetData. Did you mean VertexBuffer::UpdateVerticies ?";
-	int a = *(int*)0; //
+	int a = *(int*)0; 
+
 }
 
 IndexBuffer::IndexBuffer(unsigned int* indices, unsigned int count)

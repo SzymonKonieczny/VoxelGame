@@ -22,8 +22,9 @@ public:
 	void UpdateGLObjs();
 	void SetShader( Shader* shader) { m_Shader.reset(shader); };
 	void SetShader(std::shared_ptr<Shader> shader) { m_Shader = shader; };
-
+	glm::mat4 ModelMatrix;
 	VertexArray& GetVertexArray() { return *m_VertexArray.get(); }
+	std::shared_ptr<Shader>& getShader() { return m_Shader; }
 private:
 
 	std::shared_ptr < VertexArray> m_VertexArray;

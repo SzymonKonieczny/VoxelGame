@@ -26,9 +26,9 @@ public:
 	
 	static Window window;
 	
+	static glm::mat4 ViewProjectionMatrix;
 private:
 	static std::list<Mesh> Meshes;
-	static glm::mat4 ViewProjectionMatrix;
 	//static Framebuffer frame;
 
 };
