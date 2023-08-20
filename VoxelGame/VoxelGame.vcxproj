@@ -146,7 +146,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Game\Chunk.cpp" />
-    <ClCompile Include="Game\ChunkMesh.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="libraries\include\stb\stb_image.cpp" />
     <ClCompile Include="main.cpp" />
@@ -162,7 +161,6 @@
   <ItemGroup>
     <ClInclude Include="Game\Chunk.h" />
     <ClInclude Include="Game\ChunkManager.h" />
-    <ClInclude Include="Game\ChunkMesh.h" />
     <ClInclude Include="Game\Game.h" />
     <ClInclude Include="Game\Global.h" />
     <ClInclude Include="Game\ITerrainGenerator.h" />
@@ -172,7 +170,6 @@
     <ClInclude Include="Renderer\Buffers.h" />
     <ClInclude Include="Renderer\Camera.h" />
     <ClInclude Include="Renderer\Framebuffer.h" />
-    <ClInclude Include="Renderer\ITransformMatrix.h" />
     <ClInclude Include="Renderer\Mesh.h" />
     <ClInclude Include="Game\Renderer.h" />
     <ClInclude Include="Renderer\RendererCommad.h" />

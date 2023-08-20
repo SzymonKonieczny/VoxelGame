@@ -20,7 +20,7 @@ public:
 	void UploadUniformFloat4(std::string name, glm::vec4& value);
 
 private:
-	//std::map<std::string, std::pair<UniformType, GLuint>> 
+	//std::map<std::string, std::pair<UniformType, location xD>> 
 	unsigned int m_ID;
 
 
