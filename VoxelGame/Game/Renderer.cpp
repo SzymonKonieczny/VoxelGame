@@ -2,6 +2,44 @@
 Window Renderer::window; //constructor static call
 glm::mat4 Renderer::ViewProjectionMatrix;
 std::list<Mesh> Renderer::Meshes;
+/*Framebuffer Renderer::frame({800, 800});
+Mesh ScreenQuad;
+
+std::string vertSrc = R"(
+#version 330 core
+
+layout (location = 0) in vec2 inPos;
+layout (location = 1) in vec2 inTexCoords;
+
+out vec2 texCoords;
+
+void main()
+{
+    gl_Position = vec4(inPos.x, inPos.y, 0.0, 1.0); 
+    texCoords = inTexCoords;
+}  )";
+std::string fragSrc = R"(
+#version 330 core
+
+out vec4 FragColor;
+in vec2 texCoords;
+
+uniform sampler2D screenTexture;
+
+
+void main()
+{
+    vec3 color = vec3(0.0f);
+    FragColor = vec4(color, 1.0f);
+})";
+BufferLayout ScreenShaderLayout = {
+	{ShaderDataType::Float2, "inPos"},
+	{ShaderDataType::Float2, "inTexCoords"}
+};
+
+Shader ScreenShader(vertSrc, fragSrc);
+*/
+
 void Renderer::Init()
 {
 	window.Init();
@@ -11,6 +49,24 @@ void Renderer::Init()
 		return;
 	}
 	glfwSetWindowSizeCallback(window.GetHandle(), OnWindowResize);
+	RendererCommand::SetViewport(0, 0, 800, 800);
+	/*ScreenQuad.GetVertexArray().SetVertexBuffer(new VertexBuffer());
+	ScreenQuad.Verticies = {
+		// Coords    // texCoords
+		 1.0f, -1.0f,  1.0f, 0.0f,
+		-1.0f, -1.0f,  0.0f, 0.0f,
+		-1.0f,  1.0f,  0.0f, 1.0f,
+	
+		 1.0f,  1.0f,  1.0f, 1.0f,
+		 1.0f, -1.0f,  1.0f, 0.0f,
+		-1.0f,  1.0f,  0.0f, 1.0f
+	};
+	ScreenQuad.GetVertexArray().SetLayout(ScreenShaderLayout);
+	ScreenQuad.UpdateGLObjs();
+	
+	ScreenShader.Bind();
+	GLuint textureSamplerLoc = ScreenShader.GetUniformLocation("screenTexture");
+	glUniform1i(textureSamplerLoc, 0);*/
 }
 
 void Renderer::Shutdown()
@@ -23,13 +79,22 @@ void Renderer::OnWindowResize(GLFWwindow* window, int width, int height)
 
 }
 
-void Renderer::BeginScene(Camera& camera)
+void Renderer::BeginScene(Camera& camera) // argument : vec<ligtsources>
 {
 	ViewProjectionMatrix = camera.GetViewMatrix() * camera.GetProjectionMatrix();
+
+
 }
 
 void Renderer::EndScene()
 {
+	glEnable(GL_DEPTH_TEST);
+	glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//frame.Bind();
+
+
+
 	for (auto& m : Meshes)
 	{
 		switch (m.getType())
@@ -43,10 +108,11 @@ void Renderer::EndScene()
 		}
 	}
 	Meshes.clear();
+
+
 }
 
 void Renderer::Submit(Mesh& m)
 {
 	Meshes.push_back(m);
-	//RendererCommand::DrawNotIndexed(m);
 }

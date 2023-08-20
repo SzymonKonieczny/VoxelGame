@@ -6,6 +6,7 @@
 #include "../Renderer/Buffers.h"
 #include "../Renderer/Shader.h"
 #include "../Renderer/Mesh.h"
+#include "../Renderer/Framebuffer.h"
 
 #include <list>
 #include <iostream>
@@ -28,5 +29,6 @@ public:
 private:
 	static std::list<Mesh> Meshes;
 	static glm::mat4 ViewProjectionMatrix;
-	
+	//static Framebuffer frame;
+
 };

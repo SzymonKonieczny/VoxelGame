@@ -4,6 +4,7 @@
 Framebuffer::Framebuffer(FramebufferOptions options) : Options(options)
 {
 	glGenFramebuffers(1, &m_ID);
+	glBindFramebuffer(GL_FRAMEBUFFER, m_ID);
 
 	glGenTextures(1, &ColorTex);
 	glBindTexture(GL_TEXTURE_2D, ColorTex);
@@ -36,3 +37,4 @@ void Framebuffer::Bind()
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, m_ID);
 }
+

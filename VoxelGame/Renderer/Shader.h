@@ -7,7 +7,7 @@ public:
 	Shader(const std::string& vertexSrc, const std::string& fragmentSrc);
 	void Bind();
 	void Unbind();
-
+	unsigned int GetUniformLocation(std::string Name);
 private:
 	unsigned int m_ID;
 

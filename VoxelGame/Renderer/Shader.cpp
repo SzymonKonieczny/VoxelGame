@@ -92,3 +92,8 @@ void Shader::Unbind()
 {
 	glUseProgram(0);
 }
+
+unsigned int Shader::GetUniformLocation(std::string Name)
+{
+	return glGetUniformLocation(m_ID, Name.c_str());
+}

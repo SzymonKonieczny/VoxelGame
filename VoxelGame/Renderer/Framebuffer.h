@@ -11,6 +11,8 @@ public:
 
 	void SetFramebufferOptions();
 	void Bind();
+	unsigned int getColorTex() { return ColorTex; }
+	unsigned int getDepthStencilTex() { return DepthStencilTex; }
 
 	FramebufferOptions GetFramebufferOptions() { return Options; }
 private:

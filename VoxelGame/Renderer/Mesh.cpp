@@ -18,12 +18,10 @@ unsigned int Mesh::getCount()
 	{
 	case MeshType::Indexed:
 		Indicies.size();
-
 		break;
 	case MeshType::Unindexed:
 		int test = m_VertexArray->GetLayout().GetStride()/sizeof(float);
 		return Verticies.size() / test;
-
 		break;
 	}
 }
