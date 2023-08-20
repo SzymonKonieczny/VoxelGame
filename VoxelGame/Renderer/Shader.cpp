@@ -1,5 +1,6 @@
 #include "Shader.h"
 #include <iostream>
+#include <glm/gtc/type_ptr.hpp>
 Shader::Shader(const std::string& vertexSrc, const std::string& fragmentSrc)
 {
 
@@ -96,4 +97,35 @@ void Shader::Unbind()
 unsigned int Shader::GetUniformLocation(std::string Name)
 {
 	return glGetUniformLocation(m_ID, Name.c_str());
+}
+
+void Shader::UploadUniformMat4(std::string name, glm::mat4& value)
+{
+	GLuint loc = GetUniformLocation(name);
+	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(value));
+
+}
+
+void Shader::UploadUniformFloat(std::string name, float value)
+{
+	GLuint loc = GetUniformLocation(name);
+	glUniform1f(loc, value);
+}
+
+void Shader::UploadUniformFloat2(std::string name, glm::vec2& value)
+{
+	GLuint loc = GetUniformLocation(name);
+	glUniform2f(loc, value.x, value.y);
+}
+
+void Shader::UploadUniformFloat3(std::string name, glm::vec3& value)
+{
+	GLuint loc = GetUniformLocation(name);
+	glUniform3f(loc, value.x, value.y, value.z);
+}
+
+void Shader::UploadUniformFloat4(std::string name, glm::vec4& value)
+{
+	GLuint loc = GetUniformLocation(name);
+	glUniform4f(loc, value.x, value.y, value.z, value.w);
 }

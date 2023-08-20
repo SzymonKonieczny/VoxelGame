@@ -2,7 +2,7 @@
 #include "VertexArray.h"
 #include "Shader.h"
 #include "Texture.h"
-
+#include <glm/glm.hpp>
 #include <vector>
 
 #include <memory>
@@ -25,6 +25,7 @@ public:
 
 	VertexArray& GetVertexArray() { return *m_VertexArray.get(); }
 private:
+
 	std::shared_ptr < VertexArray> m_VertexArray;
 	std::shared_ptr<Shader> m_Shader;
 	std::shared_ptr<Texture> m_Texture;

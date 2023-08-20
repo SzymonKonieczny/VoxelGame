@@ -36,6 +36,7 @@ public:
 	static void DrawNotIndexed(Mesh& mesh)//Mesh
 	{
 		mesh.Bind();
+	
 		glDrawArrays(GL_TRIANGLES, 0, mesh.getCount());
 
 	}
