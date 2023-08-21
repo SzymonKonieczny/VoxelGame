@@ -1,6 +1,7 @@
 #pragma once
 #include <glm/glm.hpp>
-#include "Mesh.h"
+#include "../Renderer/Mesh.h"
+
 class RendererCommand {
 
 public:
@@ -36,14 +37,7 @@ public:
 	static void DrawNotIndexed(Mesh& mesh)//Mesh
 	{
 		mesh.Bind();
-		if (mesh.getShader()->GetUniformLocation("ModelMatrix") != -1)
-		{
-			mesh.getShader()->UploadUniformMat4("ModelMatrix", mesh.ModelMatrix);
-		}
-		if (mesh.getShader()->GetUniformLocation("CamViewMatrix") != -1)
-		{
-			mesh.getShader()->UploadUniformMat4("CamViewMatrix", Renderer::ViewProjectionMatrix);
-		}
+		mesh.PreDraw();
 		glDrawArrays(GL_TRIANGLES, 0, mesh.getCount());
 
 	}

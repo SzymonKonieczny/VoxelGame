@@ -7,7 +7,7 @@ public:
 	Chunk(glm::ivec3 pos);
 
 private:
-	bool hasTransparentBlock = false;
+	bool hasTransparentBlocks = false;
 	bool isGenerated = false;
 	Mesh m_ChunkMesh;
 	glm::ivec3 m_ChunkPos;

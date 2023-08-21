@@ -25,6 +25,7 @@ public:
 	glm::mat4 ModelMatrix;
 	VertexArray& GetVertexArray() { return *m_VertexArray.get(); }
 	std::shared_ptr<Shader>& getShader() { return m_Shader; }
+	 void PreDraw();
 private:
 
 	std::shared_ptr < VertexArray> m_VertexArray;

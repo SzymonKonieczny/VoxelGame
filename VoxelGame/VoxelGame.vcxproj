@@ -92,6 +92,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -121,6 +122,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -146,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Game\Chunk.cpp" />
+    <ClCompile Include="Game\ChunkMesh.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="libraries\include\stb\stb_image.cpp" />
     <ClCompile Include="main.cpp" />
@@ -161,6 +164,7 @@
   <ItemGroup>
     <ClInclude Include="Game\Chunk.h" />
     <ClInclude Include="Game\ChunkManager.h" />
+    <ClInclude Include="Game\ChunkMesh.h" />
     <ClInclude Include="Game\Game.h" />
     <ClInclude Include="Game\Global.h" />
     <ClInclude Include="Game\ITerrainGenerator.h" />
@@ -177,6 +181,10 @@
     <ClInclude Include="Renderer\Texture.h" />
     <ClInclude Include="Renderer\VertexArray.h" />
     <ClInclude Include="Renderer\Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Game\Shaders\test.frag" />
+    <None Include="Game\Shaders\test.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

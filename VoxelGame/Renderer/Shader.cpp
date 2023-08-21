@@ -1,12 +1,15 @@
 #include "Shader.h"
 #include <iostream>
 #include <glm/gtc/type_ptr.hpp>
-Shader::Shader(const std::string& vertexSrc, const std::string& fragmentSrc)
+#include<fstream>
+#include<sstream>
+
+Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath)
 {
 
-
 		GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-
+		std::string vertexSrc = get_file_contents(vertexPath.c_str());
+		std::string fragmentSrc = get_file_contents(fragmentPath.c_str());
 
 	const char* Src =vertexSrc.c_str();
 	glShaderSource(vertexShader, 1, &Src, 0);
@@ -129,3 +132,72 @@ void Shader::UploadUniformFloat4(std::string name, glm::vec4& value)
 	GLuint loc = GetUniformLocation(name);
 	glUniform4f(loc, value.x, value.y, value.z, value.w);
 }
+
+std::string Shader::get_file_contents(const char* filename)
+{
+	
+
+	std::ifstream file(filename);
+
+	if (!file.is_open()) {
+		std::cerr << "Error opening file: " << filename << std::endl;
+		return "";
+	}
+
+	std::string content((std::istreambuf_iterator<char>(file)),
+		(std::istreambuf_iterator<char>()));
+
+	file.close();
+
+	return content;
+}
+
+void Shader::AddUniform(std::string name, UniformType type)
+{
+	UniformData.insert( std::make_pair(name, Uniform(type, name) ));
+}
+
+void Shader::UploadAllUniforms()
+{
+	for (auto& uniform : UniformData)
+	{
+//#ifdef DEBUG
+//		//if (!uniform.second.dataInitialized) std::cout << "DebugInfo: Uniform " << uniform.second.name << " was nerver assigned";
+//#endif // DEBUG
+
+		auto& data = UniformData[uniform.second.name].data;
+		switch (uniform.second.type)
+		{
+
+		case UniformType::Float:
+			UploadUniformFloat(uniform.second.name, data.Float1);
+			break;
+		case UniformType::Float2:
+			UploadUniformFloat2(uniform.second.name, data.Float2);
+
+			break;
+		case UniformType::Float3:
+			UploadUniformFloat3(uniform.second.name, data.Float3);
+
+			break;
+		case UniformType::Float4:
+			UploadUniformFloat4(uniform.second.name, data.Float4);
+
+			break;
+		case UniformType::Mat4:
+			UploadUniformMat4(uniform.second.name, data.Mat4);
+
+			break;
+		default:
+			std::cout << "Using a Uniform type for which uploading wasnt yet implemented. Uniform name :" << uniform.second.name <<"\n";
+
+			break;
+		}
+	}
+}
+
+void Shader::updateUniform(std::string name, UniformDataUnion data)
+{
+	UniformData[name].data = data;
+}
+

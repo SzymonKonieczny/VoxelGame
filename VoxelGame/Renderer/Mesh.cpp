@@ -37,3 +37,8 @@ void Mesh::UpdateGLObjs()
 {
 	m_VertexArray->UpdateVertexData(Verticies.data(), Verticies.size() * sizeof(float));
 }
+
+void Mesh::PreDraw()
+{
+	m_Shader->UploadAllUniforms();
+}
