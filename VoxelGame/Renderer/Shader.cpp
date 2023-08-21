@@ -174,6 +174,7 @@ void Shader::UploadAllUniforms()
 			break;
 		case UniformType::Float2:
 			UploadUniformFloat2(uniform.second.name, data.Float2);
+			std::cout << "val : " << data.Float2.x << " " << data.Float2.y << "\n";
 
 			break;
 		case UniformType::Float3:

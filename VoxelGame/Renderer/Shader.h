@@ -13,7 +13,12 @@ union UniformDataUnion {
 	glm::vec3 Float3;
 	glm::vec4 Float4;
 	glm::mat4 Mat4;
-
+	UniformDataUnion() {};
+	UniformDataUnion(float a) :Float1(a) {};
+	UniformDataUnion(glm::vec2 a) :Float2(a) {};
+	UniformDataUnion(glm::vec3 a) :Float3(a) {};
+	UniformDataUnion(glm::vec4 a) :Float4(a) {};
+	UniformDataUnion(glm::mat4 a) :Mat4(a) {};
 };
 struct Uniform {
 	UniformType type;

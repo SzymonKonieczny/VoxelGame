@@ -24,9 +24,8 @@ int main()
 	Mesh m;
 	m.SetShader(new Shader("Game/Shaders/test.vert", "Game/Shaders/test.frag"));
 	m.getShader()->AddUniform("testUni", UniformType::Float2);
-	UniformDataUnion t;
-	t.Float2 = glm::vec2(-0.2, -0.4);
-	m.getShader()->updateUniform("testUni",t );
+
+	m.getShader()->updateUniform("testUni", glm::vec2(0.1,-0.2));
 	m.Verticies = {
 	0.0f,0.0f,0.0f,		1.0f,0.0f,0.0f,
 	0.0f,0.5f,0.0f,		0.0f,1.0f,0.0f,
@@ -34,11 +33,15 @@ int main()
 	};
 	m.UpdateGLObjs();
 	m.GetVertexArray().SetLayout(Layout);
+
+	double previousTime = glfwGetTime();
+	double deltaTime;
 	while (!glfwWindowShouldClose(Renderer::window.GetHandle()))
 	{
-
-
-
+		double currentTime = glfwGetTime();
+		deltaTime = currentTime - previousTime;
+		previousTime = currentTime;
+		
 		Renderer::Submit(m);
 		Renderer::EndScene();
 		Renderer::window.SwapBuffers();

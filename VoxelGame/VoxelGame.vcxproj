@@ -148,7 +148,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Game\Chunk.cpp" />
-    <ClCompile Include="Game\ChunkMesh.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="libraries\include\stb\stb_image.cpp" />
     <ClCompile Include="main.cpp" />
@@ -164,7 +163,6 @@
   <ItemGroup>
     <ClInclude Include="Game\Chunk.h" />
     <ClInclude Include="Game\ChunkManager.h" />
-    <ClInclude Include="Game\ChunkMesh.h" />
     <ClInclude Include="Game\Game.h" />
     <ClInclude Include="Game\Global.h" />
     <ClInclude Include="Game\ITerrainGenerator.h" />
