@@ -9,6 +9,8 @@ public:
 	void SetPosition(glm::vec3& Position) { m_Position = Position; };
 	void SetRotation(glm::vec3& Rotation) { m_Rotation = Rotation; };
 
+	void SetPosition(const glm::vec3& Position) { m_Position = Position; };
+	void SetRotation(const glm::vec3& Rotation) { m_Rotation = Rotation; };
 	glm::vec3 GetPosition() { return m_Position; };
 	glm::vec3 GetRotation() { return m_Rotation; };
 	glm::mat4& GetViewMatrix() { return m_ViewMatrix; };
@@ -16,8 +18,11 @@ public:
 
 	
 
+	void UpdateMatricies() {
+		m_ViewMatrix = glm::lookAt(m_Position, m_Rotation, { 0,1,0 });
+		m_ProjectionMatrix = glm::perspective(60.f, 1.f, 0.1f, 100.f);
+	}
 private:
-	void UpdateMatricies();
 
 	glm::vec3 m_Position = { 0.f,0.f,0.f };
 	glm::vec3 m_Rotation = { 0.f,0.f,0.f };

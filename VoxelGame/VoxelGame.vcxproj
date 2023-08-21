@@ -148,11 +148,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Game\Chunk.cpp" />
+    <ClCompile Include="Game\Game.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="libraries\include\stb\stb_image.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Renderer\Buffers.cpp" />
     <ClCompile Include="Game\Renderer.cpp" />
+    <ClCompile Include="Renderer\Camera.cpp" />
     <ClCompile Include="Renderer\Framebuffer.cpp" />
     <ClCompile Include="Renderer\Mesh.cpp" />
     <ClCompile Include="Renderer\Shader.cpp" />
@@ -181,6 +183,8 @@
     <ClInclude Include="Renderer\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Game\Shaders\ChunkShader.frag" />
+    <None Include="Game\Shaders\ChunkShader.vert" />
     <None Include="Game\Shaders\test.frag" />
     <None Include="Game\Shaders\test.vert" />
   </ItemGroup>

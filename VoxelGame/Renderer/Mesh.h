@@ -15,22 +15,30 @@ class Mesh
 public:
 	Mesh(MeshType type = MeshType::Unindexed);
 	MeshType getType() { return m_Type; }
+	VertexArray& GetVertexArray() { return *m_VertexArray.get(); }
+	std::shared_ptr<Shader>& getShader() { return m_Shader; }
+	std::map<std::string, Uniform>& GetUniformData() { return UniformData; }
+
 	unsigned int getCount();
-	std::vector<float> Verticies;
-	std::vector<unsigned int> Indicies;
 	void Bind();
+	void SetTexture(Texture* texture) { m_Texture.reset(texture); };
+	void SetTexture(std::shared_ptr<Texture> texture) { m_Texture = texture; };
 	void UpdateGLObjs();
 	void SetShader( Shader* shader) { m_Shader.reset(shader); };
 	void SetShader(std::shared_ptr<Shader>& shader) { m_Shader = shader; };
-	glm::mat4 ModelMatrix;
-	VertexArray& GetVertexArray() { return *m_VertexArray.get(); }
-	std::shared_ptr<Shader>& getShader() { return m_Shader; }
 	 void PreDraw();
+	void AddUniform(std::string name, UniformType type);
+	void updateUniform(std::string name, UniformDataUnion data);
+	void UploadAllUniforms();
+	bool hasUniform(std::string name);
+	bool hasTexture = false;
+	std::vector<float> Verticies;
+	std::vector<unsigned int> Indicies;
+	glm::mat4 ModelMatrix;
 private:
-
+	std::map<std::string, Uniform> UniformData;
 	std::shared_ptr < VertexArray> m_VertexArray;
 	std::shared_ptr<Shader> m_Shader;
 	std::shared_ptr<Texture> m_Texture;
-	bool hasTexture = false;
 	MeshType m_Type;
 };

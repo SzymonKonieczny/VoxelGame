@@ -115,6 +115,13 @@ void Shader::UploadUniformFloat(std::string name, float value)
 	glUniform1f(loc, value);
 }
 
+void Shader::UploadUniformInt(std::string name, int value)
+{
+	GLuint loc = GetUniformLocation(name);
+	glUniform1i(loc, value);
+
+}
+
 void Shader::UploadUniformFloat2(std::string name, glm::vec2& value)
 {
 	GLuint loc = GetUniformLocation(name);
@@ -152,53 +159,4 @@ std::string Shader::get_file_contents(const char* filename)
 	return content;
 }
 
-void Shader::AddUniform(std::string name, UniformType type)
-{
-	UniformData.insert( std::make_pair(name, Uniform(type, name) ));
-}
-
-void Shader::UploadAllUniforms()
-{
-	for (auto& uniform : UniformData)
-	{
-//#ifdef DEBUG
-//		//if (!uniform.second.dataInitialized) std::cout << "DebugInfo: Uniform " << uniform.second.name << " was nerver assigned";
-//#endif // DEBUG
-
-		auto& data = UniformData[uniform.second.name].data;
-		switch (uniform.second.type)
-		{
-
-		case UniformType::Float:
-			UploadUniformFloat(uniform.second.name, data.Float1);
-			break;
-		case UniformType::Float2:
-			UploadUniformFloat2(uniform.second.name, data.Float2);
-			std::cout << "val : " << data.Float2.x << " " << data.Float2.y << "\n";
-
-			break;
-		case UniformType::Float3:
-			UploadUniformFloat3(uniform.second.name, data.Float3);
-
-			break;
-		case UniformType::Float4:
-			UploadUniformFloat4(uniform.second.name, data.Float4);
-
-			break;
-		case UniformType::Mat4:
-			UploadUniformMat4(uniform.second.name, data.Mat4);
-
-			break;
-		default:
-			std::cout << "Using a Uniform type for which uploading wasnt yet implemented. Uniform name :" << uniform.second.name <<"\n";
-
-			break;
-		}
-	}
-}
-
-void Shader::updateUniform(std::string name, UniformDataUnion data)
-{
-	UniformData[name].data = data;
-}
 

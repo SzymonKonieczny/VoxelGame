@@ -37,6 +37,7 @@ public:
 	static void DrawNotIndexed(Mesh& mesh)//Mesh
 	{
 		mesh.Bind();
+		if (mesh.hasUniform("viewProjMatrix")) mesh.updateUniform("viewProjMatrix", Renderer::ViewProjectionMatrix);
 		mesh.PreDraw();
 		glDrawArrays(GL_TRIANGLES, 0, mesh.getCount());
 

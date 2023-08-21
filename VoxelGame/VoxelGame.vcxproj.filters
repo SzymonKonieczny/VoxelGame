@@ -51,6 +51,12 @@
     <ClCompile Include="Game\Chunk.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Game.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Camera.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Renderer.h">
@@ -111,5 +117,7 @@
   <ItemGroup>
     <None Include="Game\Shaders\test.vert" />
     <None Include="Game\Shaders\test.frag" />
+    <None Include="Game\Shaders\ChunkShader.vert" />
+    <None Include="Game\Shaders\ChunkShader.frag" />
   </ItemGroup>
 </Project>
