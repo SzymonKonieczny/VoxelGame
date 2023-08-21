@@ -29,6 +29,7 @@ int main()
 		Renderer::Submit(chunk.getMesh());
 		Renderer::EndScene();
 		Renderer::window.SwapBuffers();
+
 		Renderer::window.PullEvents();
 	}
 

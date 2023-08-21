@@ -1,6 +1,7 @@
 #pragma once
 #include <glm/glm.hpp>
 #include "../Renderer/Mesh.h"
+#include <iostream>
 
 class RendererCommand {
 
@@ -34,13 +35,18 @@ public:
 	{
 	}
 
-	static void DrawNotIndexed(Mesh& mesh)//Mesh
+	static void DrawNotIndexed(Mesh& mesh, glm::mat4 ViewProjectionMatrix)//Mesh
 	{
 		mesh.Bind();
-		if (mesh.hasUniform("viewProjMatrix")) mesh.updateUniform("viewProjMatrix", Renderer::ViewProjectionMatrix);
+		if (mesh.hasUniform("viewProjMatrix")) mesh.updateUniform("viewProjMatrix", ViewProjectionMatrix);
 		mesh.PreDraw();
-		glDrawArrays(GL_TRIANGLES, 0, mesh.getCount());
 
+		glDrawArrays(GL_TRIANGLES, 0, mesh.getCount());
+		GLenum err;
+		while ((err = glGetError()) != GL_NO_ERROR)
+		{
+			std::cout << "/n" << err << "/n";
+		}
 	}
 
 };

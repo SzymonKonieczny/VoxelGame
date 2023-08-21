@@ -1,11 +1,9 @@
 #version 330 core
-
 layout (location = 0) in vec3 aPos;
 layout (location = 0) in vec2 aTexCoord;
-
 layout (location = 2) in vec3 aCol;
 out vec3 Col;
-out TexCoord
+out vec2 TexCoord;
 uniform mat4 viewProjMatrix;
 uniform mat4 modelMatrix;
 
