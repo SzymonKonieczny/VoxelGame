@@ -4,7 +4,7 @@
 #include "Texture.h"
 #include <glm/glm.hpp>
 #include <vector>
-
+#include <iostream>
 #include <memory>
 enum class MeshType {
 	Indexed, Unindexed
@@ -14,6 +14,7 @@ class Mesh
 {
 public:
 	Mesh(MeshType type = MeshType::Unindexed);
+	//~Mesh() { std::cout << "Deleting Mesh\n"; }
 	MeshType getType() { return m_Type; }
 	VertexArray& GetVertexArray() { return *m_VertexArray.get(); }
 	std::shared_ptr<Shader>& getShader() { return m_Shader; }
@@ -23,7 +24,7 @@ public:
 	void Bind();
 	void SetTexture(Texture* texture) { m_Texture.reset(texture); };
 	void SetTexture(std::shared_ptr<Texture> texture) { m_Texture = texture; };
-	void UpdateGLObjs();
+	void UpdateObjectsOnGPU();
 	void SetShader( Shader* shader) { m_Shader.reset(shader); };
 	void SetShader(std::shared_ptr<Shader>& shader) { m_Shader = shader; };
 	 void PreDraw();
@@ -34,7 +35,6 @@ public:
 	bool hasTexture = false;
 	std::vector<float> Verticies;
 	std::vector<unsigned int> Indicies;
-	glm::mat4 ModelMatrix;
 private:
 	std::map<std::string, Uniform> UniformData;
 	std::shared_ptr < VertexArray> m_VertexArray;

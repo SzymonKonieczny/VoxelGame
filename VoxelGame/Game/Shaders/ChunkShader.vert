@@ -11,6 +11,6 @@ void main()
 {
    Col = aCol;
    TexCoord = aTexCoord;
-  // gl_Position = vec4(aPos.x + testUni.x, aPos.y + testUni.y, aPos.z, 1.0);
+   //gl_Position = vec4(aPos.x, aPos.y , aPos.z, 1.0);
    gl_Position = viewProjMatrix * modelMatrix * vec4(aPos.x,aPos.y,aPos.z,1.0) ;
 }

@@ -20,7 +20,7 @@ public:
 	
 
 	void UpdateMatricies() {
-		m_ViewMatrix = glm::lookAt(m_Position, m_Rotation, { 0,1,0 });
+		m_ViewMatrix = glm::lookAt(m_Position, m_Position+m_Rotation, { 0,1,0 });
 		m_ProjectionMatrix = glm::perspective(60.f, 1.f, 0.1f, 100.f);
 	}
 private:

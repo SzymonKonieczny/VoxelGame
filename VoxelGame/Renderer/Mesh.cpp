@@ -31,9 +31,13 @@ void Mesh::Bind()
 	m_VertexArray->Bind();
 	m_Shader->Bind();
 	if (hasTexture) m_Texture->Bind();
+
+
+	//Very bad for performance, very temporary
+	UpdateObjectsOnGPU();
 }
 
-void Mesh::UpdateGLObjs()
+void Mesh::UpdateObjectsOnGPU()
 {
 	m_VertexArray->UpdateVertexData(Verticies.data(), Verticies.size() * sizeof(float));
 }

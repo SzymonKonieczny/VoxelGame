@@ -17,8 +17,12 @@ int main()
 	cam.SetPosition({ 0,0,2 });
 	cam.SetRotation({ 0,0,-1 });
 
+	cam.UpdateMatricies();
 	double previousTime = glfwGetTime();
 	double deltaTime;
+
+
+
 	while (!glfwWindowShouldClose(Renderer::window.GetHandle()))
 	{
 		double currentTime = glfwGetTime();
