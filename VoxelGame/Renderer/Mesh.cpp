@@ -34,6 +34,7 @@ void Mesh::Bind()
 
 
 	//Very bad for performance, very temporary
+	//Do it so that it only updates them if theres been a change to the Verticies vector
 	UpdateObjectsOnGPU();
 }
 
