@@ -35,18 +35,12 @@ public:
 	{
 	}
 
-	static void DrawNotIndexed(Mesh& mesh, glm::mat4 ViewProjectionMatrix)//Mesh
+	static void DrawNotIndexed(Mesh& mesh)//Mesh
 	{
-		mesh.Bind();
-		if (mesh.hasUniform("viewProjMatrix")) mesh.updateUniform("viewProjMatrix", ViewProjectionMatrix);
-		mesh.PreDraw();
-		GLenum err = glGetError();
+
 
 		glDrawArrays(GL_TRIANGLES, 0, mesh.getCount());
-		while ((err = glGetError()) != GL_NO_ERROR)
-		{
-			std::cout << "/n" << err << "/n";
-		}
+
 	}
 
 };

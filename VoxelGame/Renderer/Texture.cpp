@@ -9,12 +9,12 @@ Texture::Texture(std::string path)
 	glBindTexture(GL_TEXTURE_2D, m_ID);
 
 	stbi_set_flip_vertically_on_load(1);
-	stbi_load(DataBuffer, &m_Width, &m_Height, &m_BitsPerPixel, 4);
+	DataBuffer  = stbi_load(path.c_str(), &m_Width, &m_Height, &m_BitsPerPixel, 4);
 
 	glTextureStorage2D(m_ID, 1, GL_RGBA8, m_Width, m_Height);
 
-	glTextureParameteri(m_ID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTextureParameteri(m_ID, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTextureParameteri(m_ID, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTextureParameteri(m_ID, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 						
 	glTextureParameteri(m_ID, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTextureParameteri(m_ID, GL_TEXTURE_WRAP_T, GL_REPEAT);

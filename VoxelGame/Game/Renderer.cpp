@@ -80,7 +80,7 @@ void Renderer::OnWindowResize(GLFWwindow* window, int width, int height)
 
 void Renderer::BeginScene(Camera& camera) // argument : vec<ligtsources>
 {
-	ViewProjectionMatrix = camera.GetViewMatrix() * camera.GetProjectionMatrix();
+	ViewProjectionMatrix =  camera.GetProjectionMatrix()* camera.GetViewMatrix();
 
 
 }
@@ -91,18 +91,19 @@ void Renderer::EndScene()
 	glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//frame.Bind();
-
-
-
 	for (auto& m : Meshes)
 	{
+		m.Bind();
+		if (m.hasUniform("viewProjMatrix")) m.updateUniform("viewProjMatrix", ViewProjectionMatrix);
+		m.PreDraw();
 		switch (m.getType())
 		{
 		case MeshType::Indexed:
 			RendererCommand::DrawIndexed(m);
 			break;
 		case MeshType::Unindexed:
-			RendererCommand::DrawNotIndexed(m, ViewProjectionMatrix);
+			
+			RendererCommand::DrawNotIndexed(m);
 			break;
 		}
 	}

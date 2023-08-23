@@ -11,7 +11,7 @@ public:
 
 private:
 	unsigned int m_ID;
-	 char* DataBuffer;
+	unsigned char* DataBuffer;
 	int m_Width, m_Height, m_BitsPerPixel;
 	std::string Path;
 

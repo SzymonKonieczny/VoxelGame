@@ -28,6 +28,8 @@ int main()
 		double currentTime = glfwGetTime();
 		deltaTime = currentTime - previousTime;
 		previousTime = currentTime;
+		glm::mat4 modelMat = chunk.getMesh().GetUniformData()["modelMatrix"].data.Mat4;
+		chunk.getMesh().updateUniform("modelMatrix", glm::rotate(modelMat, (float)glm::radians(deltaTime * 50), glm::vec3(0, 1, 0)));
 		Renderer::BeginScene(cam);
 
 		Renderer::Submit(chunk.getMesh());
