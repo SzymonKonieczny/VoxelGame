@@ -27,20 +27,11 @@ Chunk::Chunk(glm::ivec3 pos) : m_ChunkPos(pos)
 
 void Chunk::GenerateMesh()
 {
-	std::vector<float>  verts= {
-		// Pos					UV				Color
-		0.f,0.f,0.f ,		0.f,0.f,		1.f,1.f,1.f,
-		1.f,0.f,0.f ,		1.f,0.f,		1.f,1.f,1.f,
-		1.f,1.f,0.f ,		1.f,1.f,		1.f,1.f,1.f,
-							
-		1.f,1.f,0.f ,		1.f,1.f,		1.f,1.f,1.f,
-		0.f,1.f,0.f ,		0.f,1.f,		1.f,1.f,1.f,
-		0.f,0.f,0.f ,		0.f,0.f,		1.f,1.f,1.f
-	};
-	
-	FaceBuilder::BuildFace(m_ChunkSolidMesh, {}, BlockFace::NORTH);
-	for (auto i : verts) {
-		m_ChunkSolidMesh.Verticies.push_back(i);
 
+	for (int i =0; i< blocks.size(); i++)
+	{
+
+		FaceBuilder::BuildFace(m_ChunkSolidMesh, glm::vec3(i,0,0), BlockFace::NORTH);
 	}
+
 }

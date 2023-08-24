@@ -17,8 +17,8 @@ void Game::Start()
 	Chunk chunk({ 0,0,0 });
 	chunk.GenerateMesh();
 	Camera cam;
-	cam.SetPosition({ 0,0,2 });
-	cam.SetRotation({ 0,0,-1 });
+	cam.SetPosition({ 0,3,3 });
+	cam.SetRotation({ 0,-0.5,-1 });
 
 	cam.UpdateMatricies();
 

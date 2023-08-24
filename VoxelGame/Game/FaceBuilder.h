@@ -1,8 +1,8 @@
 #include "../Renderer/Mesh.h"
 enum class BlockFace {
-	NORTH, //-z
+	NORTH, //+z
 	EAST, //+x
-	SOUTH, //+z
+	SOUTH, //-z
 	WEST //-x
 };
 class FaceBuilder
@@ -28,13 +28,28 @@ public:
 		
 		//chunkVertex v{ glm::vec3(1.f,2.f,3.f), glm::vec2(1.f,2.f), glm::vec3(1.f,2.f,3.f) };
 		//pushVertToMesh(mesh, v);
-
+		chunkVertex v;
 		switch (Dir)
 		{
-		case BlockFace::NORTH:
-			chunkVertex v{ pos, glm::vec2(0.f,0.f), glm::vec3(1.f,1.f,1.f) };
+		case BlockFace::NORTH: //+z
+			 v={ pos + glm::vec3(0.f,0.f,1.f), glm::vec2(0.f,0.f), glm::vec3(1.f,1.f,1.f) };
+			 pushVertToMesh(mesh, v);
+			 v = { pos + glm::vec3(1.f,0.f,1.f), glm::vec2(0.2f,0.f), glm::vec3(1.f,1.f,1.f) };
+			 pushVertToMesh(mesh, v);
 
-			chunkVertex v{ pos+glm::vec3(0.f,0.f,0.f), glm::vec2(0.f,0.f), glm::vec3(1.f,1.f,1.f) };
+			 v = { pos + glm::vec3(1.f,1.f,1.f), glm::vec2(0.2f,0.2f), glm::vec3(1.f,1.f,1.f) };
+			 pushVertToMesh(mesh, v);
+			 //----
+			 v = { pos + glm::vec3(1.f,1.f,1.f), glm::vec2(0.2f,0.2f), glm::vec3(1.f,1.f,1.f) };
+			 pushVertToMesh(mesh, v);
+
+			 v = { pos + glm::vec3(0.f,1.f,1.f), glm::vec2(0.f,0.2f), glm::vec3(1.f,1.f,1.f) };
+			 pushVertToMesh(mesh, v);
+
+			 v = { pos + glm::vec3(0.f,0.f,1.f), glm::vec2(0.f,0.f), glm::vec3(1.f,1.f,1.f) };
+			 pushVertToMesh(mesh, v);
+
+
 
 
 			break;
