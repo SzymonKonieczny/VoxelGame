@@ -36,8 +36,9 @@ void Chunk::GenerateMesh()
 		1.f,1.f,0.f ,		1.f,1.f,		1.f,1.f,1.f,
 		0.f,1.f,0.f ,		0.f,1.f,		1.f,1.f,1.f,
 		0.f,0.f,0.f ,		0.f,0.f,		1.f,1.f,1.f
-
 	};
+	
+	FaceBuilder::BuildFace(m_ChunkSolidMesh, {}, BlockFace::NORTH);
 	for (auto i : verts) {
 		m_ChunkSolidMesh.Verticies.push_back(i);
 

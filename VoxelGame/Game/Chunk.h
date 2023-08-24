@@ -1,5 +1,7 @@
 #pragma once
 #include "../Renderer/Mesh.h"
+#include "../Game/FaceBuilder.h"
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 struct chunkVerex {
