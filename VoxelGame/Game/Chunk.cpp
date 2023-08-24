@@ -22,7 +22,19 @@ Chunk::Chunk(glm::ivec3 pos) : m_ChunkPos(pos)
 	m_ChunkSolidMesh.SetTexture(Game::BlockTextureAtlas);
 	m_ChunkSolidMesh.hasTexture = true;
 
-	blocks = {0,1,1,1,1};
+	blocks = { 0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1,
+	0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1 ,
+	0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1 ,
+	0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1 ,
+	0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1 ,
+	0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1 ,
+	0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1 ,
+	0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1 ,
+	0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1 ,
+	0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1 ,
+	0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1,
+	0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1 ,0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1 
+	,0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1 };
 }
 
 void Chunk::GenerateMesh()
@@ -31,7 +43,11 @@ void Chunk::GenerateMesh()
 	for (int i =0; i< blocks.size(); i++)
 	{
 
-		FaceBuilder::BuildFace(m_ChunkSolidMesh, glm::vec3(i,0,0), BlockFace::SOUTH);
+		FaceBuilder::BuildFace(m_ChunkSolidMesh,IndexToVec3(i) ,BlockFace::EAST);
+		FaceBuilder::BuildFace(m_ChunkSolidMesh,IndexToVec3(i) , BlockFace::WEST);
+		FaceBuilder::BuildFace(m_ChunkSolidMesh,IndexToVec3(i) , BlockFace::SOUTH);
+		FaceBuilder::BuildFace(m_ChunkSolidMesh,IndexToVec3(i) , BlockFace::NORTH);
+
 
 
 	}
