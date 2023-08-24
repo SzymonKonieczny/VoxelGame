@@ -7,7 +7,6 @@
 Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath)
 {
 
-		//GLuint vertexShader = glCreateShader(GLAD_GL_VERSION_4_5); Just to test debug messages
 		GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
 		std::string vertexSrc = get_file_contents(vertexPath.c_str());

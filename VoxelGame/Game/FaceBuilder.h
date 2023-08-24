@@ -3,7 +3,9 @@ enum class BlockFace {
 	NORTH, //+z
 	EAST, //+x
 	SOUTH, //-z
-	WEST //-x
+	WEST, //-x
+	UP,
+	DOWN
 };
 class FaceBuilder
 {
@@ -52,6 +54,33 @@ public:
 
 
 
+			break;
+		case BlockFace::SOUTH :
+			v = { pos + glm::vec3(0.f,0.f,0.f), glm::vec2(0.f,0.f), glm::vec3(1.f,1.f,1.f) };
+			pushVertToMesh(mesh, v);
+			v = { pos + glm::vec3(1.f,0.f,0.f), glm::vec2(0.2f,0.f), glm::vec3(1.f,1.f,1.f) };
+			pushVertToMesh(mesh, v);
+
+			v = { pos + glm::vec3(1.f,1.f,0.f), glm::vec2(0.2f,0.2f), glm::vec3(1.f,1.f,1.f) };
+			pushVertToMesh(mesh, v);
+			//----
+			v = { pos + glm::vec3(1.f,1.f,0.f), glm::vec2(0.2f,0.2f), glm::vec3(1.f,1.f,1.f) };
+			pushVertToMesh(mesh, v);
+
+			v = { pos + glm::vec3(0.f,1.f,0.f), glm::vec2(0.f,0.2f), glm::vec3(1.f,1.f,1.f) };
+			pushVertToMesh(mesh, v);
+
+			v = { pos + glm::vec3(0.f,0.f,0.f), glm::vec2(0.f,0.f), glm::vec3(1.f,1.f,1.f) };
+			pushVertToMesh(mesh, v);
+
+			break;
+		case BlockFace::EAST:
+			break;
+		case BlockFace::WEST:
+			break;
+		case BlockFace::UP:
+			break;
+		case BlockFace::DOWN:
 			break;
 		default:
 

@@ -31,7 +31,38 @@ void Chunk::GenerateMesh()
 	for (int i =0; i< blocks.size(); i++)
 	{
 
-		FaceBuilder::BuildFace(m_ChunkSolidMesh, glm::vec3(i,0,0), BlockFace::NORTH);
+		FaceBuilder::BuildFace(m_ChunkSolidMesh, glm::vec3(i,0,0), BlockFace::SOUTH);
+
+
 	}
 
+}
+
+glm::vec3 Chunk::IndexToVec3(int i)
+{
+	//order is as follows
+	/*
+	^
+	|
+  z	|
+	|ChunkSize+1,ChunkSize+2 ...
+	|0,1,2,3,4,5, ... ChunkSize
+	---------------->
+		x
+
+	*/
+	int remainder = 0;
+	int y = i / (Game::CHUNK_SIZE* Game::CHUNK_SIZE);
+	remainder = i% (Game::CHUNK_SIZE * Game::CHUNK_SIZE);
+	int z = remainder / ( Game::CHUNK_SIZE);
+	remainder = remainder % (Game::CHUNK_SIZE);
+
+	int x = remainder;
+
+	return glm::vec3(x,y,z);
+}
+
+int Chunk::Vec3ToIndex(glm::vec3 pos)
+{ 
+	return Game::CHUNK_SIZE * Game::CHUNK_SIZE * pos.y + Game::CHUNK_SIZE * pos.z + pos.x;;
 }
