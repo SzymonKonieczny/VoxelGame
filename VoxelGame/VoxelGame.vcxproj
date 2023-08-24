@@ -72,23 +72,23 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Projects on C drive Only Imortant shit\Endzajnirka\VoxelGame\VoxelGame\libraries\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Projects on C drive Only Imortant shit\Endzajnirka\VoxelGame\VoxelGame\libraries\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\libraries\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\libraries\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Projects on C drive Only Imortant shit\Endzajnirka\VoxelGame\VoxelGame\libraries\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Projects on C drive Only Imortant shit\Endzajnirka\VoxelGame\VoxelGame\libraries\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\libraries\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\libraries\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Projects on C drive Only Imortant shit\Endzajnirka\VoxelGame\VoxelGame\libraries\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Projects on C drive Only Imortant shit\Endzajnirka\VoxelGame\VoxelGame\libraries\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\libraries\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\libraries\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Projects on C drive Only Imortant shit\Endzajnirka\VoxelGame\VoxelGame\libraries\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Projects on C drive Only Imortant shit\Endzajnirka\VoxelGame\VoxelGame\libraries\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\libraries\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\libraries\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -173,6 +173,7 @@
   <ItemGroup>
     <ClInclude Include="Game\Chunk.h" />
     <ClInclude Include="Game\ChunkManager.h" />
+    <ClInclude Include="Game\FaceBuilder.h" />
     <ClInclude Include="Game\Game.h" />
     <ClInclude Include="Game\Global.h" />
     <ClInclude Include="Game\ITerrainGenerator.h" />
