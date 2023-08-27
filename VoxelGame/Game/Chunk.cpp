@@ -21,7 +21,7 @@ Chunk::Chunk(glm::ivec3 pos) : m_ChunkPos(pos)
 
 	m_ChunkSolidMesh.SetTexture(Game::BlockTextureAtlas);
 	m_ChunkSolidMesh.hasTexture = true;
-
+	
 	blocks = { 0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1,
 	0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1 ,
 	0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1 ,
@@ -42,11 +42,15 @@ void Chunk::GenerateMesh()
 
 	for (int i =0; i< blocks.size(); i++)
 	{
+		glm::vec3 pos = IndexToVec3(i);
 
 		FaceBuilder::BuildFace(m_ChunkSolidMesh,IndexToVec3(i) ,BlockFace::EAST);
 		FaceBuilder::BuildFace(m_ChunkSolidMesh,IndexToVec3(i) , BlockFace::WEST);
 		FaceBuilder::BuildFace(m_ChunkSolidMesh,IndexToVec3(i) , BlockFace::SOUTH);
 		FaceBuilder::BuildFace(m_ChunkSolidMesh,IndexToVec3(i) , BlockFace::NORTH);
+		FaceBuilder::BuildFace(m_ChunkSolidMesh, IndexToVec3(i), BlockFace::UP);
+		FaceBuilder::BuildFace(m_ChunkSolidMesh, IndexToVec3(i), BlockFace::DOWN);
+
 
 
 

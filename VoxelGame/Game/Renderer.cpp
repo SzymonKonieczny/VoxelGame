@@ -75,7 +75,7 @@ void Renderer::Shutdown()
 
 void Renderer::OnWindowResize(GLFWwindow* window, int width, int height)
 {
-
+	
 }
 
 void Renderer::BeginScene(Camera& camera) // argument : vec<ligtsources>

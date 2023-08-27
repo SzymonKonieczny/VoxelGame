@@ -17,8 +17,8 @@ void Game::Start()
 	Chunk chunk({ 0,0,0 });
 	chunk.GenerateMesh();
 	Camera cam;
-	cam.SetPosition({ 0,3,3 });
-	cam.SetRotation({ 0,-0.5,-1 });
+	cam.SetPosition({ 0,5,6 });
+	cam.SetRotation({ 0,-0.6,-1 });
 
 	cam.UpdateMatricies();
 
@@ -34,7 +34,7 @@ void Game::Start()
 		deltaTime = currentTime - previousTime;
 		previousTime = currentTime;
 		glm::mat4 modelMat = chunk.getMesh().GetUniformData()["modelMatrix"].data.Mat4;
-		chunk.getMesh().updateUniform("modelMatrix", glm::rotate(modelMat, (float)glm::radians(deltaTime * 50), glm::vec3(0, 1, 0)));
+		chunk.getMesh().updateUniform("modelMatrix", glm::rotate(modelMat, (float)glm::radians(deltaTime * 50), glm::vec3(1, 1, 1)));
 		Renderer::BeginScene(cam);
 
 		Renderer::Submit(chunk.getMesh());
