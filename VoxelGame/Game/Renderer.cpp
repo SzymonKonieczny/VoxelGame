@@ -2,7 +2,7 @@
 #include "Input.h"
 Window Renderer::window; //constructor static call
 glm::mat4 Renderer::ViewProjectionMatrix;
-std::list<Mesh> Renderer::Meshes;
+std::list<std::unique_ptr<Mesh>> Renderer::Meshes;
 /*Framebuffer Renderer::frame({800, 800});
 Mesh ScreenQuad;
 
@@ -93,17 +93,17 @@ void Renderer::EndScene()
 	//frame.Bind();
 	for (auto& m : Meshes)
 	{
-		m.Bind();
-		if (m.hasUniform("viewProjMatrix")) m.updateUniform("viewProjMatrix", ViewProjectionMatrix);
-		m.PreDraw();
-		switch (m.getType())
+		m->Bind();
+		if (m->hasUniform("viewProjMatrix")) m->updateUniform("viewProjMatrix", ViewProjectionMatrix);
+		m->PreDraw();
+		switch (m->getType())
 		{
 		case MeshType::Indexed:
-			RendererCommand::DrawIndexed(m);
+			RendererCommand::DrawIndexed(*m);
 			break;
 		case MeshType::Unindexed:
 			
-			RendererCommand::DrawNotIndexed(m);
+			RendererCommand::DrawNotIndexed(*m);
 			break;
 		}
 	}
@@ -115,5 +115,5 @@ void Renderer::EndScene()
 
 void Renderer::Submit(Mesh& m)
 {
-	Meshes.push_back(m);
+	Meshes.push_back(std::make_unique<Mesh>(m));
 }
