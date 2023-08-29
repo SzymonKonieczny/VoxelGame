@@ -5,7 +5,7 @@
 #include<glm/gtc/type_ptr.hpp>
 #include<glm/gtx/rotate_vector.hpp>
 #include<glm/gtx/vector_angle.hpp>
-Player::Player() : Pos(0,5,6), Rot(0,-0.6,-1)
+Player::Player() : Pos(0,5,6), Rot(0,-0.6,-1), velocity(0,0,0)
 {
 
 }
@@ -15,48 +15,54 @@ void Player::Update(float dt)
 
 
 	handleRotation();
-	Move();
+	Move(dt);
+	
 	cam.SetPosition(Pos);
 	cam.SetRotation(Rot);
 	cam.UpdateMatricies();
 }
 
-void Player::Move()
+void Player::Move(float dt)
 {
 	
 	if (Input::isPressed(GLFW_KEY_W))
 	{
-		Pos += speed * Rot;
+		velocity += speed * Rot *dt;
 	}
 	if (Input::isPressed(GLFW_KEY_A))
 	{
-		Pos += speed * -glm::normalize(glm::cross(Rot, glm::vec3(0, 1, 0)));
+		velocity += speed * dt * -glm::normalize(glm::cross(Rot, glm::vec3(0, 1, 0)));
 	}
 	if (Input::isPressed(GLFW_KEY_S))
 	{
-		Pos += speed * -Rot;
+		velocity += speed * dt * -Rot;
 	}
 	if (Input::isPressed(GLFW_KEY_D))
 	{
-		Pos += speed * glm::normalize(glm::cross(Rot, glm::vec3(0,1,0)));
+		velocity += speed * dt * glm::normalize(glm::cross(Rot, glm::vec3(0,1,0)));
 	}
 	if (Input::isPressed(GLFW_KEY_SPACE))
 	{
-		Pos += speed * glm::vec3(0, 1, 0);
-	}
-	if (Input::isPressed(GLFW_KEY_LEFT_CONTROL))
-	{
-		Pos += speed * -glm::vec3(0, 1, 0);
+		velocity += speed * dt * glm::vec3(0, 1, 0);
 	}
 	if (Input::isPressed(GLFW_KEY_LEFT_SHIFT))
 	{
-		speed = 0.4f;
+		velocity += speed * dt * -glm::vec3(0, 1, 0);
 	}
-	else if (Input::isPressed(GLFW_KEY_LEFT_SHIFT))
+	if (Input::isPressed(GLFW_KEY_LEFT_CONTROL))
 	{
-		speed = 0.1f;
+		speed = 100.f;
+	}
+	else if (Input::isReleased(GLFW_KEY_LEFT_CONTROL))
+	{
+		speed = 10.f;
 	}
 
+
+	Pos += velocity;
+	velocity.x *= drag * dt;
+	velocity.z *= drag * dt;
+	velocity.y *= drag * dt;
 }
 
 void Player::handleRotation()

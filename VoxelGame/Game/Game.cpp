@@ -25,14 +25,21 @@ void Game::Start()
 
 	double previousTime = glfwGetTime();
 	double deltaTime;
-
+	double currentTime = 0;
+	int counter = 0;
 	while (!glfwWindowShouldClose(Renderer::window.GetHandle()))
 	{
-		double currentTime = glfwGetTime();
+		currentTime = glfwGetTime();
 		deltaTime = currentTime - previousTime;
 		previousTime = currentTime;
-		glm::mat4 modelMat = chunk.getMesh().GetUniformData()["modelMatrix"].data.Mat4;
-		chunk.getMesh().updateUniform("modelMatrix", glm::rotate(modelMat, (float)glm::radians(deltaTime * 50), glm::vec3(1, 1, 1)));
+		counter++;
+		{
+			std::string FPS = std::to_string((1.0 / deltaTime) * counter);
+			std::string newTitle = "Voxelini Kowalini  " + FPS + " FPS";
+			glfwSetWindowTitle(Renderer::window.GetHandle(), newTitle.c_str());
+
+		}
+
 		player.Update(deltaTime);
 		Renderer::BeginScene(player.getCamera());
 

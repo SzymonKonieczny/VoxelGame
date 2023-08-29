@@ -9,6 +9,15 @@ public:
 		{
 			return true;
 		}
+		return false;
+	}
+	static bool isReleased(int GLFW_Key) {
+		if (glfwGetKey(windowptr, GLFW_Key) == GLFW_RELEASE)
+		{
+			return true;
+		}
+		return false;
+
 	}
 	static void getMouseMove(double* mouseX, double* mouseY) {
 		glfwGetCursorPos(windowptr, mouseX, mouseY);
