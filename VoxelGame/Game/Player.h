@@ -11,7 +11,7 @@ public:
 private:
 	void handleRotation();
 	float sensitivity = 60;
-
+	float speed = 2;
 	Camera cam;
 	glm::vec3 Pos;
 	glm::vec3 Rot;

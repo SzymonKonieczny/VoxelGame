@@ -23,6 +23,40 @@ void Player::Update(float dt)
 
 void Player::Move()
 {
+	
+	if (Input::isPressed(GLFW_KEY_W))
+	{
+		Pos += speed * Rot;
+	}
+	if (Input::isPressed(GLFW_KEY_A))
+	{
+		Pos += speed * -glm::normalize(glm::cross(Rot, glm::vec3(0, 1, 0)));
+	}
+	if (Input::isPressed(GLFW_KEY_S))
+	{
+		Pos += speed * -Rot;
+	}
+	if (Input::isPressed(GLFW_KEY_D))
+	{
+		Pos += speed * glm::normalize(glm::cross(Rot, glm::vec3(0,1,0)));
+	}
+	if (Input::isPressed(GLFW_KEY_SPACE))
+	{
+		Pos += speed * glm::vec3(0, 1, 0);
+	}
+	if (Input::isPressed(GLFW_KEY_LEFT_CONTROL))
+	{
+		Pos += speed * -glm::vec3(0, 1, 0);
+	}
+	if (Input::isPressed(GLFW_KEY_LEFT_SHIFT))
+	{
+		speed = 0.4f;
+	}
+	else if (Input::isPressed(GLFW_KEY_LEFT_SHIFT))
+	{
+		speed = 0.1f;
+	}
+
 }
 
 void Player::handleRotation()
