@@ -23,7 +23,7 @@ public:
 
 		m_ViewMatrix = glm::lookAt(m_Position, m_Position+m_Rotation, { 0,1,0 });
 		//m_ViewMatrix = glm::translate(glm::mat4(1.0), glm::vec3(0.0f, 0.1, -2.f));
-		m_ProjectionMatrix = glm::perspective(glm::radians(60.f), 1.f, 0.1f, 100.f);
+		m_ProjectionMatrix = glm::perspective(glm::radians(60.f), 1.f, 0.1f, 1000.f);
 	}
 private:
 

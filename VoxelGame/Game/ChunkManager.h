@@ -9,8 +9,8 @@ public:
 	
 	}
 	void GenWorld() {
-		for (int i = 0; i < 1; i++)
-			for (int k = 0; k < 1; k++)
+		for (int i = 0; i < 10; i++)
+			for (int k = 0; k < 10; k++)
 			{
 				TestChunks.push_back(Chunk({ i, 0, k }));
 			}
