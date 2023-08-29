@@ -5,8 +5,9 @@
 #include<glm/gtc/type_ptr.hpp>
 #include<glm/gtx/rotate_vector.hpp>
 #include<glm/gtx/vector_angle.hpp>
-Player::Player() : Pos(0,0,0), Rot(0,0,0)
+Player::Player() : Pos(0,5,6), Rot(0,-0.6,-1)
 {
+
 }
 
 void Player::Update(float dt)
@@ -39,5 +40,4 @@ void Player::handleRotation()
 	}
 
 	Rot = glm::rotate(Rot, glm::radians(-rotY), glm::vec3(0, 1, 0));
-
 }

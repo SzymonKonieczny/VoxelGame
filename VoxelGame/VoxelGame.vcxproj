@@ -157,6 +157,7 @@
   <ItemGroup>
     <ClCompile Include="Game\Chunk.cpp" />
     <ClCompile Include="Game\Game.cpp" />
+    <ClCompile Include="Game\Input.cpp" />
     <ClCompile Include="Game\Player.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="libraries\include\stb\stb_image.cpp" />

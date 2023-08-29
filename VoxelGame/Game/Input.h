@@ -12,7 +12,8 @@ public:
 	}
 	static void getMouseMove(double* mouseX, double* mouseY) {
 		glfwGetCursorPos(windowptr, mouseX, mouseY);
+		glfwSetCursorPos(windowptr, (screenWidth / 2), (screenHeight / 2));
+
 	}
 
 }; 
-GLFWwindow* Input::windowptr;
