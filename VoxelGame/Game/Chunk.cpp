@@ -10,7 +10,7 @@ Chunk::Chunk(glm::ivec3 pos) : m_ChunkPos(pos)
 	};
 	m_ChunkSolidMesh.GetVertexArray().SetLayout(ChunkSolidLayout);
 	m_ChunkSolidMesh.SetShader(Chunk::ChunkSolidShader);
-	m_ChunkSolidMesh.AddUniform("modelMatrix",UniformType::Mat4);
+	m_ChunkSolidMesh.AddUniform("modelMatrix", UniformType::Mat4);
 	m_ChunkSolidMesh.AddUniform("viewProjMatrix", UniformType::Mat4);
 	m_ChunkSolidMesh.AddUniform("tex0", UniformType::Int);
 
@@ -21,20 +21,11 @@ Chunk::Chunk(glm::ivec3 pos) : m_ChunkPos(pos)
 
 	m_ChunkSolidMesh.SetTexture(Game::BlockTextureAtlas);
 	m_ChunkSolidMesh.hasTexture = true;
-	
+
 	blocks = { 0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1,
 	0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1 ,
-	0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1 };//,
-	///0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1 ,
-	///0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1 ,
-	///0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1 ,
-	///0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1 ,
-	///0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1 ,
-	///0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1 ,
-	///0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1 ,
-	///0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1,
-	///0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1 ,0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1 
-	///,0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1 };
+	0,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1 };
+	//blocks.resize(Game::CHUNK_SIZE * Game::CHUNK_SIZE * Game::CHUNK_SIZE);
 }
 
 void Chunk::GenerateMesh()
@@ -43,13 +34,18 @@ void Chunk::GenerateMesh()
 	for (int i =0; i< blocks.size(); i++)
 	{
 		glm::vec3 pos = IndexToVec3(i);
-
+		if(isSolidBlock(pos+glm::vec3(1.f,0.f,0.f)))
 		FaceBuilder::BuildFace(m_ChunkSolidMesh,IndexToVec3(i) ,BlockFace::EAST);
-		FaceBuilder::BuildFace(m_ChunkSolidMesh,IndexToVec3(i) , BlockFace::WEST);
-		FaceBuilder::BuildFace(m_ChunkSolidMesh,IndexToVec3(i) , BlockFace::SOUTH);
-		FaceBuilder::BuildFace(m_ChunkSolidMesh,IndexToVec3(i) , BlockFace::NORTH);
-		FaceBuilder::BuildFace(m_ChunkSolidMesh, IndexToVec3(i), BlockFace::UP);
-		FaceBuilder::BuildFace(m_ChunkSolidMesh, IndexToVec3(i), BlockFace::DOWN);
+		if (isSolidBlock(pos + glm::vec3(-1.f, 0.f, 0.f)))
+			FaceBuilder::BuildFace(m_ChunkSolidMesh,IndexToVec3(i) , BlockFace::WEST);
+		if (isSolidBlock(pos + glm::vec3(0.f, 0.f, -1.f)))
+			FaceBuilder::BuildFace(m_ChunkSolidMesh,IndexToVec3(i) , BlockFace::SOUTH);
+		if (isSolidBlock(pos + glm::vec3(0.f, 0.f, 1.f)))
+			FaceBuilder::BuildFace(m_ChunkSolidMesh,IndexToVec3(i) , BlockFace::NORTH);
+		if (isSolidBlock(pos + glm::vec3(0.f, 1.f, 0.f)))
+			FaceBuilder::BuildFace(m_ChunkSolidMesh, IndexToVec3(i), BlockFace::UP);
+		if (isSolidBlock(pos + glm::vec3(0.f, -1.f, 0.f)))
+			FaceBuilder::BuildFace(m_ChunkSolidMesh, IndexToVec3(i), BlockFace::DOWN);
 
 
 
@@ -61,7 +57,7 @@ void Chunk::GenerateMesh()
 bool Chunk::isValidPosition(glm::vec3 pos)
 {
 
-	if (Vec3ToIndex(pos) > blocks.size()) return false;
+	//if (Vec3ToIndex(pos) > blocks.size()) return false;
 	if (pos.x < 0 || pos.x > Game::CHUNK_SIZE) return false;
 	if (pos.y < 0 || pos.y > Game::CHUNK_SIZE) return false;
 	if (pos.z < 0 || pos.z > Game::CHUNK_SIZE) return false;
