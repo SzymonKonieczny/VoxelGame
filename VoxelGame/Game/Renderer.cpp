@@ -2,7 +2,7 @@
 #include "Input.h"
 Window Renderer::window; //constructor static call
 glm::mat4 Renderer::ViewProjectionMatrix;
-std::list<std::unique_ptr<Mesh>> Renderer::Meshes;
+std::list<Mesh*> Renderer::Meshes;
 /*Framebuffer Renderer::frame({800, 800});
 Mesh ScreenQuad;
 
@@ -115,5 +115,5 @@ void Renderer::EndScene()
 
 void Renderer::Submit(Mesh& m)
 {
-	Meshes.push_back(std::make_unique<Mesh>(m));
+	Meshes.push_back(&m);
 }

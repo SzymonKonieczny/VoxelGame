@@ -28,7 +28,7 @@ public:
 	
 	static glm::mat4 ViewProjectionMatrix;
 private:
-	static std::list<std::unique_ptr<Mesh>> Meshes;
+	static std::list<Mesh*> Meshes;
 	//static Framebuffer frame;
 
 };
