@@ -75,7 +75,10 @@ void Renderer::Shutdown()
 
 void Renderer::OnWindowResize(GLFWwindow* window, int width, int height)
 {
-	
+	screenHeight = height;
+	screenWidth = width;
+	RendererCommand::SetViewport(0, 0, screenWidth, screenHeight);
+
 }
 
 void Renderer::BeginScene(Camera& camera) // argument : vec<ligtsources>

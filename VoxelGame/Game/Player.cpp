@@ -19,7 +19,7 @@ void Player::Update(float dt)
 	
 	cam.SetPosition(Pos);
 	cam.SetRotation(Rot);
-	cam.UpdateMatricies();
+	cam.UpdateMatricies(90.f,screenWidth/(float)screenHeight );
 }
 
 void Player::Move(float dt)
