@@ -19,6 +19,8 @@ public:
 	std::vector<unsigned int> blocks;
 	static std::shared_ptr<Shader>  ChunkSolidShader;
 private:
+	bool isValidPosition(glm::vec3 pos);
+	bool isSolidBlock(glm::vec3 pos);
 	glm::vec3 IndexToVec3(int i);
 	int Vec3ToIndex(glm::vec3 pos);
 	bool hasTransparentBlocks = false;
