@@ -4,6 +4,7 @@
 #include "Chunk.h"
 #include "../Renderer/Window.h"
 #include "Renderer.h"
+#include "Player.h"
 class Game
 {
 public:
@@ -15,5 +16,6 @@ public:
 	static int CHUNK_SIZE;
 	static std::shared_ptr<Texture> BlockTextureAtlas;
 private:
-	void Update();
+	Player player;
+	void Update(float dt);
 };

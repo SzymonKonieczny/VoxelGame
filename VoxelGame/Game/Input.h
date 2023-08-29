@@ -10,7 +10,7 @@ public:
 			return true;
 		}
 	}
-	static void getRotation(double* mouseX, double* mouseY) {
+	static void getMouseMove(double* mouseX, double* mouseY) {
 		glfwGetCursorPos(windowptr, mouseX, mouseY);
 	}
 

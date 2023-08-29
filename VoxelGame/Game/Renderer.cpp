@@ -1,4 +1,5 @@
 #include "Renderer.h"
+#include "Input.h"
 Window Renderer::window; //constructor static call
 glm::mat4 Renderer::ViewProjectionMatrix;
 std::list<Mesh> Renderer::Meshes;
@@ -45,8 +46,7 @@ void Renderer::Init()
 	window.Init();
 	
 	glfwSetWindowSizeCallback(window.GetHandle(), OnWindowResize);
-	RendererCommand::SetViewport(0, 0, 800, 800);
-	
+	RendererCommand::SetViewport(0, 0, screenWidth,screenHeight);
 
 	/*ScreenQuad.GetVertexArray().SetVertexBuffer(new VertexBuffer());
 	ScreenQuad.Verticies = {
