@@ -30,17 +30,17 @@ void Chunk::GenerateMesh()
 	for (int i =0; i< blocks.size(); i++)
 	{
 		glm::vec3 pos = IndexToVec3(i);
-		if(isSolidBlock(pos+glm::vec3(1.f,0.f,0.f)))
+		if(!isSolidBlock(pos+glm::vec3(1.f,0.f,0.f)))
 		FaceBuilder::BuildFace(m_ChunkSolidMesh,IndexToVec3(i) ,BlockFace::EAST);
-		if (isSolidBlock(pos + glm::vec3(-1.f, 0.f, 0.f)))
+		if (!isSolidBlock(pos + glm::vec3(-1.f, 0.f, 0.f)))
 			FaceBuilder::BuildFace(m_ChunkSolidMesh,IndexToVec3(i) , BlockFace::WEST);
-		if (isSolidBlock(pos + glm::vec3(0.f, 0.f, -1.f)))
+		if (!isSolidBlock(pos + glm::vec3(0.f, 0.f, -1.f)))
 			FaceBuilder::BuildFace(m_ChunkSolidMesh,IndexToVec3(i) , BlockFace::SOUTH);
-		if (isSolidBlock(pos + glm::vec3(0.f, 0.f, 1.f)))
+		if (!isSolidBlock(pos + glm::vec3(0.f, 0.f, 1.f)))
 			FaceBuilder::BuildFace(m_ChunkSolidMesh,IndexToVec3(i) , BlockFace::NORTH);
-		if (isSolidBlock(pos + glm::vec3(0.f, 1.f, 0.f)))
+		if (!isSolidBlock(pos + glm::vec3(0.f, 1.f, 0.f)))
 			FaceBuilder::BuildFace(m_ChunkSolidMesh, IndexToVec3(i), BlockFace::UP);
-		if (isSolidBlock(pos + glm::vec3(0.f, -1.f, 0.f)))
+		if (!isSolidBlock(pos + glm::vec3(0.f, -1.f, 0.f)))
 			FaceBuilder::BuildFace(m_ChunkSolidMesh, IndexToVec3(i), BlockFace::DOWN);
 
 	}
@@ -50,18 +50,19 @@ void Chunk::GenerateMesh()
 bool Chunk::isValidPosition(glm::vec3 pos)
 {
 
-	//if (Vec3ToIndex(pos) > blocks.size()) return false;
-	if (pos.x < 0 || pos.x > Game::CHUNK_SIZE) return false;
-	if (pos.y < 0 || pos.y > Game::CHUNK_SIZE) return false;
-	if (pos.z < 0 || pos.z > Game::CHUNK_SIZE) return false;
+	if (Vec3ToIndex(pos) >= blocks.size() || Vec3ToIndex(pos) < 0) return false;
+	if (pos.x < 0 || pos.x >= Game::CHUNK_SIZE) return false;
+	if (pos.y < 0 || pos.y >= Game::CHUNK_SIZE) return false;
+	if (pos.z < 0 || pos.z >= Game::CHUNK_SIZE) return false;
 
 	return true;
 }
 
 bool Chunk::isSolidBlock(glm::vec3 pos)
 {
-	//if (!isValidPosition(pos)) return false;
-	return true;
+	if (!isValidPosition(pos)) return false;
+	//std::cout << Vec3ToIndex(pos) << "\n";
+	return (blocks[Vec3ToIndex(pos)]==1);
 }
 
 glm::vec3 Chunk::IndexToVec3(int i)
@@ -90,5 +91,5 @@ glm::vec3 Chunk::IndexToVec3(int i)
 
 int Chunk::Vec3ToIndex(glm::vec3 pos)
 { 
-	return Game::CHUNK_SIZE * Game::CHUNK_SIZE * pos.y + Game::CHUNK_SIZE * pos.z + pos.x;;
+	return Game::CHUNK_SIZE * Game::CHUNK_SIZE * pos.y + Game::CHUNK_SIZE * pos.z + pos.x;
 }

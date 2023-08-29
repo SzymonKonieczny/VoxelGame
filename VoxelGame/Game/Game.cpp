@@ -24,18 +24,16 @@ void Game::Start()
 	double previousTime = glfwGetTime();
 	double deltaTime;
 	double currentTime = 0;
-	int counter = 0;
+	glfwSwapInterval(0);
 	while (!glfwWindowShouldClose(Renderer::window.GetHandle()))
 	{
 		currentTime = glfwGetTime();
 		deltaTime = currentTime - previousTime;
 		previousTime = currentTime;
-		counter++;
 		{
-			std::string FPS = std::to_string((1.0 / deltaTime) * counter);
+			std::string FPS = std::to_string((1.0 / deltaTime));
 			std::string newTitle = "Voxelini Kowalini  " + FPS + " FPS";
 			glfwSetWindowTitle(Renderer::window.GetHandle(), newTitle.c_str());
-
 		}
 
 		player.Update(deltaTime);
