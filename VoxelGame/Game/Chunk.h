@@ -13,6 +13,7 @@ struct chunkVerex {
 class Chunk {
 public:
 	Chunk(glm::ivec3 pos);
+	glm::ivec3 m_ChunkPos;
 	
 	Mesh& getMesh() { return m_ChunkSolidMesh; };
 	void GenerateMesh();
@@ -26,6 +27,5 @@ private:
 	bool hasTransparentBlocks = false;
 	bool isGenerated = false;
 	Mesh m_ChunkSolidMesh;
-	glm::ivec3 m_ChunkPos;
 
 };

@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "Input.h"
+
 int Game::CHUNK_SIZE = 16;
 std::shared_ptr<Texture> Game::BlockTextureAtlas;
 
@@ -16,13 +17,10 @@ void Game::Init()
 
 void Game::Start()
 {
-	Chunk chunk({ 0,0,0 });
-	chunk.GenerateMesh();
 	
 
 
-
-
+	world.chunkManager.GenWorld();
 	double previousTime = glfwGetTime();
 	double deltaTime;
 	double currentTime = 0;
@@ -42,8 +40,10 @@ void Game::Start()
 
 		player.Update(deltaTime);
 		Renderer::BeginScene(player.getCamera());
-
-		Renderer::Submit(chunk.getMesh());
+		for (auto& chunk : world.chunkManager.getChunks())
+		{
+			Renderer::Submit(chunk.getMesh());
+		}
 		Renderer::EndScene();
 		Renderer::window.SwapBuffers();
 

@@ -1,6 +1,6 @@
 #pragma once
-#include "Buffers.h"
 #include <glad/glad.h>
+#include "Buffers.h"
 #include <memory>
 class VertexArray {
 public:

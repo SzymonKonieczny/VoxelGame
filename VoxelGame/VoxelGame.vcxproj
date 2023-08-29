@@ -159,6 +159,9 @@
     <ClCompile Include="Game\Game.cpp" />
     <ClCompile Include="Game\Input.cpp" />
     <ClCompile Include="Game\Player.cpp" />
+    <ClCompile Include="Game\TerrainGeneratorTest.cpp" />
+    <ClCompile Include="Game\Util.cpp" />
+    <ClCompile Include="Game\World.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="libraries\include\stb\stb_image.cpp" />
     <ClCompile Include="main.cpp" />
@@ -174,6 +177,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Chunk.h" />
+    <ClInclude Include="Game\ChunkCol.h" />
     <ClInclude Include="Game\ChunkManager.h" />
     <ClInclude Include="Game\FaceBuilder.h" />
     <ClInclude Include="Game\Game.h" />
@@ -181,6 +185,8 @@
     <ClInclude Include="Game\Input.h" />
     <ClInclude Include="Game\ITerrainGenerator.h" />
     <ClInclude Include="Game\Player.h" />
+    <ClInclude Include="Game\TerrainGeneratorTest.h" />
+    <ClInclude Include="Game\Util.h" />
     <ClInclude Include="Game\World.h" />
     <ClInclude Include="libraries\include\stb\stb_image.h" />
     <ClInclude Include="Renderer\Buffers.h" />

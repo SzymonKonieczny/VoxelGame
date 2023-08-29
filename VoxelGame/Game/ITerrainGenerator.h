@@ -1,6 +1,7 @@
 #pragma once
 #include "Global.h"
-class IWorldGenerator {
+#include "ChunkCol.h"
+class ITerrainGenerator {
 public:
-	int i = ChunkSize;
+	virtual void generateTerrain(Chunk& chunk)=0;
 };
