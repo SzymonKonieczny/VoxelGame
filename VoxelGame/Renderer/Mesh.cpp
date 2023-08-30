@@ -11,7 +11,6 @@ Mesh::Mesh(MeshType type)
 		m_VertexArray->SetIndexBuffer(new IndexBuffer());
 	}
 
-
 	//DEBUG STUFF
 	//NrOfMeshes += 1;
 	//std::cout << "Mesh constructed "<< NrOfMeshes <<"\n";
@@ -35,12 +34,26 @@ void Mesh::Bind()
 {
 	m_VertexArray->Bind();
 	m_Shader->Bind();
-	if (hasTexture) m_Texture->Bind();
+	if (hasTexture)
+	{
+		for (auto& pair : m_Textures)
+		{
+			glActiveTexture(GL_TEXTURE0 + pair.first);
+			pair.second->Bind();
+		}
+	}
+
 
 
 	//Very bad for performance, very temporary
 	//Do it so that it only updates them if theres been a change to the Verticies vector
 	UpdateObjectsOnGPU();
+}
+
+void Mesh::SetTexture(unsigned int slot, Texture* texture)
+{
+	if (m_Textures.contains(slot)) m_Textures[slot].reset(texture);
+	else m_Textures.insert({ slot, std::shared_ptr<Texture>(texture) });
 }
 
 void Mesh::UpdateObjectsOnGPU()

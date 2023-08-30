@@ -19,7 +19,7 @@ Chunk::Chunk(glm::ivec3 pos) : m_ChunkPos(pos)
 		pos.y * Game::CHUNK_SIZE, pos.z * Game::CHUNK_SIZE)));
 
 
-	m_ChunkSolidMesh.SetTexture(Game::BlockTextureAtlas);
+	m_ChunkSolidMesh.SetTexture(0,Game::BlockTextureAtlas);
 	m_ChunkSolidMesh.hasTexture = true;
 
 }

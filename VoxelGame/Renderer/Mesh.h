@@ -22,8 +22,8 @@ public:
 
 	unsigned int getCount();
 	void Bind();
-	void SetTexture(Texture* texture) { m_Texture.reset(texture); };
-	void SetTexture(std::shared_ptr<Texture> texture) { m_Texture = texture; };
+	void SetTexture(unsigned int slot, Texture* texture);
+	void SetTexture(unsigned int slot, std::shared_ptr<Texture> texture) { m_Textures[slot] = texture; };
 	void UpdateObjectsOnGPU();
 	void SetShader( Shader* shader) { m_Shader.reset(shader); };
 	void SetShader(std::shared_ptr<Shader>& shader) { m_Shader = shader; };
@@ -39,7 +39,7 @@ private:
 	std::map<std::string, Uniform> UniformData;
 	std::shared_ptr < VertexArray> m_VertexArray;
 	std::shared_ptr<Shader> m_Shader;
-	std::shared_ptr<Texture> m_Texture;
+	std::map<int, std::shared_ptr<Texture>> m_Textures;
 	MeshType m_Type;
 	static  int NrOfMeshes;
 };
