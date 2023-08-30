@@ -3,44 +3,8 @@
 Window Renderer::window; //constructor static call
 glm::mat4 Renderer::ViewProjectionMatrix;
 std::list<Mesh*> Renderer::Meshes;
-/*Framebuffer Renderer::frame({800, 800});
-Mesh ScreenQuad;
-
-std::string vertSrc = R"(
-#version 330 core
-
-layout (location = 0) in vec2 inPos;
-layout (location = 1) in vec2 inTexCoords;
-
-out vec2 texCoords;
-
-void main()
-{
-    gl_Position = vec4(inPos.x, inPos.y, 0.0, 1.0); 
-    texCoords = inTexCoords;
-}  )";
-std::string fragSrc = R"(
-#version 330 core
-
-out vec4 FragColor;
-in vec2 texCoords;
-
-uniform sampler2D screenTexture;
-
-
-void main()
-{
-    vec3 color = vec3(0.0f);
-    FragColor = vec4(color, 1.0f);
-})";
-BufferLayout ScreenShaderLayout = {
-	{ShaderDataType::Float2, "inPos"},
-	{ShaderDataType::Float2, "inTexCoords"}
-};
-
-Shader ScreenShader(vertSrc, fragSrc);
-*/
-
+std::unique_ptr<Framebuffer> frame;//(FramebufferOptions(screenWidth,screenHeight )); //Width, Height
+std::unique_ptr < Mesh> ScreenQuad;
 void Renderer::Init()
 {
 	window.Init();
@@ -48,8 +12,11 @@ void Renderer::Init()
 	glfwSetWindowSizeCallback(window.GetHandle(), OnWindowResize);
 	RendererCommand::SetViewport(0, 0, screenWidth,screenHeight);
 
-	/*ScreenQuad.GetVertexArray().SetVertexBuffer(new VertexBuffer());
-	ScreenQuad.Verticies = {
+	frame.reset(new Framebuffer(FramebufferOptions(screenWidth, screenHeight)));
+	ScreenQuad.reset(new Mesh);
+
+	ScreenQuad->GetVertexArray().SetVertexBuffer(new VertexBuffer());
+	ScreenQuad->Verticies = {
 		// Coords    // texCoords
 		 1.0f, -1.0f,  1.0f, 0.0f,
 		-1.0f, -1.0f,  0.0f, 0.0f,
@@ -59,12 +26,13 @@ void Renderer::Init()
 		 1.0f, -1.0f,  1.0f, 0.0f,
 		-1.0f,  1.0f,  0.0f, 1.0f
 	};
-	ScreenQuad.GetVertexArray().SetLayout(ScreenShaderLayout);
-	ScreenQuad.UpdateGLObjs();
-	
-	ScreenShader.Bind();
-	GLuint textureSamplerLoc = ScreenShader.GetUniformLocation("screenTexture");
-	glUniform1i(textureSamplerLoc, 0);*/
+
+	ScreenQuad->GetVertexArray().SetLayout(BufferLayout({ { ShaderDataType::Float2,"Coords"},{ShaderDataType::Float2,"texCoords" }}));
+	ScreenQuad->UpdateObjectsOnGPU();
+	ScreenQuad->SetShader(new Shader("Game/Shaders/ScreenQuadShader.vert", "Game/Shaders/ScreenQuadShader.frag"));
+	ScreenQuad->AddUniform("screenTexture", UniformType::Int);  
+	ScreenQuad->updateUniform("screenTexture", 0);
+
 
 }
 
@@ -90,10 +58,10 @@ void Renderer::BeginScene(Camera& camera) // argument : vec<ligtsources>
 
 void Renderer::EndScene()
 {
+	frame->Bind();
 	glEnable(GL_DEPTH_TEST);
 	glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	//frame.Bind();
 	for (auto& m : Meshes)
 	{
 		m->Bind();
@@ -111,6 +79,17 @@ void Renderer::EndScene()
 		}
 	}
 	
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	glDisable(GL_DEPTH_TEST);
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	ScreenQuad->Bind();
+	frame->BindColorTexture();
+	ScreenQuad->PreDraw();
+	RendererCommand::DrawNotIndexed(*ScreenQuad);
+
 	Meshes.clear();
 
 

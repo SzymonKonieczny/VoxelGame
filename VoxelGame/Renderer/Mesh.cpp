@@ -1,5 +1,6 @@
 #include "Mesh.h"
 #include <iostream>
+ int Mesh::NrOfMeshes = 0;
 Mesh::Mesh(MeshType type)
 {
 	m_VertexArray.reset(new VertexArray());
@@ -9,7 +10,11 @@ Mesh::Mesh(MeshType type)
 	{
 		m_VertexArray->SetIndexBuffer(new IndexBuffer());
 	}
-	std::cout << "Mesh constructed\n";
+
+
+	//DEBUG STUFF
+	//NrOfMeshes += 1;
+	//std::cout << "Mesh constructed "<< NrOfMeshes <<"\n";
 }
 
 unsigned int Mesh::getCount()
@@ -104,6 +109,5 @@ void Mesh::UploadAllUniforms()
 
 bool Mesh::hasUniform(std::string name)
 {
-	
-	return UniformData.contains(name);;
+	return UniformData.contains(name);
 }

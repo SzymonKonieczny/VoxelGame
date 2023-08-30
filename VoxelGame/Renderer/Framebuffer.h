@@ -11,6 +11,7 @@ public:
 
 	void SetFramebufferOptions();
 	void Bind();
+	void BindColorTexture();
 	unsigned int getColorTex() { return ColorTex; }
 	unsigned int getDepthStencilTex() { return DepthStencilTex; }
 

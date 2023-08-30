@@ -1,6 +1,7 @@
 #pragma once
 #include "Chunk.h"
 #include "TerrainGeneratorTest.h"
+#include <list>
 class ChunkManager{
 public:
 	ChunkManager(): Generator(new TerrainGeneratorTest()) 
@@ -12,7 +13,7 @@ public:
 		for (int i = 0; i < 10; i++)
 			for (int k = 0; k < 10; k++)
 			{
-				TestChunks.push_back(Chunk({ i, 0, k }));
+				TestChunks.emplace_back(glm::ivec3( i, 0, k ));
 			}
 		for (auto& chunk : TestChunks)
 		{
@@ -20,7 +21,7 @@ public:
 			chunk.GenerateMesh();
 		}
 	}
-	std::vector<Chunk> TestChunks;
+	std::list<Chunk> TestChunks;
 	ITerrainGenerator* Generator;
-	std::vector<Chunk>& getChunks() { return TestChunks; }
+	std::list<Chunk>& getChunks() { return TestChunks; }
 };

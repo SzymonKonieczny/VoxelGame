@@ -14,7 +14,7 @@ class Mesh
 {
 public:
 	Mesh(MeshType type = MeshType::Unindexed);
-	//~Mesh() { std::cout << "Deleting Mesh\n"; }
+	//~Mesh() {NrOfMeshes-=1; }
 	MeshType getType() { return m_Type; }
 	VertexArray& GetVertexArray() { return *m_VertexArray.get(); }
 	std::shared_ptr<Shader>& getShader() { return m_Shader; }
@@ -41,4 +41,5 @@ private:
 	std::shared_ptr<Shader> m_Shader;
 	std::shared_ptr<Texture> m_Texture;
 	MeshType m_Type;
+	static  int NrOfMeshes;
 };
