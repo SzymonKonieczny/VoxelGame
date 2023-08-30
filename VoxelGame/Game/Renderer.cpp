@@ -5,6 +5,8 @@ glm::mat4 Renderer::ViewProjectionMatrix;
 std::list<Mesh*> Renderer::Meshes;
 std::unique_ptr<Framebuffer> frame;//(FramebufferOptions(screenWidth,screenHeight )); //Width, Height
 std::unique_ptr < Mesh> ScreenQuad;
+std::unique_ptr<Framebuffer> ShadowMap;//(FramebufferOptions(screenWidth,screenHeight )); //Width, Height
+int ShadowMapRes = 1024;
 void Renderer::Init()
 {
 	window.Init();
@@ -13,6 +15,8 @@ void Renderer::Init()
 	RendererCommand::SetViewport(0, 0, screenWidth,screenHeight);
 
 	frame.reset(new Framebuffer(FramebufferOptions(screenWidth, screenHeight)));
+	ShadowMap.reset(new Framebuffer(FramebufferOptions(screenWidth, screenHeight,false)));
+
 	ScreenQuad.reset(new Mesh);
 
 	ScreenQuad->GetVertexArray().SetVertexBuffer(new VertexBuffer());
@@ -31,6 +35,10 @@ void Renderer::Init()
 	ScreenQuad->UpdateObjectsOnGPU();
 	ScreenQuad->SetShader(new Shader("Game/Shaders/ScreenQuadShader.vert", "Game/Shaders/ScreenQuadShader.frag"));
 	ScreenQuad->AddUniform("screenTexture", UniformType::Int);  
+	ScreenQuad->AddUniform("depthTexture", UniformType::Int);
+
+	ScreenQuad->AddUniform("lightSpaceMatrix", UniformType::Mat4);
+
 	ScreenQuad->updateUniform("screenTexture", 0);
 
 
