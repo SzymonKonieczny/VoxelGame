@@ -5,6 +5,7 @@
 #include<glm/gtc/type_ptr.hpp>
 #include<glm/gtx/rotate_vector.hpp>
 #include<glm/gtx/vector_angle.hpp>
+#include <iostream>
 Player::Player() : Pos(0,5,6), Rot(0,-0.6,-1), velocity(0,0,0)
 {
 
@@ -24,7 +25,11 @@ void Player::Update(float dt)
 
 void Player::Move(float dt)
 {
-	
+	if (Input::isPressed(GLFW_KEY_P))
+	{
+		std::cout << "Pos : " << Pos.x << ' ' << Pos.y << ' ' << Pos.z << "Rot :" << Rot.x << ' ' << Rot.y << ' ' << Rot.z << '\n';
+	}
+
 	if (Input::isPressed(GLFW_KEY_W))
 	{
 		velocity += speed * Rot *dt;

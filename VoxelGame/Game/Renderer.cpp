@@ -80,8 +80,8 @@ void Renderer::EndScene()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.1f, 100.0f);
-	glm::mat4 lightView = glm::lookAt(/*CameraPos + */ glm::vec3(-5.f, 50.0f, 0.f),
-		glm::vec3(0.f, 0.0f, 0.f),
+	glm::mat4 lightView = glm::lookAt(/*CameraPos + */ glm::vec3(-60.f, 21.0f, -5.f),
+		glm::vec3(1.f, -1.0f, 1.f),
 		glm::vec3(0.0f, 1.0f, 0.0f));
 	glm::mat4 lightSpaceMatrix = lightProjection * lightView;
 
@@ -131,7 +131,8 @@ void Renderer::EndScene()
 
 	ScreenQuad->Bind();
 	frame->BindColorTexture();
-	//ShadowMap->BindDepthTexture();
+	glActiveTexture(GL_TEXTURE1);
+	ShadowMap->BindDepthTexture();
 	ScreenQuad->PreDraw();
 	RendererCommand::DrawNotIndexed(*ScreenQuad);
 
