@@ -74,8 +74,11 @@ void Renderer::BeginScene(Camera& camera) // argument : vec<ligtsources>
 void Renderer::EndScene()
 {
 	ShadowMap->Bind();
+	glEnable(GL_DEPTH_TEST);
+
 	glViewport(0, 0, ShadowMapRes, ShadowMapRes);// Shadow render pass
-	glClear(GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.1f, 100.0f);
 	glm::mat4 lightView = glm::lookAt(/*CameraPos + */ glm::vec3(-5.f, 50.0f, 0.f),
 		glm::vec3(0.f, 0.0f, 0.f),
@@ -101,7 +104,6 @@ void Renderer::EndScene()
 
 	frame->Bind();
 	glViewport(0, 0, screenWidth, screenHeight); // Normal render pass
-	glEnable(GL_DEPTH_TEST);
 	glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	for (auto& m : Meshes)
