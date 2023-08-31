@@ -27,6 +27,9 @@ public:
 	static Window window;
 	
 	static glm::mat4 ViewProjectionMatrix;
+	static glm::vec3 CameraPos;
+	static glm::vec3 CameraRot;
+
 private:
 	static std::list<Mesh*> Meshes;
 

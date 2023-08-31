@@ -8,7 +8,7 @@ void TerrainGeneratorTest::generateTerrain(Chunk& chunk)
 			for (int x = 0; x < ChunkSize; x++)
 			{
 
-				chunk.blocks.push_back(Util::random(1,7));
+				chunk.blocks.push_back(Util::random(0,4));
 			}
 	}
 }

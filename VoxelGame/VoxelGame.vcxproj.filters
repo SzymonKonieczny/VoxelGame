@@ -151,5 +151,7 @@
     <None Include="Game\Shaders\ChunkShader.frag" />
     <None Include="Game\Shaders\ScreenQuadShader.vert" />
     <None Include="Game\Shaders\ScreenQuadShader.frag" />
+    <None Include="Game\Shaders\ShadowPass.vert" />
+    <None Include="Game\Shaders\ShadowPass.frag" />
   </ItemGroup>
 </Project>
