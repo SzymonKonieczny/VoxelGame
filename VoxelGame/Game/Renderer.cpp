@@ -80,9 +80,16 @@ void Renderer::EndScene()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.1f, 100.0f);
-	glm::mat4 lightView = glm::lookAt(/*CameraPos + */ glm::vec3(41.f, 63.0f, -17.f), //position
-		glm::vec3(41.f, 63.0f, -17.f)+ glm::vec3(0.1962f, -0.68f, 0.92f), //position + direction
-		glm::vec3(0.0f, 1.0f, 0.0f));
+
+		/*glm::mat4 lightView = glm::lookAt(glm::vec3(-60.f, 21.0f, -5.f),
+		glm::vec3(1.f, -1.0f, 1.f),
+		glm::vec3(0.0f, 1.0f, 0.0f));*/
+
+	//glm::mat4 lightProjection = glm::perspective(glm::radians(90.f),1.f,0.1f,1000.f);
+
+		glm::mat4 lightView = glm::lookAt(glm::vec3(0.5f, 20.0f, 0.8f), //position
+	glm::vec3(0.5f, 20.0f, 0.8f)+ glm::vec3(0.8f, -0.4f, 0.75f), //position + direction
+	glm::vec3(0.0f, 1.0f, 0.0f)); //41.f, 63.0f, -17.f
 	glm::mat4 lightSpaceMatrix = lightProjection * lightView;
 
 	for (auto& m : Meshes)
