@@ -78,7 +78,7 @@ void Renderer::EndScene()
 
 	glViewport(0, 0, ShadowMapRes, ShadowMapRes);// Shadow render pass
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+	glm::vec3 lightPos = glm::vec3(0.5f, 20.0f, 0.8f);
 	glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.1f, 100.0f);
 
 		/*glm::mat4 lightView = glm::lookAt(glm::vec3(-60.f, 21.0f, -5.f),
@@ -87,7 +87,7 @@ void Renderer::EndScene()
 
 	//glm::mat4 lightProjection = glm::perspective(glm::radians(90.f),1.f,0.1f,1000.f);
 
-		glm::mat4 lightView = glm::lookAt(glm::vec3(0.5f, 20.0f, 0.8f), //position
+		glm::mat4 lightView = glm::lookAt(lightPos, //position
 	glm::vec3(0.5f, 20.0f, 0.8f)+ glm::vec3(0.8f, -0.4f, 0.75f), //position + direction
 	glm::vec3(0.0f, 1.0f, 0.0f)); //41.f, 63.0f, -17.f
 	glm::mat4 lightSpaceMatrix = lightProjection * lightView;
@@ -123,6 +123,11 @@ void Renderer::EndScene()
 		m->Bind();
 		if (m->hasUniform("viewProjMatrix")) m->updateUniform("viewProjMatrix", ViewProjectionMatrix);
 		if (m->hasUniform("shadowDepthTexture")) m->updateUniform("shadowDepthTexture", 7);
+		if (m->hasUniform("lightSpaceMatrix")) m->updateUniform("lightSpaceMatrix", lightSpaceMatrix);
+
+		if (m->hasUniform("viewPos")) m->updateUniform("viewPos", CameraPos);
+		if (m->hasUniform("lightPos")) m->updateUniform("lightPos", lightPos);
+
 
 		m->PreDraw();
 		switch (m->getType())

@@ -2,26 +2,29 @@
 out vec4 FragColor;
 in vec3 Col;
 in vec2 TexCoord;
+
+in vec4  FragPosLightSpace;
+
 uniform sampler2D tex0;
 uniform sampler2D shadowDepthTexture;
-
+float CalculateShadow(vec4 fragPosLightSpace)
+{
+   // perform perspective divide
+    vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
+	projCoords = projCoords * 0.5 + 0.5; 
+	float closestDepth = texture(shadowDepthTexture, projCoords.xy).r;   
+	float currentDepth = projCoords.z;  
+	//float bias = max(0.05 * (1.0 - dot(normal, lightDir)), 0.005);
+	float bias = 0.005;
+	float shadow = currentDepth -bias> closestDepth  ? 1.0 : 0.5;  
+	return shadow;
+}
 void main()
 {	
-	vec4 pixel1;
-	vec4 pixel2;
 	vec4 pixel;
 
-	 pixel1 = texture(tex0 , TexCoord);
-	 pixel2 = texture(shadowDepthTexture , TexCoord);
-	 pixel = (pixel1+pixel2)/2;
-//	if(pixel.w < 0.1) discard;
-	FragColor = vec4( vec4(Col, 1.0f)*pixel );
-
-	//FragColor = vec4((color, 1.0f)*  pixel);
-
-
-
-
+	 pixel = texture(tex0 , TexCoord);
+	FragColor = vec4( vec4(Col, 1.0f)*pixel * CalculateShadow( FragPosLightSpace));
 	
 
 }
