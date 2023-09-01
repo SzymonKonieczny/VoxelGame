@@ -13,6 +13,11 @@ Chunk::Chunk(glm::ivec3 pos) : m_ChunkPos(pos)
 	m_ChunkSolidMesh.AddUniform("modelMatrix", UniformType::Mat4);
 	m_ChunkSolidMesh.AddUniform("viewProjMatrix", UniformType::Mat4);
 	m_ChunkSolidMesh.AddUniform("tex0", UniformType::Int);
+	m_ChunkSolidMesh.AddUniform("shadowDepthTexture", UniformType::Int);
+
+
+
+	m_ChunkSolidMesh.updateUniform("shadowDepthTexture", 7); //7 7th texture is reserved for the shadowmap
 
 	m_ChunkSolidMesh.updateUniform("tex0", 0);
 	m_ChunkSolidMesh.updateUniform("modelMatrix", glm::translate(glm::mat4(1.0), glm::vec3(pos.x * Game::CHUNK_SIZE,

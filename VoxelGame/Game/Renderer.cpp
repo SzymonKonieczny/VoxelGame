@@ -80,8 +80,8 @@ void Renderer::EndScene()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.1f, 100.0f);
-	glm::mat4 lightView = glm::lookAt(/*CameraPos + */ glm::vec3(-60.f, 21.0f, -5.f),
-		glm::vec3(1.f, -1.0f, 1.f),
+	glm::mat4 lightView = glm::lookAt(/*CameraPos + */ glm::vec3(41.f, 63.0f, -17.f), //position
+		glm::vec3(41.f, 63.0f, -17.f)+ glm::vec3(0.1962f, -0.68f, 0.92f), //position + direction
 		glm::vec3(0.0f, 1.0f, 0.0f));
 	glm::mat4 lightSpaceMatrix = lightProjection * lightView;
 
@@ -89,6 +89,7 @@ void Renderer::EndScene()
 	{
 		m->Bind();
 		if (m->hasUniform("viewProjMatrix")) m->updateUniform("viewProjMatrix", lightSpaceMatrix);
+
 		m->PreDraw();
 		switch (m->getType())
 		{
@@ -106,10 +107,16 @@ void Renderer::EndScene()
 	glViewport(0, 0, screenWidth, screenHeight); // Normal render pass
 	glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glActiveTexture(GL_TEXTURE7);	//ShadowMap uploading 
+	ShadowMap->BindDepthTexture();
+
 	for (auto& m : Meshes)
 	{
 		m->Bind();
 		if (m->hasUniform("viewProjMatrix")) m->updateUniform("viewProjMatrix", ViewProjectionMatrix);
+		if (m->hasUniform("shadowDepthTexture")) m->updateUniform("shadowDepthTexture", 7);
+
 		m->PreDraw();
 		switch (m->getType())
 		{
@@ -131,8 +138,7 @@ void Renderer::EndScene()
 
 	ScreenQuad->Bind();
 	frame->BindColorTexture();
-	glActiveTexture(GL_TEXTURE1);
-	ShadowMap->BindDepthTexture();
+
 	ScreenQuad->PreDraw();
 	RendererCommand::DrawNotIndexed(*ScreenQuad);
 
