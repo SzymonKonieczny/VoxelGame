@@ -178,6 +178,7 @@
     <ClCompile Include="Renderer\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Action.h" />
     <ClInclude Include="Game\BlockInfo.h" />
     <ClInclude Include="Game\Chunk.h" />
     <ClInclude Include="Game\ChunkColumn.h" />

@@ -2,6 +2,7 @@
 #include "Util.h"
 void TerrainGeneratorTest::generateTerrain(Chunk& chunk)
 {
+	chunk.setIsGenerated(false);
 
 	int index = 0;
 	if (chunk.m_ChunkPos.y != 0) {
@@ -21,6 +22,6 @@ void TerrainGeneratorTest::generateTerrain(Chunk& chunk)
 				}
 		}
 	}
-
+	chunk.setIsGenerated(true);
 
 }

@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "World.h"	
 #include "BlockInfo.h"
+#include "Action.h"
 class Game
 {
 public:

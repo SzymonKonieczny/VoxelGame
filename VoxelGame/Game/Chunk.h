@@ -20,11 +20,14 @@ public:
 	
 	std::vector<unsigned int> blocks;
 	static std::shared_ptr<Shader>  ChunkSolidShader;
+	void setIsGenerated(bool flag) { isGenerated = flag; }
 private:
 	bool isValidPosition(glm::vec3 pos);
 	bool isSolidBlock(glm::vec3 pos);
 	bool hasTransparentBlocks = false;
 	bool isGenerated = false;
+	bool isMeshed = false;
+
 	Mesh m_ChunkSolidMesh;
 
 };

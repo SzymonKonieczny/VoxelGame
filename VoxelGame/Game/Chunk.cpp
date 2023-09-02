@@ -38,6 +38,8 @@ Chunk::Chunk(glm::ivec3 pos) : m_ChunkPos(pos)
 
 void Chunk::GenerateMesh()
 {
+
+	isMeshed = false;
 	blocks[0] = 0;
 	for (int i = 0; i < blocks.size(); i++)
 	{
@@ -61,6 +63,7 @@ void Chunk::GenerateMesh()
 	}
 
 	m_ChunkSolidMesh.UpdateObjectsOnGPU();
+	isMeshed = true;
 }
 
 bool Chunk::isValidPosition(glm::vec3 pos)

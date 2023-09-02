@@ -1,5 +1,6 @@
 #pragma once
 #include "../Renderer/Camera.h"
+#include "Action.h"
 
 class Player {
 
@@ -21,5 +22,7 @@ private:
 	float BlocksCooldown = 0.1;
 	float drag = 0.2f;
 	glm::vec3 velocity;
+	std::queue<Action> actionQueue;
+
 
 };
