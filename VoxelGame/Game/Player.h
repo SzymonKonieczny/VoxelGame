@@ -8,6 +8,7 @@ public:
 	void Update(float dt);
 	void Move(float dt);
 	Camera& getCamera() { return cam; }
+	const glm::vec3& getPositon() { return Pos; };
 private:
 	void handleRotation();
 	Camera cam;

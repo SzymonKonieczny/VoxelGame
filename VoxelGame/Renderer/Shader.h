@@ -2,7 +2,7 @@
 #include <string>
 #include <glad/glad.h>
 #include <vector>
-#include <map>
+#include <unordered_map>
 #include <glm/glm.hpp>
 enum class UniformType {
 	Int,Float,Float2,Float3,Float4,Mat4
@@ -51,6 +51,8 @@ public:
 private:
 	unsigned int m_ID;
 	std::string get_file_contents(const char* filename);
+	std::unordered_map<std::string, unsigned int> UniformLocations;
+
 	
 
 };

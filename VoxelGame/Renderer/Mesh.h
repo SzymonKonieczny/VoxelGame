@@ -3,6 +3,7 @@
 #include "Shader.h"
 #include "Texture.h"
 #include <glm/glm.hpp>
+#include <unordered_map>
 #include <vector>
 #include <iostream>
 #include <memory>
@@ -18,7 +19,7 @@ public:
 	MeshType getType() { return m_Type; }
 	VertexArray& GetVertexArray() { return *m_VertexArray.get(); }
 	std::shared_ptr<Shader>& getShader() { return m_Shader; }
-	std::map<std::string, Uniform>& GetUniformData() { return UniformData; }
+	std::unordered_map<std::string, Uniform>& GetUniformData() { return UniformData; }
 
 	unsigned int getCount();
 	void Bind();
@@ -36,10 +37,11 @@ public:
 	std::vector<float> Verticies;
 	std::vector<unsigned int> Indicies;
 private:
-	std::map<std::string, Uniform> UniformData;
+	std::unordered_map<std::string, Uniform> UniformData;
 	std::shared_ptr < VertexArray> m_VertexArray;
 	std::shared_ptr<Shader> m_Shader;
-	std::map<int, std::shared_ptr<Texture>> m_Textures;
+	std::unordered_map<int, std::shared_ptr<Texture>> m_Textures;
+
 	MeshType m_Type;
 	static  int NrOfMeshes;
 };

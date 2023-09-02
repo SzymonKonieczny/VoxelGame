@@ -100,7 +100,18 @@ void Shader::Unbind()
 
 unsigned int Shader::GetUniformLocation(std::string Name)
 {
-	return glGetUniformLocation(m_ID, Name.c_str());
+
+	return glGetUniformLocation(m_ID, Name.c_str()); //Apparenrly just this is faster than what i tried below, for now ill let it stay 
+	if (UniformLocations.contains(Name))
+	{
+		return UniformLocations.at(Name);
+	}
+	else
+	{
+		unsigned int location = glGetUniformLocation(m_ID, Name.c_str());
+		UniformLocations.insert({ Name,location });
+		return location;
+	}
 }
 
 void Shader::UploadUniformMat4(std::string name, glm::mat4& value)

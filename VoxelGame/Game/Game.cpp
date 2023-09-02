@@ -1,3 +1,4 @@
+
 #include "Game.h"
 #include "Input.h"
 
@@ -12,15 +13,15 @@ void Game::Init()
 	BlockTextureAtlas.reset(new Texture("Game/Textures/Atlas.png"));
 	Chunk::ChunkSolidShader.reset(new Shader("Game/Shaders/ChunkShader.vert", "Game/Shaders/ChunkShader.frag"));
 
-	
 }
 
 void Game::Start()
 {
 	
 
+	FillBlockTable();
 
-	world.chunkManager.GenWorld();
+	//world.chunkManager.GenWorld();
 	double previousTime = glfwGetTime();
 	double deltaTime;
 	double currentTime = 0;
@@ -37,17 +38,57 @@ void Game::Start()
 		}
 
 		player.Update(deltaTime);
+		world.chunkManager.UpdateLoadedChunkMap({ player.getPositon().x/ChunkSize, player.getPositon().z / ChunkSize });
+
 		Renderer::BeginScene(player.getCamera());
-		for (auto& chunk : world.chunkManager.getChunks())
-		{
-			Renderer::Submit(chunk.getMesh());
-		}
+
+		RenderWorld(world);
+
 		Renderer::EndScene();
 		Renderer::window.SwapBuffers();
 
 		Renderer::window.PullEvents();
 	}
 
+}
+
+void Game::RenderWorld(World& world)
+{
+	for (auto& chunkCol : world.chunkManager.getChunks())
+	{
+		if (isChunkColumnInFrustum(chunkCol.second))
+		{
+			for (auto& chunk : chunkCol.second.m_Chunks) {
+				Renderer::Submit(chunk.getMesh());
+			}
+		}
+
+	}
+}
+
+
+
+bool Game::isChunkColumnInFrustum(ChunkColumn& col)
+{
+	glm::vec2 playerPos(player.getPositon().x/ChunkSize, player.getPositon().z/ ChunkSize);//first check if in render distance, later actual frustum
+	glm::vec2 colPos(col.m_Position.x, col.m_Position.y);
+	if(RenderDistance > glm::distance(colPos, playerPos))return true; //fcked up logic but it works xd
+	else return false;
+
+}
+
+void Game::FillBlockTable()
+{
+
+	BlockTable.push_back(BlockInfo({ 0.8f,0.f }, true, false)); //AIR
+	BlockTable.push_back(BlockInfo({ 0.f,0.f }, false, true)); //Grass
+	BlockTable.push_back(BlockInfo({ 0.2f,0.f }, false, true)); //Ore
+	BlockTable.push_back(BlockInfo({ 0.4f,0.f }, false, true)); //Stone
+	BlockTable.push_back(BlockInfo({ 0.6f,0.f }, false, true)); //Dirt
+	BlockTable.push_back(BlockInfo({ 0.8f,0.f }, false, true)); //Wood
+
+
+	
 }
 
 void Game::Update(float dt)

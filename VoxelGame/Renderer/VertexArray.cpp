@@ -138,6 +138,7 @@ void VertexArray::SetIndexBuffer(IndexBuffer* indexBuffer)
 }
 void VertexArray::UpdateVertexData(float* vertices, unsigned int size)
 {
+	Bind();
 	m_Vertexbuffer->UpdateVerticies(vertices, size);
 }
 

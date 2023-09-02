@@ -1,8 +1,10 @@
+
 #include "Chunk.h"
 #include "Game.h"
 std::shared_ptr<Shader>  Chunk::ChunkSolidShader;
 Chunk::Chunk(glm::ivec3 pos) : m_ChunkPos(pos)
 {
+	blocks.resize(ChunkSize* ChunkSize* ChunkSize);
 	BufferLayout ChunkSolidLayout = {
 		{ShaderDataType::Float3,"aPos"},
 		{ShaderDataType::Float2,"aTexCoord"},
@@ -15,6 +17,9 @@ Chunk::Chunk(glm::ivec3 pos) : m_ChunkPos(pos)
 	m_ChunkSolidMesh.AddUniform("tex0", UniformType::Int);
 	m_ChunkSolidMesh.AddUniform("shadowDepthTexture", UniformType::Int);
 	m_ChunkSolidMesh.AddUniform("ViewPos", UniformType::Float3);
+	m_ChunkSolidMesh.AddUniform("lightPos", UniformType::Float3);
+
+	
 	m_ChunkSolidMesh.AddUniform("lightSpaceMatrix", UniformType::Mat4);
 
 
@@ -22,8 +27,8 @@ Chunk::Chunk(glm::ivec3 pos) : m_ChunkPos(pos)
 	m_ChunkSolidMesh.updateUniform("shadowDepthTexture", 7); //7 7th texture is reserved for the shadowmap
 
 	m_ChunkSolidMesh.updateUniform("tex0", 0);
-	m_ChunkSolidMesh.updateUniform("modelMatrix", glm::translate(glm::mat4(1.0), glm::vec3(pos.x * Game::CHUNK_SIZE,
-		pos.y * Game::CHUNK_SIZE, pos.z * Game::CHUNK_SIZE)));
+	m_ChunkSolidMesh.updateUniform("modelMatrix", glm::translate(glm::mat4(1.0), glm::vec3(pos.x * ChunkSize,
+		pos.y * ChunkSize, pos.z * ChunkSize)));
 
 
 	m_ChunkSolidMesh.SetTexture(0,Game::BlockTextureAtlas);
@@ -31,13 +36,40 @@ Chunk::Chunk(glm::ivec3 pos) : m_ChunkPos(pos)
 
 }
 
+void Chunk::GenerateMesh()
+{
+	blocks[0] = 0;
+	for (int i = 0; i < blocks.size(); i++)
+	{
+
+		const BlockInfo& blockInfo = BlockTable[blocks[i]];
+		if (blockInfo.isTransparent) continue;
+		glm::vec3 pos = Util::IndexToVec3(i);
+		if (!isSolidBlock(pos + glm::vec3(1.f, 0.f, 0.f)))
+			FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::EAST, blockInfo.UV);
+		if (!isSolidBlock(pos + glm::vec3(-1.f, 0.f, 0.f)))
+			FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::WEST, blockInfo.UV);
+		if (!isSolidBlock(pos + glm::vec3(0.f, 0.f, -1.f)))
+			FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::SOUTH, blockInfo.UV);
+		if (!isSolidBlock(pos + glm::vec3(0.f, 0.f, 1.f)))
+			FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::NORTH, blockInfo.UV);
+		if (!isSolidBlock(pos + glm::vec3(0.f, 1.f, 0.f)))
+			FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::UP, blockInfo.UV);
+		if (!isSolidBlock(pos + glm::vec3(0.f, -1.f, 0.f)))
+			FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::DOWN, blockInfo.UV);
+
+	}
+
+	m_ChunkSolidMesh.UpdateObjectsOnGPU();
+}
+
 bool Chunk::isValidPosition(glm::vec3 pos)
 {
 
-	if (Vec3ToIndex(pos) >= blocks.size() || Vec3ToIndex(pos) < 0) return false;
-	if (pos.x < 0 || pos.x >= Game::CHUNK_SIZE) return false;
-	if (pos.y < 0 || pos.y >= Game::CHUNK_SIZE) return false;
-	if (pos.z < 0 || pos.z >= Game::CHUNK_SIZE) return false;
+	if (Util::Vec3ToIndex(pos) >= blocks.size() || Util::Vec3ToIndex(pos) < 0) return false;
+	if (pos.x < 0 || pos.x >= ChunkSize) return false;
+	if (pos.y < 0 || pos.y >= ChunkSize) return false;
+	if (pos.z < 0 || pos.z >= ChunkSize) return false;
 
 	return true;
 }
@@ -45,35 +77,9 @@ bool Chunk::isValidPosition(glm::vec3 pos)
 bool Chunk::isSolidBlock(glm::vec3 pos)
 {
 	if (!isValidPosition(pos)) return false;
-	//std::cout << Vec3ToIndex(pos) << "\n";
-	return true;// (blocks[Vec3ToIndex(pos)] == 1);
+	
+	const BlockInfo& info = BlockTable[blocks[Util::Vec3ToIndex(pos)]];
+	return info.isSold;
 }
 
-glm::vec3 Chunk::IndexToVec3(int i)
-{
-	//order is as follows
-	/*
-	^
-	|
-  z	|
-	|ChunkSize+1,ChunkSize+2 ...
-	|0,1,2,3,4,5, ... ChunkSize
-	---------------->
-		x
 
-	*/
-	int remainder = 0;
-	int y = i / (Game::CHUNK_SIZE* Game::CHUNK_SIZE);
-	remainder = i% (Game::CHUNK_SIZE * Game::CHUNK_SIZE);
-	int z = remainder / ( Game::CHUNK_SIZE);
-	remainder = remainder % (Game::CHUNK_SIZE);
-
-	int x = remainder;
-
-	return glm::vec3(x,y,z);
-}
-
-int Chunk::Vec3ToIndex(glm::vec3 pos)
-{ 
-	return Game::CHUNK_SIZE * Game::CHUNK_SIZE * pos.y + Game::CHUNK_SIZE * pos.z + pos.x;
-}

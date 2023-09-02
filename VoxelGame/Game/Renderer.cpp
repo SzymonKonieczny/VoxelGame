@@ -96,6 +96,8 @@ void Renderer::EndScene()
 	{
 		m->Bind();
 		if (m->hasUniform("viewProjMatrix")) m->updateUniform("viewProjMatrix", lightSpaceMatrix);
+		//if (m->hasUniform("modelMatrix")) m->updateUniform("modelMatrix", m->GetUniformData()["modelMatrix"].data);
+
 
 		m->PreDraw();
 		switch (m->getType())
@@ -117,17 +119,20 @@ void Renderer::EndScene()
 
 	glActiveTexture(GL_TEXTURE7);	//ShadowMap uploading 
 	ShadowMap->BindDepthTexture();
-
+	//int MeshesSize = 0;
 	for (auto& m : Meshes)
 	{
+		//MeshesSize += 1;
+
+
 		m->Bind();
 		if (m->hasUniform("viewProjMatrix")) m->updateUniform("viewProjMatrix", ViewProjectionMatrix);
 		if (m->hasUniform("shadowDepthTexture")) m->updateUniform("shadowDepthTexture", 7);
 		if (m->hasUniform("lightSpaceMatrix")) m->updateUniform("lightSpaceMatrix", lightSpaceMatrix);
 
-	//	if (m->hasUniform("viewPos")) m->updateUniform("viewPos", CameraPos);
-	//	if (m->hasUniform("lightPos")) m->updateUniform("lightPos", lightPos);
-
+		if (m->hasUniform("viewPos")) m->updateUniform("viewPos", CameraPos);
+		if (m->hasUniform("lightPos")) m->updateUniform("lightPos", lightPos);
+			
 
 		m->PreDraw();
 		switch (m->getType())
@@ -141,7 +146,7 @@ void Renderer::EndScene()
 			break;
 		}
 	}
-	
+	//std::cout << MeshesSize << "  meshes rendered this frame \n";
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	glDisable(GL_DEPTH_TEST);

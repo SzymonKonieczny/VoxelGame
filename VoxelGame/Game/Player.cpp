@@ -32,7 +32,7 @@ void Player::Move(float dt)
 
 	if (Input::isPressed(GLFW_KEY_W))
 	{
-		velocity += speed * Rot *dt;
+		velocity += speed * glm::normalize(glm::vec3(Rot.x,0, Rot.z)) *dt;
 	}
 	if (Input::isPressed(GLFW_KEY_A))
 	{
@@ -40,7 +40,7 @@ void Player::Move(float dt)
 	}
 	if (Input::isPressed(GLFW_KEY_S))
 	{
-		velocity += speed * dt * -Rot;
+		velocity += speed * dt * -glm::normalize(glm::vec3(Rot.x, 0, Rot.z));
 	}
 	if (Input::isPressed(GLFW_KEY_D))
 	{

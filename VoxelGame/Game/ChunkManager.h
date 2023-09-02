@@ -1,7 +1,9 @@
 #pragma once
-#include "Chunk.h"
+#include "ChunkColumn.h"
 #include "TerrainGeneratorTest.h"
-#include <list>
+#include <map>
+#include <glm/gtx/hash.hpp>
+#include <queue>
 class ChunkManager{
 public:
 	ChunkManager(): Generator(new TerrainGeneratorTest()) 
@@ -9,19 +11,11 @@ public:
 		
 	
 	}
-	void GenWorld() {
-		for (int i = 0; i < 10; i++)
-			for (int k = 0; k < 10; k++)
-			{
-				TestChunks.emplace_back(glm::ivec3( i, 0, k ));
-			}
-		for (auto& chunk : TestChunks)
-		{
-			Generator->generateTerrain(chunk);
-			chunk.GenerateMesh();
-		}
-	}
-	std::list<Chunk> TestChunks;
-	ITerrainGenerator* Generator;
-	std::list<Chunk>& getChunks() { return TestChunks; }
+	
+	void GenerateChunksFromQueue(int amount);
+	void UpdateLoadedChunkMap(glm::vec2 CenterPoint);
+	std::unordered_map<glm::ivec2,ChunkColumn> ChunkMap;
+	std::queue<glm::ivec2> ChunksGenerationQueue;
+	std::unique_ptr<ITerrainGenerator> Generator;
+	std::unordered_map<glm::ivec2, ChunkColumn>& getChunks() { return ChunkMap; }
 };
