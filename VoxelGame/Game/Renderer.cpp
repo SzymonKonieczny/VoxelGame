@@ -92,25 +92,25 @@ void Renderer::EndScene()
 	glm::vec3(0.0f, 1.0f, 0.0f)); //41.f, 63.0f, -17.f
 	glm::mat4 lightSpaceMatrix = lightProjection * lightView;
 
-	for (auto& m : Meshes)
-	{
-		m->Bind();
-		if (m->hasUniform("viewProjMatrix")) m->updateUniform("viewProjMatrix", lightSpaceMatrix);
-		//if (m->hasUniform("modelMatrix")) m->updateUniform("modelMatrix", m->GetUniformData()["modelMatrix"].data);
-
-
-		m->PreDraw();
-		switch (m->getType())
-		{
-		case MeshType::Indexed:
-			RendererCommand::DrawIndexed(*m);
-			break;
-		case MeshType::Unindexed:
-
-			RendererCommand::DrawNotIndexed(*m);
-			break;
-		}
-	}
+	//for (auto& m : Meshes)
+	//{
+	//	m->Bind();
+	//	if (m->hasUniform("viewProjMatrix")) m->updateUniform("viewProjMatrix", lightSpaceMatrix);
+	//	if (m->hasUniform("modelMatrix")) m->updateUniform("modelMatrix", m->GetUniformData()["modelMatrix"].data);
+	//
+	//
+	//	m->PreDraw();
+	//	switch (m->getType())
+	//	{
+	//	case MeshType::Indexed:
+	//		RendererCommand::DrawIndexed(*m);
+	//		break;
+	//	case MeshType::Unindexed:
+	//
+	//		RendererCommand::DrawNotIndexed(*m);
+	//		break;
+	//	}
+	//}
 
 	frame->Bind();
 	glViewport(0, 0, screenWidth, screenHeight); // Normal render pass
@@ -122,9 +122,6 @@ void Renderer::EndScene()
 	//int MeshesSize = 0;
 	for (auto& m : Meshes)
 	{
-		//MeshesSize += 1;
-
-
 		m->Bind();
 		if (m->hasUniform("viewProjMatrix")) m->updateUniform("viewProjMatrix", ViewProjectionMatrix);
 		if (m->hasUniform("shadowDepthTexture")) m->updateUniform("shadowDepthTexture", 7);
@@ -132,9 +129,27 @@ void Renderer::EndScene()
 
 		if (m->hasUniform("viewPos")) m->updateUniform("viewPos", CameraPos);
 		if (m->hasUniform("lightPos")) m->updateUniform("lightPos", lightPos);
-			
-
 		m->PreDraw();
+		break;
+	}
+	for (auto& m : Meshes)
+	{
+		//MeshesSize += 1;
+
+		
+		m->Bind();
+		//if (m->hasUniform("viewProjMatrix")) m->updateUniform("viewProjMatrix", ViewProjectionMatrix);
+		//if (m->hasUniform("shadowDepthTexture")) m->updateUniform("shadowDepthTexture", 7);
+		//if (m->hasUniform("lightSpaceMatrix")) m->updateUniform("lightSpaceMatrix", lightSpaceMatrix);
+		//
+		//if (m->hasUniform("viewPos")) m->updateUniform("viewPos", CameraPos);
+		//if (m->hasUniform("lightPos")) m->updateUniform("lightPos", lightPos);
+			
+		if (m->hasUniform("modelMatrix")) m->updateUniform("modelMatrix", m->GetUniformData()["modelMatrix"].data);
+		
+		m->uploadSingleUniform("modelMatrix");
+		
+		//m->PreDraw();
 		switch (m->getType())
 		{
 		case MeshType::Indexed:

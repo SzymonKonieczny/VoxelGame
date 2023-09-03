@@ -32,6 +32,7 @@ public:
 	void AddUniform(std::string name, UniformType type);
 	void updateUniform(std::string name, UniformDataUnion data);
 	void UploadAllUniforms();
+	void uploadSingleUniform(std::string name);
 	bool hasUniform(std::string name);
 	bool hasTexture = false;
 	std::vector<float> Verticies;

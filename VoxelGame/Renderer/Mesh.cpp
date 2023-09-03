@@ -32,8 +32,8 @@ unsigned int Mesh::getCount()
 
 void Mesh::Bind()
 {
-	m_VertexArray->Bind();
 	m_Shader->Bind();
+	m_VertexArray->Bind();
 	if (hasTexture)
 	{
 		for (auto& pair : m_Textures)
@@ -86,38 +86,74 @@ void Mesh::UploadAllUniforms()
 		//#ifdef DEBUG
 		//		//if (!uniform.second.dataInitialized) std::cout << "DebugInfo: Uniform " << uniform.second.name << " was nerver assigned";
 		//#endif // DEBUG
+		uploadSingleUniform(uniform.first);
+		//auto& data = UniformData[uniform.second.name].data;
+		//switch (uniform.second.type)
+		//{
+		//case UniformType::Int:
+		//	m_Shader->UploadUniformInt(uniform.second.name, data.Int1);
+		//
+		//	break;
+		//case UniformType::Float:
+		//	m_Shader->UploadUniformFloat(uniform.second.name, data.Float1);
+		//	break;
+		//case UniformType::Float2:
+		//	m_Shader->UploadUniformFloat2(uniform.second.name, data.Float2);
+		//
+		//	break;
+		//case UniformType::Float3:
+		//	m_Shader->UploadUniformFloat3(uniform.second.name, data.Float3);
+		//
+		//	break;
+		//case UniformType::Float4:
+		//	m_Shader->UploadUniformFloat4(uniform.second.name, data.Float4);
+		//
+		//	break;
+		//case UniformType::Mat4:
+		//	m_Shader->UploadUniformMat4(uniform.second.name, data.Mat4);
+		//
+		//	break;
+		//default:
+		//	std::cout << "Using a Uniform type for which uploading wasnt yet implemented. Uniform name :" << uniform.second.name << "\n";
+		//
+		//	break;
+		//}
+	}
+}
 
-		auto& data = UniformData[uniform.second.name].data;
-		switch (uniform.second.type)
-		{
-		case UniformType::Int:
-			m_Shader->UploadUniformInt(uniform.second.name, data.Int1);
+void Mesh::uploadSingleUniform(std::string name)
+{
+	auto& uniform = UniformData[name];
+	auto& data = uniform.data;
+	switch (uniform.type)
+	{
+	case UniformType::Int:
+		m_Shader->UploadUniformInt(uniform.name, data.Int1);
 
-			break;
-		case UniformType::Float:
-			m_Shader->UploadUniformFloat(uniform.second.name, data.Float1);
-			break;
-		case UniformType::Float2:
-			m_Shader->UploadUniformFloat2(uniform.second.name, data.Float2);
+		break;
+	case UniformType::Float:
+		m_Shader->UploadUniformFloat(uniform.name, data.Float1);
+		break;
+	case UniformType::Float2:
+		m_Shader->UploadUniformFloat2(uniform.name, data.Float2);
 
-			break;
-		case UniformType::Float3:
-			m_Shader->UploadUniformFloat3(uniform.second.name, data.Float3);
+		break;
+	case UniformType::Float3:
+		m_Shader->UploadUniformFloat3(uniform.name, data.Float3);
 
-			break;
-		case UniformType::Float4:
-			m_Shader->UploadUniformFloat4(uniform.second.name, data.Float4);
+		break;
+	case UniformType::Float4:
+		m_Shader->UploadUniformFloat4(uniform.name, data.Float4);
 
-			break;
-		case UniformType::Mat4:
-			m_Shader->UploadUniformMat4(uniform.second.name, data.Mat4);
+		break;
+	case UniformType::Mat4:
+		m_Shader->UploadUniformMat4(uniform.name, data.Mat4);
 
-			break;
-		default:
-			std::cout << "Using a Uniform type for which uploading wasnt yet implemented. Uniform name :" << uniform.second.name << "\n";
+		break;
+	default:
+		std::cout << "Using a Uniform type for which uploading wasnt yet implemented. Uniform name :" << uniform.name << "\n";
 
-			break;
-		}
+		break;
 	}
 }
 
