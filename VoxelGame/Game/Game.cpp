@@ -59,7 +59,7 @@ void Game::RenderWorld(World& world)
 		if (isChunkColumnInFrustum(chunkCol.second))
 		{
 			for (auto& chunk : chunkCol.second.m_Chunks) {
-				Renderer::Submit(chunk.getMesh());
+				Renderer::Submit(chunk->getMesh());
 			}
 		}
 

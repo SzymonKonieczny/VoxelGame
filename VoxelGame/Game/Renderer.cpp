@@ -135,8 +135,7 @@ void Renderer::EndScene()
 	for (auto& m : Meshes)
 	{
 		//MeshesSize += 1;
-
-		
+		if (!m->getReadyForDraw()) continue;
 		m->Bind();
 		//if (m->hasUniform("viewProjMatrix")) m->updateUniform("viewProjMatrix", ViewProjectionMatrix);
 		//if (m->hasUniform("shadowDepthTexture")) m->updateUniform("shadowDepthTexture", 7);
@@ -161,7 +160,6 @@ void Renderer::EndScene()
 			break;
 		}
 	}
-	//std::cout << MeshesSize << "  meshes rendered this frame \n";
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	glDisable(GL_DEPTH_TEST);
@@ -181,5 +179,5 @@ void Renderer::EndScene()
 
 void Renderer::Submit(Mesh& m)
 {
-	Meshes.push_back(&m);
+	Meshes.push_back(&m); //Break it up to ChunkMeshes, and other meshes to keep  i made optimalizations later on
 }

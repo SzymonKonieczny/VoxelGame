@@ -1,25 +1,77 @@
 #include "ChunkManager.h"
 #include "Input.h"
-void ChunkManager::GenerateChunksFromQueue(int amount)
+void ChunkManager::GenerateChunksFromQueue(int amount )
 {
-	for (int i = 0; i < amount; i++)
+	std::list<glm::ivec2> PosList;
+	for (int i = 0; i<amount;i++)
 	{
 		if (ChunksGenerationQueue.empty()) break;
-		glm::ivec2 Pos = ChunksGenerationQueue.front();
-		if (!ChunkMap.contains(Pos)) {
-			ChunksGenerationQueue.pop();
-
-			continue;
-		}
-		ChunkColumn& col = ChunkMap.at(Pos);
-			ChunksGenerationQueue.pop();
-		for (auto& chunk : col.m_Chunks) {
-			Generator->generateTerrain(chunk);
-			chunk.GenerateMesh();
-		}
+		PosList.push_back(ChunksGenerationQueue.front());
+		ChunksGenerationQueue.pop();
 	}
+#if 0 //async chunk gen off
+	std::thread ChunkGenerationThread(&ChunkManager::AsyncGenerateChunks, this, PosList, std::ref(isChunkGenerationThreadDone));
+	ChunkGenerationThread.join();
+
+#else
+	AsyncGenerateChunks(PosList, std::ref(isChunkGenerationThreadDone));
+#endif	
 }
 
+void ChunkManager::MeshChunksFromQueue(int amount)
+{
+	std::list<glm::ivec2> PosList;
+	for (int i = 0; i < amount; i++)
+	{
+		if (ChunksMeshingQueue.empty()) break;
+		PosList.push_back(ChunksMeshingQueue.front());
+		ChunksMeshingQueue.pop();
+	}
+
+#if 0 //async chunk meshing off
+	std::thread ChunkGenerationThread(&ChunkManager::AsyncGenerateChunks, this, PosList, std::ref(isChunkGenerationThreadDone));
+	ChunkGenerationThread.join();
+
+#else
+	AsyncMeshChunks(PosList, std::ref(isChunkGenerationThreadDone));
+#endif	
+}
+
+void ChunkManager::AsyncGenerateChunks(std::list<glm::ivec2> List, bool& isChunkGenerationThreadDoneFlag)
+{
+	isChunkGenerationThreadDoneFlag = false;
+	for (auto& Pos : List)
+	{
+		if (ChunkMap.contains(Pos)) {
+			ChunkColumn& col = ChunkMap.at(Pos);
+			for (auto& chunk : col.m_Chunks) {
+			
+				Generator->generateTerrain(chunk);
+				ChunksMeshingQueue.push(Pos);
+				//chunk->GenerateMesh();
+			}
+		}
+	}
+
+	isChunkGenerationThreadDoneFlag = true;
+}
+void ChunkManager::AsyncMeshChunks(std::list<glm::ivec2> List, bool& isChunkMeshThreadDoneFlag)
+{
+	isChunkMeshThreadDoneFlag = false;
+	for (auto& Pos : List)
+	{
+		if (ChunkMap.contains(Pos)) {
+			ChunkColumn& col = ChunkMap.at(Pos);
+			for (auto& chunk : col.m_Chunks) {
+
+				//Generator->generateTerrain(chunk);
+				chunk->GenerateMesh();
+			}
+		}
+	}
+
+	isChunkMeshThreadDoneFlag = true;
+}
 void ChunkManager::UpdateLoadedChunkMap(glm::vec2 CenterPoint)
 {
 	int minX = CenterPoint.x - RenderDistance;
@@ -38,11 +90,16 @@ void ChunkManager::UpdateLoadedChunkMap(glm::vec2 CenterPoint)
 
 			}
 			else {
-				ChunkMap.insert({ glm::ivec2(x, z), ChunkColumn(glm::ivec2(x, z)) });
+				ChunkMap.emplace( glm::ivec2(x, z), ChunkColumn(glm::ivec2(x, z)) );
 				ChunksGenerationQueue.push(glm::ivec2(x, z));
 			}
 		}
 	}
+	//Remove outside (renderdistance + a little bit)
+	minX  -= RenderDistance ;//*0.5;
+	minZ  -= RenderDistance ;//* 0.5;
+	maxX  += RenderDistance ;//* 0.5;
+	maxZ  += RenderDistance ;//* 0.5;
 
 	for (auto it = ChunkMap.begin(); it!= ChunkMap.end();)
 	{
@@ -53,14 +110,12 @@ void ChunkManager::UpdateLoadedChunkMap(glm::vec2 CenterPoint)
 		}
 		else it++;
 	}
+//	GenerateChunksFromQueue(1);
 
-	GenerateChunksFromQueue(1);
-if (Input::isPressed(GLFW_KEY_1))
-	{
-		std::cout << ChunkMap.size() << "ChunkMap size \n";
-		for (auto it : ChunkMap)
-		{
-			std::cout << "ChunkPos : " << it.first.x << ' ' << it.first.y << '\n';
-		}
+	if (isChunkGenerationThreadDone) {
+	
+		isChunkGenerationThreadDone = false;
+		GenerateChunksFromQueue(1);
 	}
+	MeshChunksFromQueue(1);
 }

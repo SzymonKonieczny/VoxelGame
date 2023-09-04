@@ -25,7 +25,7 @@ unsigned int Mesh::getCount()
 		break;
 	case MeshType::Unindexed:
 		int test = m_VertexArray->GetLayout().GetStride()/sizeof(float);
-		return Verticies.size() / test;
+		return VerticiesSize / test;
 		break;
 	}
 }
@@ -59,7 +59,9 @@ void Mesh::SetTexture(unsigned int slot, Texture* texture)
 void Mesh::UpdateObjectsOnGPU()
 {
 	m_VertexArray->UpdateVertexData(Verticies.data(), Verticies.size() * sizeof(float));
-	//Verticies.clear();
+	VerticiesSize = Verticies.size();
+	glFlush();
+	Verticies.clear();
 }
 
 void Mesh::PreDraw()

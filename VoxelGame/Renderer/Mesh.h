@@ -29,6 +29,8 @@ public:
 	void SetShader( Shader* shader) { m_Shader.reset(shader); };
 	void SetShader(std::shared_ptr<Shader>& shader) { m_Shader = shader; };
 	 void PreDraw();
+	 bool getReadyForDraw() { return readyForDraw; }
+	 void setReadyForDraw(bool flag) { readyForDraw = flag; }
 	void AddUniform(std::string name, UniformType type);
 	void updateUniform(std::string name, UniformDataUnion data);
 	void UploadAllUniforms();
@@ -38,11 +40,12 @@ public:
 	std::vector<float> Verticies;
 	std::vector<unsigned int> Indicies;
 private:
+	unsigned int VerticiesSize=0; //VERTICIES ON THE GPU!!!!!!!!! The local vector can be cleared for memory
 	std::unordered_map<std::string, Uniform> UniformData;
 	std::shared_ptr < VertexArray> m_VertexArray;
 	std::shared_ptr<Shader> m_Shader;
 	std::unordered_map<int, std::shared_ptr<Texture>> m_Textures;
-
+	bool readyForDraw = true;
 	MeshType m_Type;
 	static  int NrOfMeshes;
 };
