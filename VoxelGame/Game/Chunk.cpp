@@ -19,11 +19,12 @@ Chunk::Chunk(glm::ivec3 pos) : m_ChunkPos(pos)
 	m_ChunkSolidMesh.AddUniform("viewProjMatrix", UniformType::Mat4);
 	m_ChunkSolidMesh.AddUniform("tex0", UniformType::Int);
 	m_ChunkSolidMesh.AddUniform("shadowDepthTexture", UniformType::Int);
-	m_ChunkSolidMesh.AddUniform("ViewPos", UniformType::Float3);
-	m_ChunkSolidMesh.AddUniform("lightPos", UniformType::Float3);
+	m_ChunkSolidMesh.AddUniform("lightSpaceMatrix", UniformType::Mat4);
+	
+	//m_ChunkSolidMesh.AddUniform("ViewPos", UniformType::Float3);
+	//m_ChunkSolidMesh.AddUniform("lightPos", UniformType::Float3);
 
 	
-	m_ChunkSolidMesh.AddUniform("lightSpaceMatrix", UniformType::Mat4);
 
 
 

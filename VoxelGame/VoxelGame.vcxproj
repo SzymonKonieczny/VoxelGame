@@ -189,6 +189,7 @@
     <ClInclude Include="Game\Input.h" />
     <ClInclude Include="Game\ITerrainGenerator.h" />
     <ClInclude Include="Game\Player.h" />
+    <ClInclude Include="Game\PointCollider.h" />
     <ClInclude Include="Game\TerrainGeneratorTest.h" />
     <ClInclude Include="Game\Util.h" />
     <ClInclude Include="Game\World.h" />

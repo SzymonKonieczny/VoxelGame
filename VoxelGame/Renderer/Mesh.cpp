@@ -60,7 +60,7 @@ void Mesh::UpdateObjectsOnGPU()
 {
 	m_VertexArray->UpdateVertexData(Verticies.data(), Verticies.size() * sizeof(float));
 	VerticiesSize = Verticies.size();
-	glFlush();
+	//glFlush();
 	Verticies.clear();
 }
 
