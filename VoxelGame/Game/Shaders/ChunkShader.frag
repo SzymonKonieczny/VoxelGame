@@ -22,7 +22,7 @@ float CalculateShadow(vec4 fragPosLightSpace)
 	float closestDepth = texture(shadowDepthTexture, projCoords.xy).r;   
 	float currentDepth = projCoords.z ;//linearizeDepth(projCoords.z,0.1f, 1000.f);  
 	float bias = 0.000;
-	float shadow = currentDepth -bias> closestDepth  ? 1.0 : 0.5;  
+	float shadow = currentDepth -bias> closestDepth  ? 0.5 : 0.0;  
 	return shadow;
 }
 void main()
@@ -30,7 +30,7 @@ void main()
 	vec4 pixel;
 
 	 pixel = texture(tex0 , TexCoord);
-	FragColor = vec4( vec4(Col, 1.0f)*pixel* CalculateShadow( FragPosLightSpace));
+	FragColor = vec4( vec4(Col, 1.0f)*pixel*  (1-CalculateShadow( FragPosLightSpace)));
 	
 
 }
