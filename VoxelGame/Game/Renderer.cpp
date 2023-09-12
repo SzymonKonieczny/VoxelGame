@@ -100,7 +100,7 @@ void Renderer::EndScene()
 		std::cout << "Teleporting the lightsource to player ...\n";
 	}
 
-
+	
 	ShadowPassShader->Bind();
 	ShadowPassShader->UploadUniformMat4("lightSpaceMatrix", lightSpaceMatrix);
 
@@ -122,7 +122,7 @@ void Renderer::EndScene()
 			break;
 		}
 	}
-
+	
 	frame->Bind();
 	glViewport(0, 0, screenWidth, screenHeight); // Normal render pass
 	glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
@@ -156,7 +156,7 @@ void Renderer::EndScene()
 		//if (m->hasUniform("viewPos")) m->updateUniform("viewPos", CameraPos);
 		//if (m->hasUniform("lightPos")) m->updateUniform("lightPos", lightPos);
 			
-		if (m->hasUniform("modelMatrix")) m->updateUniform("modelMatrix", m->GetUniformData()["modelMatrix"].data);
+		// if (m->hasUniform("modelMatrix")) m->updateUniform("modelMatrix", m->GetUniformData()["modelMatrix"].data);
 		
 		m->uploadSingleUniform("modelMatrix");
 

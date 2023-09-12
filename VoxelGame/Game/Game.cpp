@@ -25,7 +25,7 @@ void Game::Start()
 	double previousTime = glfwGetTime();
 	double deltaTime;
 	double currentTime = 0;
-	//glfwSwapInterval(0);
+	glfwSwapInterval(0);
 	while (!glfwWindowShouldClose(Renderer::window.GetHandle()))
 	{
 		currentTime = glfwGetTime();

@@ -6,7 +6,8 @@ void TerrainGeneratorTest::generateTerrain(std::shared_ptr<Chunk> chunk)
 	chunk->setIsGenerated(false);
 
 	int index = 0;
-	if (chunk->m_ChunkPos.y != 0) {
+	if (chunk->m_ChunkPos.y > 2/* != 0*/) {
+		/*
 		for(int i =0;i<ChunkSize;i++)
 		chunk->blocks[Util::Vec3ToIndex({7.f,i,7.f})] = (Util::random(1, 4));
 		for (int y = 0; y < Util::random(6, 13); y++)
@@ -17,7 +18,7 @@ void TerrainGeneratorTest::generateTerrain(std::shared_ptr<Chunk> chunk)
 					chunk->blocks[index] = (Util::random(1, 4));
 					index++;
 				}
-		}
+		}*/
 	}
 	else
 	{

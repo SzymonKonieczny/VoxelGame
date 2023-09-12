@@ -22,6 +22,6 @@ private:
 	bool isChunkColumnInFrustum(ChunkColumn& col);
 	void FillBlockTable();
 	World world;
-	Player player;
+	Player player; //put into World
 	void Update(float dt);
 };
