@@ -37,10 +37,8 @@ void Game::Start()
 			glfwSetWindowTitle(Renderer::window.GetHandle(), newTitle.c_str());
 		}
 
-		player.Update(deltaTime);
-		world.chunkManager.UpdateLoadedChunkMap({ player.getPositon().x/ChunkSize, player.getPositon().z / ChunkSize });
-
-		Renderer::BeginScene(player.getCamera());
+		Update(deltaTime);
+		Renderer::BeginScene(world.player.getCamera());
 
 		RenderWorld(world);
 
@@ -70,7 +68,7 @@ void Game::RenderWorld(World& world)
 
 bool Game::isChunkColumnInFrustum(ChunkColumn& col)
 {
-	glm::vec2 playerPos(player.getPositon().x/ChunkSize, player.getPositon().z/ ChunkSize);//first check if in render distance, later actual frustum
+	glm::vec2 playerPos(world.player.getPositon().x/ChunkSize, world.player.getPositon().z/ ChunkSize);//first check if in render distance, later actual frustum
 	glm::vec2 colPos(col.m_Position.x, col.m_Position.y);
 	if(RenderDistance > glm::distance(colPos, playerPos))return true; //fcked up logic but it works xd
 	else return false;
@@ -91,7 +89,7 @@ void Game::FillBlockTable()
 	
 }
 
-void Game::Update(float dt)
+void Game::Update(double dt)
 {
-	player.Update(dt);
+	world.TickWorld(dt);
 }

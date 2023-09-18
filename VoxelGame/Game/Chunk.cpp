@@ -67,6 +67,7 @@ void Chunk::GenerateMesh()
 
 	m_ChunkSolidMesh.UpdateObjectsOnGPU();
 	setIsMeshed(true);
+	setIsDirty(false);
 	MeshMutex.unlock();
 
 

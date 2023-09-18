@@ -24,6 +24,8 @@ public:
 	bool isChunkMeshThreadDone=true;
 
 	void UpdateLoadedChunkMap(glm::vec2 CenterPoint);
+	void AddToMeshQueue(glm::ivec2 Coord);
+
 	std::unordered_map<glm::ivec2,ChunkColumn> ChunkMap;
 	std::queue<glm::ivec2> ChunksGenerationQueue;
 	std::queue<glm::ivec2> ChunksMeshingQueue;

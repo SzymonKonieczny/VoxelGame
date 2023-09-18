@@ -4,7 +4,7 @@
 #include "Chunk.h"
 #include "../Renderer/Window.h"
 #include "Renderer.h"
-#include "Player.h"
+
 #include "World.h"	
 #include "BlockInfo.h"
 #include "Action.h"
@@ -22,6 +22,6 @@ private:
 	bool isChunkColumnInFrustum(ChunkColumn& col);
 	void FillBlockTable();
 	World world;
-	Player player; //put into World
-	void Update(float dt);
+
+	void Update(double dt);
 };

@@ -64,7 +64,6 @@ void ChunkManager::AsyncMeshChunks(std::list<glm::ivec2> List, bool& isChunkMesh
 			ChunkColumn& col = ChunkMap.at(Pos);
 			for (auto& chunk : col.m_Chunks) {
 
-				//Generator->generateTerrain(chunk);
 				chunk->GenerateMesh();
 			}
 		}
@@ -118,4 +117,9 @@ void ChunkManager::UpdateLoadedChunkMap(glm::vec2 CenterPoint)
 		GenerateChunksFromQueue(1);
 	}
 	MeshChunksFromQueue(1);
+}
+
+void ChunkManager::AddToMeshQueue(glm::ivec2 Coord)
+{
+	ChunksMeshingQueue.push(Coord);
 }
