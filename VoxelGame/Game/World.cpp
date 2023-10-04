@@ -23,15 +23,26 @@ void World::HandleActionQueue()
 	Action action = player.GetAction();
 	switch (action.type) {
 		case ActionType::Break:
+		{
 			RayInfo info = Ray::Cast(action.Coordinates, action.Direction, chunkManager, action.Range, RayType::BLOCK_RAY);
 			if (!info.Miss)
 			{
 
 				SetBlockOnPosition(info.HitPos, BlockName::Air);
-				std::cout << " Raycast hit at :"  << info.HitPos.x << ' ' << info.HitPos.y << ' ' << info.HitPos.z << '\n';
 
 			}
+		}
+		break;
+		case ActionType::Place:
+		{
+			RayInfo info = Ray::Cast(action.Coordinates, action.Direction, chunkManager, action.Range, RayType::BLOCK_RAY);
+			if (!info.Miss)
+			{
 
+				SetBlockOnPosition(info.HitFromPos, action.blockName);
+
+			}
+		}
 		break;
 	}
 }

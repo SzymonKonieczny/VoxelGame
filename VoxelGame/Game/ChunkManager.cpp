@@ -3,7 +3,7 @@
 void ChunkManager::SetBlockAtPosition(glm::vec3 Position, BlockName name)
 {
 	glm::vec3 ChunkPos = Util::WorldPosToChunkPos(Position);
-	if (ChunkPos.y < 0) { std::cout << "Trying to set block in a ChunkPos.y <0 @ ChunkManager::SetBlockAtPosition \n";  return; }
+	if (ChunkPos.y < 0 || ChunkPos.y >= ChunksInColumn) { std::cout << "Trying to set block in a ChunkPos.y <0 OR ChunkPos.y >= ChunksInColumn@ ChunkManager::SetBlockAtPosition \n";  return; }
 
 	glm::ivec2 ColumnPos = { ChunkPos.x,ChunkPos.z };
 	if (ChunkMap.contains(ColumnPos))

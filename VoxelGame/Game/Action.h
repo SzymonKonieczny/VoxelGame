@@ -1,5 +1,6 @@
 #pragma once
 #include <glm/glm.hpp>
+#include "BlockInfo.h"
 enum class ActionType {
 	None, Break, Place
 };
@@ -8,6 +9,7 @@ struct Action{
 	//	glm::vec3 Direction = { 0,0,0 }, float Range = 0.f)
 
 	ActionType type;
+	BlockName blockName;
 	glm::vec3 Coordinates;
 	glm::vec3 Direction;
 	float Range;
@@ -25,5 +27,14 @@ public:
 		a.Range = Range;
 		return a;
 	}
+	static Action PlaceAction(glm::vec3 Coordinates,  glm::vec3 Direction, float Range, BlockName blockName) {
+		Action a;
+		a.blockName = blockName;
 
+		a.Coordinates = Coordinates;
+		a.Direction = Direction;
+		a.type = ActionType::Place;
+		a.Range = Range;
+		return a;
+	}
 };

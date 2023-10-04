@@ -8,7 +8,7 @@ public:
 	{
 
 		glm::vec3 ChunkPos = Util::WorldPosToChunkPos(Pos);
-		if (ChunkPos.y < 0) return false;
+		if (ChunkPos.y < 0 || ChunkPos.y >= ChunksInColumn) return false;
 		glm::ivec2 ColumnPos = { ChunkPos.x,ChunkPos.z };
 		if (World.ChunkMap.contains(ColumnPos))
 		{

@@ -2,6 +2,7 @@
 #include "../Renderer/Camera.h"
 #include "Action.h"
 #include "PointCollider.h"
+#include "BlockInfo.h"
 #include <queue>
 class Player {
 

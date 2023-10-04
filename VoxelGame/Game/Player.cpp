@@ -6,7 +6,7 @@
 #include<glm/gtx/rotate_vector.hpp>
 #include<glm/gtx/vector_angle.hpp>
 #include <iostream>
-Player::Player() : Pos(0,5,6), Rot(0,-0.6,-1), velocity(0,0,0)
+Player::Player() : Pos(20,5,20), Rot(0,-0.6,-1), velocity(0,0,10)
 {
 
 }
@@ -76,8 +76,10 @@ void Player::HandleMouseButtons()
 	if (Input::mouseIsPressed(GLFW_MOUSE_BUTTON_LEFT))
 	{
 		actionQueue.push(ActionBuilder::BreakAction(cam.GetPosition(), cam.GetRotation(), 5));
-		std::cout << "Adding Action BREAK cam at:" << cam.GetPosition().x << ' ' << cam.GetPosition().y << ' ' << cam.GetPosition().z << ' '
-			<< "and rot " << cam.GetRotation().x << ' ' << cam.GetRotation().y << ' ' << cam.GetRotation().z << '\n';
+	}
+	else if (Input::mouseIsPressed(GLFW_MOUSE_BUTTON_RIGHT))
+	{
+		actionQueue.push(ActionBuilder::PlaceAction(cam.GetPosition(), cam.GetRotation(), 5, BlockName::Wood));
 	}
 }
 
