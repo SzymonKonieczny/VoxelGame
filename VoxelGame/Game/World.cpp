@@ -2,22 +2,36 @@
 #include "Util.h"
 BlockInfo World::GetBlockOnPosition(glm::vec3 Pos)
 {
-	auto chunk =chunkManager.ChunkMap.at(glm::ivec2(Pos.x / ChunkSize, Pos.z / ChunkSize)).getChunk(Pos.y/ChunkSize);
-	
-	unsigned int ID = chunk->blocks[Util::Vec3ToIndex({ (int)Pos.x % ChunkSize,(int)Pos.y % ChunkSize,(int)Pos.z % ChunkSize })];
-		return BlockTable[ID];
+	return BlockTable[0];
 }
 
-void World::SetBlockOnPosition(glm::vec3 Pos, int ID)
+void World::SetBlockOnPosition(glm::vec3 Pos, BlockName name)
 {
-	auto chunk = chunkManager.ChunkMap.at(glm::ivec2(Pos.x / ChunkSize, Pos.z / ChunkSize)).getChunk(Pos.y / ChunkSize);
-	chunk->blocks[Util::Vec3ToIndex({ (int)Pos.x % ChunkSize,(int)Pos.y % ChunkSize,(int)Pos.z % ChunkSize })] = ID;
-	chunk->setIsDirty(true);
+	chunkManager.SetBlockAtPosition(Pos, name);
 }
 
 void World::TickWorld(double deltaTime)
 {
+	HandleActionQueue();
 	player.Update(deltaTime);
 	chunkManager.UpdateLoadedChunkMap({ player.getPositon().x / ChunkSize, player.getPositon().z / ChunkSize });
 
+}
+
+void World::HandleActionQueue()
+{
+	Action action = player.GetAction();
+	switch (action.type) {
+		case ActionType::Break:
+			RayInfo info = Ray::Cast(action.Coordinates, action.Direction, chunkManager, action.Range, RayType::BLOCK_RAY);
+			if (!info.Miss)
+			{
+
+				SetBlockOnPosition(info.HitPos, BlockName::Air);
+				std::cout << " Raycast hit at :"  << info.HitPos.x << ' ' << info.HitPos.y << ' ' << info.HitPos.z << '\n';
+
+			}
+
+		break;
+	}
 }

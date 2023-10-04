@@ -16,6 +16,7 @@ void Player::Update(float dt)
 
 
 	handleRotation();
+	HandleMouseButtons();
 	Move(dt);
 	
 	cam.SetPosition(Pos);
@@ -68,6 +69,24 @@ void Player::Move(float dt)
 	velocity.x *= drag * dt;
 	velocity.z *= drag * dt;
 	velocity.y *= drag * dt;
+}
+
+void Player::HandleMouseButtons()
+{
+	if (Input::mouseIsPressed(GLFW_MOUSE_BUTTON_LEFT))
+	{
+		actionQueue.push(ActionBuilder::BreakAction(cam.GetPosition(), cam.GetRotation(), 5));
+		std::cout << "Adding Action BREAK cam at:" << cam.GetPosition().x << ' ' << cam.GetPosition().y << ' ' << cam.GetPosition().z << ' '
+			<< "and rot " << cam.GetRotation().x << ' ' << cam.GetRotation().y << ' ' << cam.GetRotation().z << '\n';
+	}
+}
+
+Action Player::GetAction()
+{
+	if (actionQueue.empty()) return Action(ActionType::None);
+	Action ret = actionQueue.front();
+	actionQueue.pop();
+	return ret;
 }
 
 void Player::handleRotation()

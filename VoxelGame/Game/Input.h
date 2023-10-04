@@ -11,6 +11,20 @@ public:
 		}
 		return false;
 	}
+	static bool mouseIsPressed(int GLFW_Key) {
+		if (glfwGetMouseButton(windowptr, GLFW_Key) == GLFW_PRESS)
+		{
+			return true;
+		}
+		return false;
+	}
+	static bool mouseIsReleased(int GLFW_Key) {
+		if (glfwGetMouseButton(windowptr, GLFW_Key) == GLFW_RELEASE)
+		{
+			return true;
+		}
+		return false;
+	}
 	static bool isReleased(int GLFW_Key) {
 		if (glfwGetKey(windowptr, GLFW_Key) == GLFW_RELEASE)
 		{

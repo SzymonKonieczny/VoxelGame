@@ -5,7 +5,7 @@
 #include <glm/gtx/hash.hpp>
 #include <queue>
 #include <thread>
-
+#include "BlockInfo.h"
 class ChunkManager{
 public:
 	ChunkManager(): Generator(new TerrainGeneratorTest()) 
@@ -14,6 +14,8 @@ public:
 	
 	}
 	
+	void SetBlockAtPosition(glm::vec3 Position, BlockName name);
+
 	void GenerateChunksFromQueue(int amount);
 	void MeshChunksFromQueue(int amount);
 

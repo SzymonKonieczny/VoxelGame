@@ -3,11 +3,14 @@
 #include "Action.h"
 #include "BlockInfo.h"
 #include "Player.h"
+#include "Ray.h"
+
 class World {
 public:
 	ChunkManager chunkManager;
 	BlockInfo GetBlockOnPosition(glm::vec3 Pos);
-	void SetBlockOnPosition(glm::vec3 Pos, int ID);
+	void SetBlockOnPosition(glm::vec3 Pos, BlockName name);
 	void TickWorld(double deltaTime);
-	Player player; //put into World
+	void HandleActionQueue();
+	Player player; 
 };

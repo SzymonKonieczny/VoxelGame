@@ -1,5 +1,27 @@
 #include "ChunkManager.h"
 #include "Input.h"
+void ChunkManager::SetBlockAtPosition(glm::vec3 Position, BlockName name)
+{
+	glm::vec3 ChunkPos = Util::WorldPosToChunkPos(Position);
+	if (ChunkPos.y < 0) { std::cout << "Trying to set block in a ChunkPos.y <0 @ ChunkManager::SetBlockAtPosition \n";  return; }
+
+	glm::ivec2 ColumnPos = { ChunkPos.x,ChunkPos.z };
+	if (ChunkMap.contains(ColumnPos))
+	{
+		glm::vec3 LocalPos = Util::WorldPosToLocalPos(Position);
+		auto& column = ChunkMap.at(ColumnPos);
+		auto& chunk = column.getChunk(ChunkPos.y);
+		int index = Util::Vec3ToIndex(LocalPos);
+		if (index < 0) return;
+		chunk->blocks[index] = (unsigned int)name;
+		chunk->setIsDirty(true);
+		ChunksMeshingQueue.push(ColumnPos);
+	}
+	else
+	{
+		// ADD TO BLOCK QUEUE FOR NOT YET CREATED CHUNKS
+	}
+}
 void ChunkManager::GenerateChunksFromQueue(int amount )
 {
 	std::list<glm::ivec2> PosList;

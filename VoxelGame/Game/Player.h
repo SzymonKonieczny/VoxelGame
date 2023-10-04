@@ -1,6 +1,7 @@
 #pragma once
 #include "../Renderer/Camera.h"
 #include "Action.h"
+#include "PointCollider.h"
 #include <queue>
 class Player {
 
@@ -8,8 +9,10 @@ public:
 	Player();
 	void Update(float dt);
 	void Move(float dt);
+	void HandleMouseButtons();
 	Camera& getCamera() { return cam; }
 	const glm::vec3& getPositon() { return Pos; };
+	Action GetAction();
 private:
 	void handleRotation();
 	Camera cam;
