@@ -106,6 +106,9 @@ void Renderer::EndScene()
 
 	for (auto& m : Meshes)
 	{
+		if (m->getCount() == 0) continue;
+		if (!m->getReadyForDraw()) continue;
+
 		m->Bind();
 		ShadowPassShader->Bind();
 		ShadowPassShader->UploadUniformMat4("modelMatrix", m->GetUniformData().at("modelMatrix").data.Mat4);
@@ -132,6 +135,8 @@ void Renderer::EndScene()
 
 	for (auto& m : Meshes)
 	{
+		if (m->getCount() == 0) continue;
+
 		if (!m->getReadyForDraw()) continue;
 
 		m->Bind();

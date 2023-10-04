@@ -75,11 +75,11 @@ void Player::HandleMouseButtons()
 {
 	if (Input::mouseIsPressed(GLFW_MOUSE_BUTTON_LEFT))
 	{
-		actionQueue.push(ActionBuilder::BreakAction(cam.GetPosition(), cam.GetRotation(), 5));
+		actionQueue.push(ActionBuilder::BreakAction(cam.GetPosition(), cam.GetRotation(), 25));
 	}
 	else if (Input::mouseIsPressed(GLFW_MOUSE_BUTTON_RIGHT))
 	{
-		actionQueue.push(ActionBuilder::PlaceAction(cam.GetPosition(), cam.GetRotation(), 5, BlockName::Wood));
+		actionQueue.push(ActionBuilder::PlaceAction(cam.GetPosition(), cam.GetRotation(), 25, BlockName::Wood));
 	}
 }
 
