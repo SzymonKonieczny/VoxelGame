@@ -2,7 +2,7 @@
 #include <vector>
 #include <glm/glm.hpp>
 enum class BlockName {
-	Air, Grass, Stone, Wood
+	Air, Grass, Ore, Stone, Dirt, Wood
 };
 struct BlockInfo {
 	glm::vec2 UV;
