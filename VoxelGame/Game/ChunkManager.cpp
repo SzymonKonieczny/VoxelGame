@@ -32,8 +32,10 @@ void ChunkManager::GenerateChunksFromQueue(int amount )
 		ChunksGenerationQueue.pop();
 	}
 #if 0 //async chunk gen off
+	isChunkGenerationThreadDone = false;
+
 	std::thread ChunkGenerationThread(&ChunkManager::AsyncGenerateChunks, this, PosList, std::ref(isChunkGenerationThreadDone));
-	ChunkGenerationThread.join();
+	//ChunkGenerationThread.join();
 
 #else
 	AsyncGenerateChunks(PosList, std::ref(isChunkGenerationThreadDone));
@@ -42,6 +44,7 @@ void ChunkManager::GenerateChunksFromQueue(int amount )
 
 void ChunkManager::MeshChunksFromQueue(int amount)
 {
+	if (!isChunkMeshThreadDone) return;
 	std::list<glm::ivec2> PosList;
 	for (int i = 0; i < amount; i++)
 	{
@@ -50,18 +53,19 @@ void ChunkManager::MeshChunksFromQueue(int amount)
 		ChunksMeshingQueue.pop();
 	}
 
-#if 0 //async chunk meshing off
-	std::thread ChunkGenerationThread(&ChunkManager::AsyncGenerateChunks, this, PosList, std::ref(isChunkGenerationThreadDone));
-	ChunkGenerationThread.join();
+#if 1 //async chunk meshing off
+	isChunkMeshThreadDone = false;
+	std::thread ChunkMeshThread(&ChunkManager::AsyncMeshChunks, this, PosList, std::ref(isChunkMeshThreadDone));
+	ChunkMeshThread.join();
 
 #else
-	AsyncMeshChunks(PosList, std::ref(isChunkGenerationThreadDone));
+	AsyncMeshChunks(PosList, std::ref(isChunkMeshThreadDone));
 #endif	
 }
 
 void ChunkManager::AsyncGenerateChunks(std::list<glm::ivec2> List, bool& isChunkGenerationThreadDoneFlag)
 {
-	isChunkGenerationThreadDoneFlag = false;
+	//isChunkGenerationThreadDoneFlag = false; Jest robione przed wywolaniem GenerateChunksFromQueue
 	for (auto& Pos : List)
 	{
 		if (ChunkMap.contains(Pos)) {
@@ -70,7 +74,6 @@ void ChunkManager::AsyncGenerateChunks(std::list<glm::ivec2> List, bool& isChunk
 			
 				Generator->generateTerrain(chunk);
 				ChunksMeshingQueue.push(Pos);
-				//chunk->GenerateMesh();
 			}
 		}
 	}
@@ -79,7 +82,7 @@ void ChunkManager::AsyncGenerateChunks(std::list<glm::ivec2> List, bool& isChunk
 }
 void ChunkManager::AsyncMeshChunks(std::list<glm::ivec2> List, bool& isChunkMeshThreadDoneFlag)
 {
-	isChunkMeshThreadDoneFlag = false;
+	//isChunkMeshThreadDoneFlag = false; Jest robione przed wywolaniem MeshChunksFromQueue
 	for (auto& Pos : List)
 	{
 		if (ChunkMap.contains(Pos)) {
@@ -131,14 +134,17 @@ void ChunkManager::UpdateLoadedChunkMap(glm::vec2 CenterPoint)
 		}
 		else it++;
 	}
-//	GenerateChunksFromQueue(1);
 
 	if (isChunkGenerationThreadDone) {
 	
-		isChunkGenerationThreadDone = false;
 		GenerateChunksFromQueue(1);
 	}
-	MeshChunksFromQueue(1);
+	if (isChunkMeshThreadDone) {
+
+
+		MeshChunksFromQueue(5);
+
+	}
 }
 
 void ChunkManager::AddToMeshQueue(glm::ivec2 Coord)
