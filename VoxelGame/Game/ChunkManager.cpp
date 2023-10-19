@@ -15,7 +15,7 @@ void ChunkManager::SetBlockAtPosition(glm::vec3 Position, BlockName name)
 		if (index < 0) return;
 		chunk->blocks[index] = (unsigned int)name;
 		chunk->setIsDirty(true);
-		ChunksMeshingQueue.push(ColumnPos);
+		AddToMeshQueue(ColumnPos);
 	}
 	else
 	{
@@ -31,11 +31,11 @@ void ChunkManager::GenerateChunksFromQueue(int amount )
 		PosList.push_back(ChunksGenerationQueue.front());
 		ChunksGenerationQueue.pop();
 	}
-#if 0 //async chunk gen off
+#if 1 //async chunk gen off
 	isChunkGenerationThreadDone = false;
 
 	std::thread ChunkGenerationThread(&ChunkManager::AsyncGenerateChunks, this, PosList, std::ref(isChunkGenerationThreadDone));
-	//ChunkGenerationThread.join();
+	ChunkGenerationThread.join();
 
 #else
 	AsyncGenerateChunks(PosList, std::ref(isChunkGenerationThreadDone));
@@ -49,14 +49,16 @@ void ChunkManager::MeshChunksFromQueue(int amount)
 	for (int i = 0; i < amount; i++)
 	{
 		if (ChunksMeshingQueue.empty()) break;
-		PosList.push_back(ChunksMeshingQueue.front());
+		glm::ivec2 Pos =ChunksMeshingQueue.front();
+		PosList.push_back(Pos);
+		ChunksInMeshQueue.erase(Pos);
 		ChunksMeshingQueue.pop();
 	}
 
 #if 1 //async chunk meshing off
 	isChunkMeshThreadDone = false;
 	std::thread ChunkMeshThread(&ChunkManager::AsyncMeshChunks, this, PosList, std::ref(isChunkMeshThreadDone));
-	ChunkMeshThread.join();
+	ChunkMeshThread.detach();
 
 #else
 	AsyncMeshChunks(PosList, std::ref(isChunkMeshThreadDone));
@@ -73,8 +75,8 @@ void ChunkManager::AsyncGenerateChunks(std::list<glm::ivec2> List, bool& isChunk
 			for (auto& chunk : col.m_Chunks) {
 			
 				Generator->generateTerrain(chunk);
-				ChunksMeshingQueue.push(Pos);
 			}
+			AddToMeshQueue(Pos);
 		}
 	}
 
@@ -149,5 +151,7 @@ void ChunkManager::UpdateLoadedChunkMap(glm::vec2 CenterPoint)
 
 void ChunkManager::AddToMeshQueue(glm::ivec2 Coord)
 {
+	if (ChunksInMeshQueue.contains(Coord))  return;
 	ChunksMeshingQueue.push(Coord);
+	ChunksInMeshQueue.emplace(Coord);
 }

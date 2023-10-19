@@ -65,7 +65,9 @@ void Chunk::GenerateMesh()
 
 	}
 
-	m_ChunkSolidMesh.UpdateObjectsOnGPU();
+	//m_ChunkSolidMesh.UpdateObjectsOnGPU(); meshing happens on another thread, cant use GLcalls
+
+	setIsGPU_BufferOutdated(true);
 	setIsMeshed(true);
 	setIsDirty(false);
 	MeshMutex.unlock();

@@ -46,6 +46,8 @@ private:
 	std::shared_ptr<Shader> m_Shader;
 	std::unordered_map<int, std::shared_ptr<Texture>> m_Textures;
 	bool readyForDraw = true;
+	
+	//bool autoUpdateOnGPU = true; //automatic updating the GPU buffer after 
 	MeshType m_Type;
 	static  int NrOfMeshes;
 };

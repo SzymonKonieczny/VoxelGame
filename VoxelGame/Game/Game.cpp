@@ -57,6 +57,11 @@ void Game::RenderWorld(World& world)
 		if (isChunkColumnInFrustum(chunkCol.second))
 		{
 			for (auto& chunk : chunkCol.second.m_Chunks) {
+				if (chunk->isGPU_BufferOutdated() && chunk->isMeshed())
+				{
+					chunk->getMesh().UpdateObjectsOnGPU();
+					chunk->setIsGPU_BufferOutdated(false);
+				}
 				Renderer::Submit(chunk->getMesh());
 			}
 		}

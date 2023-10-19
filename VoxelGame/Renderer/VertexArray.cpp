@@ -40,7 +40,7 @@ VertexArray::VertexArray(float* vertices, unsigned int size)
 
 VertexArray::~VertexArray()
 {
-	std::cout << "Deleting VertexArray id " << m_ID << "\n";
+	//std::cout << "Deleting VertexArray id " << m_ID << "\n";
 
 	glDeleteVertexArrays(1, &m_ID);
 }
