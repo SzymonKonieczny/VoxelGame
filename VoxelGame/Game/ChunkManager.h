@@ -22,18 +22,18 @@ public:
 	void MeshChunksFromQueue(int amount);
 
 	void AsyncGenerateChunks(std::list<glm::ivec2> List, bool& isChunkGenerationThreadDoneFlag);
-	void AsyncMeshChunks(std::list<glm::ivec2> List, bool& isChunkMeshThreadDoneFlag);
+	void AsyncMeshChunks(std::list<glm::ivec3> List, bool& isChunkMeshThreadDoneFlag);
 
 	bool isChunkGenerationThreadDone=true;
 	bool isChunkMeshThreadDone=true;
 
 	void UpdateLoadedChunkMap(glm::vec2 CenterPoint);
-	void AddToMeshQueue(glm::ivec2 Coord);
+	void AddToMeshQueue(glm::ivec3 Coord);
 
 	std::unordered_map<glm::ivec2,ChunkColumn> ChunkMap;
 	std::queue<glm::ivec2> ChunksGenerationQueue;
-	std::queue<glm::ivec2> ChunksMeshingQueue;
-	std::unordered_set<glm::ivec2> ChunksInMeshQueue;
+	std::queue<glm::ivec3> ChunksMeshingQueue;
+	std::unordered_set<glm::ivec3> ChunksInMeshQueue;
 
 
 	std::shared_ptr<ITerrainGenerator> Generator;

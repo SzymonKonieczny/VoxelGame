@@ -35,7 +35,7 @@ public:
 	bool isGPU_BufferOutdated() { return m_isGPU_BufferOutdated; }
 
 	void setIsDirty(bool flag) { m_isDirty=flag; }
-
+	bool hasTransparentBlocks() { return m_hasTransparentBlocks; }
 
 private:
 	bool isValidPosition(glm::vec3 pos);

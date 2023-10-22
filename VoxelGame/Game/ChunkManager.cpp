@@ -15,7 +15,7 @@ void ChunkManager::SetBlockAtPosition(glm::vec3 Position, BlockName name)
 		if (index < 0) return;
 		chunk->blocks[index] = (unsigned int)name;
 		chunk->setIsDirty(true);
-		AddToMeshQueue(ColumnPos);
+		AddToMeshQueue(ChunkPos);
 	}
 	else
 	{
@@ -45,11 +45,11 @@ void ChunkManager::GenerateChunksFromQueue(int amount )
 void ChunkManager::MeshChunksFromQueue(int amount)
 {
 	if (!isChunkMeshThreadDone) return;
-	std::list<glm::ivec2> PosList;
+	std::list<glm::ivec3> PosList;
 	for (int i = 0; i < amount; i++)
 	{
 		if (ChunksMeshingQueue.empty()) break;
-		glm::ivec2 Pos =ChunksMeshingQueue.front();
+		glm::ivec3 Pos =ChunksMeshingQueue.front();
 		PosList.push_back(Pos);
 		ChunksInMeshQueue.erase(Pos);
 		ChunksMeshingQueue.pop();
@@ -75,20 +75,20 @@ void ChunkManager::AsyncGenerateChunks(std::list<glm::ivec2> List, bool& isChunk
 			for (auto& chunk : col.m_Chunks) {
 			
 				Generator->generateTerrain(chunk);
+				AddToMeshQueue(chunk->m_ChunkPos);
 			}
-			AddToMeshQueue(Pos);
 		}
 	}
 
 	isChunkGenerationThreadDoneFlag = true;
 }
-void ChunkManager::AsyncMeshChunks(std::list<glm::ivec2> List, bool& isChunkMeshThreadDoneFlag)
+void ChunkManager::AsyncMeshChunks(std::list<glm::ivec3> List, bool& isChunkMeshThreadDoneFlag)
 {
 	//isChunkMeshThreadDoneFlag = false; Jest robione przed wywolaniem MeshChunksFromQueue
 	for (auto& Pos : List)
 	{
 		if (ChunkMap.contains(Pos)) {
-			ChunkColumn& col = ChunkMap.at(Pos);
+			ChunkColumn& col = ChunkMap.at({ Pos.x,Pos.z });
 			for (auto& chunk : col.m_Chunks) {
 
 				chunk->GenerateMesh();
@@ -139,7 +139,7 @@ void ChunkManager::UpdateLoadedChunkMap(glm::vec2 CenterPoint)
 
 	if (isChunkGenerationThreadDone) {
 	
-		GenerateChunksFromQueue(1);
+		GenerateChunksFromQueue(5);
 	}
 	if (isChunkMeshThreadDone) {
 
@@ -149,7 +149,7 @@ void ChunkManager::UpdateLoadedChunkMap(glm::vec2 CenterPoint)
 	}
 }
 
-void ChunkManager::AddToMeshQueue(glm::ivec2 Coord)
+void ChunkManager::AddToMeshQueue(glm::ivec3 Coord)
 {
 	if (ChunksInMeshQueue.contains(Coord))  return;
 	ChunksMeshingQueue.push(Coord);

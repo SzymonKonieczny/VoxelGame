@@ -5,7 +5,7 @@
 static int ChunkSize = 16;
 static  int screenWidth = 800;
 static  int screenHeight = 800;
-static  int ChunksInColumn = 8;
-static int RenderDistance = 5;
+static  int ChunksInColumn = 16;
+static int RenderDistance = 8;
 
 #endif  GLOBAL_H;
