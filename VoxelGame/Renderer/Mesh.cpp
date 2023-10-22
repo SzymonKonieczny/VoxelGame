@@ -61,7 +61,7 @@ void Mesh::UpdateObjectsOnGPU()
 	m_VertexArray->UpdateVertexData(Verticies.data(), Verticies.size() * sizeof(float));
 	VerticiesSize = Verticies.size();
 	//glFlush();
-	Verticies.clear();
+	//Verticies.clear(); causes wierd glitches, kinda like byte/bitwise offsets in data sent to the GPU when swapIntervals is ON
 }
 
 void Mesh::PreDraw()

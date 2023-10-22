@@ -44,6 +44,7 @@ void Chunk::GenerateMesh()
 {
 	MeshMutex.lock();
 	setIsMeshed(false);
+	m_ChunkSolidMesh.Verticies.clear();
 	for (int i = 0; i < blocks.size(); i++)
 	{
 
