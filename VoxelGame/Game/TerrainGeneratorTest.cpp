@@ -8,7 +8,7 @@ void TerrainGeneratorTest::generateTerrain(ChunkColumn& chunkColumn)
 		chunk->setIsGenerated(false);
 
 		int index = 0;
-		if (chunk->m_ChunkPos.y > 6/* != 0*/) {
+		if (chunk->m_ChunkPos.y > 1/* != 0*/) {
 
 		}
 		else
