@@ -1,7 +1,9 @@
 #include "TerrainGeneratorTest.h"
 #include "Util.h"
+#include <FastNoise/FastNoise.h>
 void TerrainGeneratorTest::generateTerrain(std::shared_ptr<ChunkColumn> chunkColumn)
 {
+
 	for (std::shared_ptr<Chunk> chunk : chunkColumn->m_Chunks)
 	{
 		chunk->blockMutex.lock();

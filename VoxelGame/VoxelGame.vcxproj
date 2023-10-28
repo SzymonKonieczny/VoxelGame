@@ -97,11 +97,13 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)Game\FastNoise2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;FastNoise.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)Game\FastNoise2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -113,13 +115,15 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)Game\FastNoise2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;FastNoise.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)Game\FastNoise2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -129,11 +133,13 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)Game\FastNoise2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;FastNoise.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)Game\FastNoise2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -145,13 +151,15 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)Game\FastNoise2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;FastNoise.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)Game\FastNoise2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -187,6 +195,29 @@
     <ClInclude Include="Game\ChunkColumn.h" />
     <ClInclude Include="Game\ChunkManager.h" />
     <ClInclude Include="Game\FaceBuilder.h" />
+    <ClInclude Include="Game\FastNoise2\include\FastNoise\FastNoise.h" />
+    <ClInclude Include="Game\FastNoise2\include\FastNoise\FastNoise_C.h" />
+    <ClInclude Include="Game\FastNoise2\include\FastNoise\FastNoise_Config.h" />
+    <ClInclude Include="Game\FastNoise2\include\FastNoise\FastNoise_Export.h" />
+    <ClInclude Include="Game\FastNoise2\include\FastNoise\Generators\BasicGenerators.h" />
+    <ClInclude Include="Game\FastNoise2\include\FastNoise\Generators\Blends.h" />
+    <ClInclude Include="Game\FastNoise2\include\FastNoise\Generators\Cellular.h" />
+    <ClInclude Include="Game\FastNoise2\include\FastNoise\Generators\DomainWarp.h" />
+    <ClInclude Include="Game\FastNoise2\include\FastNoise\Generators\DomainWarpFractal.h" />
+    <ClInclude Include="Game\FastNoise2\include\FastNoise\Generators\Fractal.h" />
+    <ClInclude Include="Game\FastNoise2\include\FastNoise\Generators\Generator.h" />
+    <ClInclude Include="Game\FastNoise2\include\FastNoise\Generators\Modifiers.h" />
+    <ClInclude Include="Game\FastNoise2\include\FastNoise\Generators\Perlin.h" />
+    <ClInclude Include="Game\FastNoise2\include\FastNoise\Generators\Simplex.h" />
+    <ClInclude Include="Game\FastNoise2\include\FastNoise\Generators\Value.h" />
+    <ClInclude Include="Game\FastNoise2\include\FastNoise\Metadata.h" />
+    <ClInclude Include="Game\FastNoise2\include\FastNoise\SmartNode.h" />
+    <ClInclude Include="Game\FastNoise2\include\FastSIMD\FastSIMD.h" />
+    <ClInclude Include="Game\FastNoise2\include\FastSIMD\FastSIMD_Config.h" />
+    <ClInclude Include="Game\FastNoise2\include\FastSIMD\FastSIMD_Export.h" />
+    <ClInclude Include="Game\FastNoise2\include\FastSIMD\FunctionList.h" />
+    <ClInclude Include="Game\FastNoise2\include\FastSIMD\InlInclude.h" />
+    <ClInclude Include="Game\FastNoise2\include\FastSIMD\SIMDTypeList.h" />
     <ClInclude Include="Game\Game.h" />
     <ClInclude Include="Game\Global.h" />
     <ClInclude Include="Game\Input.h" />
