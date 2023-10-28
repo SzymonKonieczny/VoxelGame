@@ -1,6 +1,7 @@
 #pragma once
 #include "ChunkColumn.h"
-#include "TerrainGeneratorTest.h"
+//#include "TerrainGeneratorTest.h"
+#include "BasicTerrainGenerator.h"
 #include <map>
 #include <unordered_set>
 
@@ -10,9 +11,9 @@
 #include "BlockInfo.h"
 class ChunkManager{
 public:
-	ChunkManager(): Generator(new TerrainGeneratorTest()) 
+	ChunkManager()
 	{
-		
+		Generator.reset(new BasicTerrainGenerator());
 	
 	}
 	

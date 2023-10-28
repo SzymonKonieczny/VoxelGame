@@ -1,8 +1,6 @@
 #pragma once
 #include "ITerrainGenerator.h"
-
-
-class BasicTerrainGenerator : ITerrainGenerator {
+class BasicTerrainGenerator : public ITerrainGenerator {
 	void generateTerrain(std::shared_ptr<ChunkColumn> chunk)override;
 
 
