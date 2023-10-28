@@ -3,6 +3,12 @@
 #include <FastNoise/FastNoise.h>
 void TerrainGeneratorTest::generateTerrain(std::shared_ptr<ChunkColumn> chunkColumn)
 {
+	FastNoise::SmartNode<> fnGenerator = FastNoise::NewFromEncodedNodeTree("DQAFAAAAAAAAQAgAAAAAAD8AAAAAAA==");
+	
+	std::vector<float> noiseOutput(16 * 16 * 16);
+
+	// Generate a 16 x 16 x 16 area of noise
+	fnGenerator->GenUniformGrid3D(noiseOutput.data(), 0, 0, 0, 16, 16, 16, 0.2f, 1337);
 
 	for (std::shared_ptr<Chunk> chunk : chunkColumn->m_Chunks)
 	{

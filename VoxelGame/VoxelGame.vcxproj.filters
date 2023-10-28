@@ -250,4 +250,8 @@
     <None Include="Game\Shaders\ShadowPass.vert" />
     <None Include="Game\Shaders\ShadowPass.frag" />
   </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Game\FastNoise2\bin\FastNoise.dll" />
+    <CopyFileToFolders Include="Game\FastNoise2\bin\FastNoiseD.dll" />
+  </ItemGroup>
 </Project>
