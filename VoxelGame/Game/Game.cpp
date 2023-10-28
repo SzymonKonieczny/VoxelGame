@@ -56,7 +56,7 @@ void Game::RenderWorld(World& world)
 	{
 		if (isChunkColumnInFrustum(chunkCol.second))
 		{
-			for (auto& chunk : chunkCol.second.m_Chunks) {
+			for (auto& chunk : chunkCol.second->m_Chunks) {
 				if (chunk->isGPU_BufferOutdated() && chunk->isMeshed())
 				{
 					chunk->getMesh().UpdateObjectsOnGPU();
@@ -71,10 +71,10 @@ void Game::RenderWorld(World& world)
 
 
 
-bool Game::isChunkColumnInFrustum(ChunkColumn& col)
+bool Game::isChunkColumnInFrustum(std::shared_ptr<ChunkColumn> col)
 {
 	glm::vec2 playerPos(world.player.getPositon().x/ChunkSize, world.player.getPositon().z/ ChunkSize);//first check if in render distance, later actual frustum
-	glm::vec2 colPos(col.m_Position.x, col.m_Position.y);
+	glm::vec2 colPos(col->m_Position.x, col->m_Position.y);
 	if(RenderDistance > glm::distance(colPos, playerPos))return true; //fcked up logic but it works xd
 	else return false;
 

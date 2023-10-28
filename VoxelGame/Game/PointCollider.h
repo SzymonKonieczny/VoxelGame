@@ -14,7 +14,7 @@ public:
 		{
 			glm::vec3 LocalPos = Util::WorldPosToLocalPos(Pos);
 			auto& column = World.ChunkMap.at(ColumnPos);
-			auto& chunk = column.getChunk(ChunkPos.y);
+			auto& chunk = column->getChunk(ChunkPos.y);
 			int index = Util::Vec3ToIndex(LocalPos);
 			if (index < 0) return false;
 			return BlockTable[chunk->blocks[index]].isSold;

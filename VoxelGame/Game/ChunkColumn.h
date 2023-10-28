@@ -15,10 +15,13 @@ public:
 		return m_Chunks[index];
 	}
 
-	void setBlockInColumn(glm::vec3 Pos, BlockName block)
+	void setBlockInColumn(glm::vec3 Pos, BlockName block) ///thread unsafe, use mutexes outside!
 	{
 		int chunkIndex = Pos.y / ChunkSize;
+
 		m_Chunks[chunkIndex]->blocks[Util::Vec3ToIndex({ Pos.x,(int)Pos.y % ChunkSize,Pos.z })] = (unsigned int)block;
+	
+
 	}
 	glm::ivec2 m_Position;
 	std::vector<std::shared_ptr<Chunk>>  m_Chunks;

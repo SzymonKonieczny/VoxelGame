@@ -10,7 +10,7 @@ void ChunkManager::SetBlockAtPosition(glm::vec3 Position, BlockName name)
 	{
 		glm::vec3 LocalPos = Util::WorldPosToLocalPos(Position);
 		auto& column = ChunkMap.at(ColumnPos);
-		auto& chunk = column.getChunk(ChunkPos.y);
+		auto& chunk = column->getChunk(ChunkPos.y);
 		int index = Util::Vec3ToIndex(LocalPos);
 		if (index < 0) return;
 		chunk->blocks[index] = (unsigned int)name;
@@ -71,9 +71,9 @@ void ChunkManager::AsyncGenerateChunks(std::list<glm::ivec2> List, bool& isChunk
 	for (auto& Pos : List)
 	{
 		if (ChunkMap.contains(Pos)) {
-			ChunkColumn& col = ChunkMap.at(Pos);
+			auto col = ChunkMap.at(Pos);
 			Generator->generateTerrain(col); // potencjalnie generowanie chunka ktory w tym samym czasie bedzie usuniety
-			for (auto& chunk : col.m_Chunks) {
+			for (auto& chunk : col->m_Chunks) {
 			
 				AddToMeshQueue(chunk->m_ChunkPos);
 			}
@@ -88,8 +88,8 @@ void ChunkManager::AsyncMeshChunks(std::list<glm::ivec3> List, bool& isChunkMesh
 	for (auto& Pos : List)
 	{
 		if (ChunkMap.contains(Pos)) {
-			ChunkColumn& col = ChunkMap.at({ Pos.x,Pos.z });
-			for (auto& chunk : col.m_Chunks) {
+			auto col = ChunkMap.at({ Pos.x,Pos.z });
+			for (auto& chunk : col->m_Chunks) {
 
 				chunk->GenerateMesh();
 			}
@@ -115,8 +115,8 @@ void ChunkManager::UpdateLoadedChunkMap(glm::vec2 CenterPoint)
 			{
 
 			}
-			else {
-				ChunkMap.emplace( glm::ivec2(x, z), ChunkColumn(glm::ivec2(x, z)) );
+			else {								
+				ChunkMap.emplace( glm::ivec2(x, z), new ChunkColumn(glm::ivec2(x, z)));
 				ChunksGenerationQueue.push(glm::ivec2(x, z));
 			}
 		}
@@ -139,7 +139,7 @@ void ChunkManager::UpdateLoadedChunkMap(glm::vec2 CenterPoint)
 
 	if (isChunkGenerationThreadDone) {
 	
-		GenerateChunksFromQueue(5);
+		GenerateChunksFromQueue(1);
 	}
 	if (isChunkMeshThreadDone) {
 

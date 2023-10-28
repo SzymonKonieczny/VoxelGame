@@ -155,6 +155,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\BasicTerrainGenerator.cpp" />
     <ClCompile Include="Game\BlockInfo.cpp" />
     <ClCompile Include="Game\Chunk.cpp" />
     <ClCompile Include="Game\ChunkManager.cpp" />
@@ -180,6 +181,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Action.h" />
+    <ClInclude Include="Game\BasicTerrainGenerator.h" />
     <ClInclude Include="Game\BlockInfo.h" />
     <ClInclude Include="Game\Chunk.h" />
     <ClInclude Include="Game\ChunkColumn.h" />
