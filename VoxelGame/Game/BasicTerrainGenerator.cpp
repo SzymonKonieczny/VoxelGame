@@ -8,7 +8,7 @@ void BasicTerrainGenerator::generateTerrain(std::shared_ptr<ChunkColumn> chunkCo
 	for (int nr = 0; nr<3;nr++)
 	{
 		auto chunk = chunkColumn->m_Chunks[nr];
-		FastNoise::SmartNode<> fnGenerator = FastNoise::NewFromEncodedNodeTree("EwDNzIxACAA=");
+		FastNoise::SmartNode<> fnGenerator = FastNoise::NewFromEncodedNodeTree("EwAK1yM9CQA=");
 
 		std::vector<float> noiseOutput(16 * 16 * 16);
 		glm::vec3 ChunkPos =chunk->m_ChunkPos;
