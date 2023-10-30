@@ -72,7 +72,11 @@ void ChunkManager::AsyncGenerateChunks(std::list<glm::ivec2> List, bool& isChunk
 	{
 		if (ChunkMap.contains(Pos)) {
 			auto col = ChunkMap.at(Pos);
+			
 			Generator->generateTerrain(col); // potencjalnie generowanie chunka ktory w tym samym czasie bedzie usuniety
+			Generator->addIcing(col);
+			
+			
 			for (auto& chunk : col->m_Chunks) {
 			
 				AddToMeshQueue(chunk->m_ChunkPos);
@@ -87,7 +91,7 @@ void ChunkManager::AsyncMeshChunks(std::list<glm::ivec3> List, bool& isChunkMesh
 	//isChunkMeshThreadDoneFlag = false; Jest robione przed wywolaniem MeshChunksFromQueue
 	for (auto& Pos : List)
 	{
-		if (ChunkMap.contains(Pos)) {
+		if (ChunkMap.contains({ Pos.x,Pos.z })) {
 			auto col = ChunkMap.at({ Pos.x,Pos.z });
 			for (auto& chunk : col->m_Chunks) {
 

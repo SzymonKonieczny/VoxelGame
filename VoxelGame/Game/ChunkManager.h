@@ -13,7 +13,7 @@ class ChunkManager{
 public:
 	ChunkManager()
 	{
-		Generator.reset(new BasicTerrainGenerator());
+		Generator.reset(new BasicTerrainGenerator(std::shared_ptr<ChunkManager>(this)));
 	
 	}
 	

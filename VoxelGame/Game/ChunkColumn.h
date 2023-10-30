@@ -14,7 +14,14 @@ public:
 	std::shared_ptr<Chunk>& getChunk(int index) {
 		return m_Chunks[index];
 	}
+	
+	BlockName getBlockInColumn(glm::vec3 Pos) ///thread unsafe, use mutexes outside!
+	{
+		int chunkIndex = Pos.y / ChunkSize;
 
+		return (BlockName)m_Chunks[chunkIndex]->blocks[Util::Vec3ToIndex({ Pos.x,(int)Pos.y % ChunkSize,Pos.z })];
+
+	}
 	void setBlockInColumn(glm::vec3 Pos, BlockName block) ///thread unsafe, use mutexes outside!
 	{
 		int chunkIndex = Pos.y / ChunkSize;
