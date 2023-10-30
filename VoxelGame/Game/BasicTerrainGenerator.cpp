@@ -4,18 +4,18 @@
 void BasicTerrainGenerator::generateTerrain(std::shared_ptr<ChunkColumn> chunkColumn)
 {
 
-
+	// Far lands type EAAAAAA/EwAK1yM9CQAAexSCQQ==
 
 	//for (auto& chunk : chunkColumn->m_Chunks)
 	for (int nr = 0; nr<3;nr++)
 	{
 		auto chunk = chunkColumn->m_Chunks[nr];
-		FastNoise::SmartNode<> fnGenerator = FastNoise::NewFromEncodedNodeTree("EAAAAAA/EwAK1yM9CQAAexSCQQ==");
+		FastNoise::SmartNode<> fnGenerator = FastNoise::NewFromEncodedNodeTree("EwApXA8+DQAEAAAAexQOQAkAAHsUrj4BEADNzIw/EwAK1yM9//8AAABcj4pB");
 
 		std::vector<float> noiseOutput(16 * 16 * 16);
 		glm::ivec3 ChunkPos =chunk->m_ChunkPos;
 
-		fnGenerator->GenUniformGrid3D(noiseOutput.data(), ChunkPos.x*ChunkSize, ChunkPos.y * ChunkSize, ChunkPos.z * ChunkSize, 
+		fnGenerator->GenUniformGrid3D(noiseOutput.data(), ChunkPos.x*ChunkSize, ChunkPos.z * ChunkSize, ChunkPos.y * ChunkSize, 
 			ChunkSize, ChunkSize, ChunkSize, 0.2f, 1337);
 
 		int index = 0;
