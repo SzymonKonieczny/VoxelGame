@@ -6,7 +6,7 @@
 #include<glm/gtx/rotate_vector.hpp>
 #include<glm/gtx/vector_angle.hpp>
 #include <iostream>
-Player::Player() : Pos(20,5,20), Rot(0,-0.6,-1), velocity(0,0,10)
+Player::Player() : Pos(2000,5,2000), Rot(0,-0.6,-1), velocity(0,0,10)
 {
 
 }
