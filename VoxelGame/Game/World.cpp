@@ -13,7 +13,9 @@ void World::SetBlockOnPosition(glm::vec3 Pos, BlockName name)
 void World::TickWorld(double deltaTime)
 {
 	HandleActionQueue();
+	int* a = &screenWidth;
 	player.Update(deltaTime);
+
 	chunkManager.UpdateLoadedChunkMap({ player.getPositon().x / ChunkSize, player.getPositon().z / ChunkSize });
 
 }

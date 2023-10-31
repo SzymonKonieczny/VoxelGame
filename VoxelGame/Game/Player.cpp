@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Global.h"
 #include "Input.h"
 #include <glm/glm.hpp>
 #include<glm/gtc/matrix_transform.hpp>
@@ -18,7 +19,8 @@ void Player::Update(float dt)
 	handleRotation();
 	HandleMouseButtons();
 	Move(dt);
-	
+	int* a = &screenWidth;
+
 	cam.SetPosition(Pos);
 	cam.SetRotation(Rot);
 	cam.UpdateMatricies(90.f,screenWidth/(float)screenHeight );

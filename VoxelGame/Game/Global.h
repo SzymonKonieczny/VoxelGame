@@ -2,10 +2,10 @@
 #ifndef GLOBAL_H;
 #define GLOBAL_H
 
-static  int ChunkSize = 16;
-static  int screenWidth = 800;
-static  int screenHeight = 800;
-static  int ChunksInColumn = 16;
-static  int RenderDistance = 8;
+extern  int ChunkSize;		// = 16;
+extern  int screenWidth;	//	= 800; //1280;
+extern  int screenHeight;	// = 800;// 720;
+extern  int ChunksInColumn;	//	 = 16;
+extern  int RenderDistance;	// = 8;
 
 #endif  GLOBAL_H;
