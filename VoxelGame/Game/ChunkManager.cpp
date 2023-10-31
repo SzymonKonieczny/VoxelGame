@@ -81,7 +81,6 @@ void ChunkManager::AsyncGenerateChunks(std::list<glm::ivec2> List, bool& isChunk
 			auto col = ChunkMap.at(Pos);
 			
 			Generator->generateTerrain(col); // potencjalnie generowanie chunka ktory w tym samym czasie bedzie usuniety
-			Generator->addIcing(col);
 			
 			
 			for (auto& chunk : col->m_Chunks) {
