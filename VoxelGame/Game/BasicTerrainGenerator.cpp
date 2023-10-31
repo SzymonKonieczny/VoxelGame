@@ -4,13 +4,19 @@
 void BasicTerrainGenerator::generateTerrain(std::shared_ptr<ChunkColumn> chunkColumn)
 {
 
-	// Far lands type EwApXA8+DQAEAAAAexQOQAkAAHsUrj4BEACPwvW/EwCPwvU9//8AAADNzCxA
+	// Far lands type EwApXA8+GgABDQAEAAAAexQOQAkAAHsUrj4BEACPwvW/EwCPwvU9//8AAADNzCxAAQMA16NwPw==
 
-
-	for (int nr = 0; nr<8;nr++)
+	//cool dziurawy Amplified EwDNzEw9IQANAAQAAAB7FA5ACQAAexSuPgEQAI/C9b8TAI/C9T3//wAAAM3MLEAEAI/CdT0AAAAAcT26wHsUrj8AAAAACtejvAAAAAAAAAAAAArXIzw=
+	
+	// With actual bottom. Good base !:
+	// EwDFILC9GQANAAQAAAB7FA5ACQAAexSuPgAAAAAAAQQAAAAAAAAAAAAAAIA/AAAAAAAAAAAAAAAAAACAPwAAAAA=
+	//EwCuR2G+DQAPAAAAhetRQCAADQAEAAAAexQOQAkAAHsUrj4AAAAAAAEEAAAAAAAAAAAACtcDQAAAAAAAAAAAAAAAAAAAgD8AAAAAAM3MzD0APQrXvgAAACBA
+	
+	
+	for (int nr = 0; nr<ChunksInColumn-1;nr++)
 	{
 		auto chunk = chunkColumn->m_Chunks[nr];
-		FastNoise::SmartNode<> fnGenerator = FastNoise::NewFromEncodedNodeTree("EwApXA8+DQAEAAAAexQOQAkAAHsUrj4BEACPwvW/EwCPwvU9//8AAADNzCxA");
+		FastNoise::SmartNode<> fnGenerator = FastNoise::NewFromEncodedNodeTree("EwCuR2G+DQAPAAAAhetRQCAADQAEAAAAexQOQAkAAHsUrj4AAAAAAAEEAAAAAAAAAAAACtcDQAAAAAAAAAAAAAAAAAAAgD8AAAAAAM3MzD0APQrXvgAAACBA");
 
 		std::vector<float> noiseOutput(16 * 16 * 16);
 		glm::ivec3 ChunkPos =chunk->m_ChunkPos;
@@ -22,7 +28,7 @@ void BasicTerrainGenerator::generateTerrain(std::shared_ptr<ChunkColumn> chunkCo
 
 		for (int i = 0; i < chunk->blocks.size(); i++)
 		{
-			chunk->blocks[i] = noiseOutput[index++] > 0.07f ? (int)BlockName::Stone : (int)BlockName::Air;
+			chunk->blocks[i] = noiseOutput[index++] > 0 ? (int)BlockName::Stone : (int)BlockName::Air;
 		}
 
 	}
@@ -33,7 +39,6 @@ void BasicTerrainGenerator::generateTerrain(std::shared_ptr<ChunkColumn> chunkCo
 void BasicTerrainGenerator::addIcing(std::shared_ptr<ChunkColumn> chunkColumn)
 {
 	std::queue<BlockName> topToBottomSpecialBlocks;
-	(Util::random(1,10) ==2)? topToBottomSpecialBlocks.push(BlockName::BlueRose): topToBottomSpecialBlocks.push(BlockName::Air);
 
 	topToBottomSpecialBlocks.push(BlockName::Grass);
 	topToBottomSpecialBlocks.push(BlockName::Dirt);
