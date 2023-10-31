@@ -163,13 +163,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Game\BasicTerrainGenerator.cpp" />
+    <ClCompile Include="Game\EarthyTerrainGenerator.cpp" />
+    <ClCompile Include="Game\HeavenTerrainGenerator.cpp" />
     <ClCompile Include="Game\BlockInfo.cpp" />
     <ClCompile Include="Game\Chunk.cpp" />
     <ClCompile Include="Game\ChunkManager.cpp" />
     <ClCompile Include="Game\Game.cpp" />
     <ClCompile Include="Game\Global.cpp" />
     <ClCompile Include="Game\Input.cpp" />
+    <ClCompile Include="Game\PlainsBiome.cpp" />
     <ClCompile Include="Game\Player.cpp" />
     <ClCompile Include="Game\Ray.cpp" />
     <ClCompile Include="Game\TerrainGeneratorTest.cpp" />
@@ -190,7 +192,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Action.h" />
-    <ClInclude Include="Game\BasicTerrainGenerator.h" />
+    <ClInclude Include="Game\EarthyTerrainGenerator.h" />
+    <ClInclude Include="Game\HeavenTerrainGenerator.h" />
     <ClInclude Include="Game\BlockInfo.h" />
     <ClInclude Include="Game\Chunk.h" />
     <ClInclude Include="Game\ChunkColumn.h" />
@@ -224,6 +227,7 @@
     <ClInclude Include="Game\IBiome.h" />
     <ClInclude Include="Game\Input.h" />
     <ClInclude Include="Game\ITerrainGenerator.h" />
+    <ClInclude Include="Game\PlainsBiome.h" />
     <ClInclude Include="Game\Player.h" />
     <ClInclude Include="Game\PointCollider.h" />
     <ClInclude Include="Game\Ray.h" />
