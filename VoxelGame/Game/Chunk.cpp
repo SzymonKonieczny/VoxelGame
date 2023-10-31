@@ -52,17 +52,17 @@ void Chunk::GenerateMesh()
 		if (blockInfo.isTransparent) continue;
 		glm::vec3 pos = Util::IndexToVec3(i);
 		if (!isSolidBlock(pos + glm::vec3(1.f, 0.f, 0.f)))
-			FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::EAST, blockInfo.UV);
+			FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::EAST, blockInfo.UVside);
 		if (!isSolidBlock(pos + glm::vec3(-1.f, 0.f, 0.f)))
-			FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::WEST, blockInfo.UV);
+			FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::WEST, blockInfo.UVside);
 		if (!isSolidBlock(pos + glm::vec3(0.f, 0.f, -1.f)))
-			FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::SOUTH, blockInfo.UV);
+			FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::SOUTH, blockInfo.UVside);
 		if (!isSolidBlock(pos + glm::vec3(0.f, 0.f, 1.f)))
-			FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::NORTH, blockInfo.UV);
+			FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::NORTH, blockInfo.UVside);
 		if (!isSolidBlock(pos + glm::vec3(0.f, 1.f, 0.f)))
-			FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::UP, blockInfo.UV);
+			FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::UP, blockInfo.UVtop);
 		if (!isSolidBlock(pos + glm::vec3(0.f, -1.f, 0.f)))
-			FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::DOWN, blockInfo.UV);
+			FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::DOWN, blockInfo.UVbottom);
 
 	}
 

@@ -84,7 +84,7 @@ void Game::FillBlockTable()
 {
 
 	BlockTable.push_back(BlockInfo({ 0.8f,0.f }, true, false)); //AIR
-	BlockTable.push_back(BlockInfo({ 0.f,0.f }, false, true)); //Grass
+	BlockTable.push_back(BlockInfo({ 0.f,0.f }, { 0.2f,0.6f }, { 0.6f,0.f }, false, true)); //Grass
 	BlockTable.push_back(BlockInfo({ 0.2f,0.f }, false, true)); //Ore
 	BlockTable.push_back(BlockInfo({ 0.4f,0.f }, false, true)); //Stone
 	BlockTable.push_back(BlockInfo({ 0.6f,0.f }, false, true)); //Dirt
