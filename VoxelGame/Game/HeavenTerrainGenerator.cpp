@@ -16,7 +16,7 @@ void HeavenTerrainGenerator::generateTerrain(std::shared_ptr<ChunkColumn> chunkC
 	for (int nr = 0; nr<ChunksInColumn-1;nr++)
 	{
 		auto chunk = chunkColumn->m_Chunks[nr];
-		FastNoise::SmartNode<> fnGenerator = FastNoise::NewFromEncodedNodeTree("GQAJAAEEAAAAAAAAAAAAzcxMvQAAAAAAAAAAAAAAAAAAoEEAAAAA");
+		FastNoise::SmartNode<> fnGenerator = FastNoise::NewFromEncodedNodeTree("EwDNzEw9IQANAAQAAAB7FA5ACQAAexSuPgEQAI/C9b8TAI/C9T3//wAAAM3MLEAEAI/CdT0AAAAAcT26wHsUrj8AAAAACtejvAAAAAAAAAAAAArXIzw=");
 
 		std::vector<float> noiseOutput(16 * 16 * 16);
 		glm::ivec3 ChunkPos =chunk->m_ChunkPos;
