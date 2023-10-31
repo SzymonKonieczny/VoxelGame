@@ -12,39 +12,43 @@ void World::SetBlockOnPosition(glm::vec3 Pos, BlockName name)
 
 void World::TickWorld(double deltaTime)
 {
-	HandleActionQueue();
-	int* a = &screenWidth;
+	HandleActionQueue(1);
 	player.Update(deltaTime);
 
 	chunkManager.UpdateLoadedChunkMap({ player.getPositon().x / ChunkSize, player.getPositon().z / ChunkSize });
 
 }
 
-void World::HandleActionQueue()
+void World::HandleActionQueue(int amount)
 {
-	Action action = player.GetAction();
-	switch (action.type) {
-		case ActionType::Break:
-		{
-			RayInfo info = Ray::Cast(action.Coordinates, action.Direction, chunkManager, action.Range, RayType::BLOCK_RAY);
-			if (!info.Miss)
+	for (int i = 0; i < amount; i++)
+	{
+
+	
+		Action action = player.GetAction();
+		switch (action.type) {
+			case ActionType::Break:
 			{
+				RayInfo info = Ray::Cast(action.Coordinates, action.Direction, chunkManager, action.Range, RayType::BLOCK_RAY);
+				if (!info.Miss)
+				{
 
-				SetBlockOnPosition(info.HitPos, BlockName::Air);
+					SetBlockOnPosition(info.HitPos, BlockName::Air);
 
+				}
 			}
-		}
-		break;
-		case ActionType::Place:
-		{
-			RayInfo info = Ray::Cast(action.Coordinates, action.Direction, chunkManager, action.Range, RayType::BLOCK_RAY);
-			if (!info.Miss)
+			break;
+			case ActionType::Place:
 			{
+				RayInfo info = Ray::Cast(action.Coordinates, action.Direction, chunkManager, action.Range, RayType::BLOCK_RAY);
+				if (!info.Miss)
+				{
 
-				SetBlockOnPosition(info.HitFromPos, action.blockName);
+					SetBlockOnPosition(info.HitFromPos, action.blockName);
 
+				}
 			}
+			break;
 		}
-		break;
 	}
 }

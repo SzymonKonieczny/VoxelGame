@@ -1,5 +1,6 @@
 #include "ChunkManager.h"
 #include "Input.h"
+#include <Windows.h>
 void ChunkManager::SetBlockAtPosition(glm::vec3 Position, BlockName name)
 {
 	glm::vec3 ChunkPos = Util::WorldPosToChunkPos(Position);
@@ -35,7 +36,7 @@ void ChunkManager::GenerateChunksFromQueue(int amount )
 	isChunkGenerationThreadDone = false;
 
 	std::thread ChunkGenerationThread(&ChunkManager::AsyncGenerateChunks, this, PosList, std::ref(isChunkGenerationThreadDone));
-	ChunkGenerationThread.join();
+	ChunkGenerationThread.detach();
 
 #else
 	AsyncGenerateChunks(PosList, std::ref(isChunkGenerationThreadDone));
@@ -50,9 +51,15 @@ void ChunkManager::MeshChunksFromQueue(int amount)
 	{
 		if (ChunksMeshingQueue.empty()) break;
 		glm::ivec3 Pos =ChunksMeshingQueue.front();
-		PosList.push_back(Pos);
-		ChunksInMeshQueue.erase(Pos);
 		ChunksMeshingQueue.pop();
+		//if (ChunkMap.at({ Pos.x,Pos.z})->m_Chunks[Pos.y]->isDirty() //Checking if the chunk is dirty
+		//	&& ChunksInMeshQueue.contains(Pos))
+		{
+			PosList.push_back(Pos);
+			ChunksInMeshQueue.erase(Pos);
+		}
+
+
 	}
 
 #if 1 //async chunk meshing off
@@ -88,18 +95,18 @@ void ChunkManager::AsyncGenerateChunks(std::list<glm::ivec2> List, bool& isChunk
 }
 void ChunkManager::AsyncMeshChunks(std::list<glm::ivec3> List, bool& isChunkMeshThreadDoneFlag)
 {
+
 	//isChunkMeshThreadDoneFlag = false; Jest robione przed wywolaniem MeshChunksFromQueue
 	for (auto& Pos : List)
 	{
 		if (ChunkMap.contains({ Pos.x,Pos.z })) {
 			auto col = ChunkMap.at({ Pos.x,Pos.z });
-			for (auto& chunk : col->m_Chunks) {
-
-				chunk->GenerateMesh();
-			}
+			if(Pos.y< col->m_Chunks.size())
+				col->m_Chunks[Pos.y]->GenerateMesh();
+			
 		}
 	}
-
+	//Sleep(10);  function too fast, causes meshes to dissapear. Sleep(100) stops it xd
 	isChunkMeshThreadDoneFlag = true;
 }
 void ChunkManager::UpdateLoadedChunkMap(glm::vec2 CenterPoint)
@@ -143,12 +150,12 @@ void ChunkManager::UpdateLoadedChunkMap(glm::vec2 CenterPoint)
 
 	if (isChunkGenerationThreadDone) {
 	
-		GenerateChunksFromQueue(1);
+		GenerateChunksFromQueue(RenderDistance);
 	}
 	if (isChunkMeshThreadDone) {
 
 
-		MeshChunksFromQueue(5);
+		MeshChunksFromQueue(ChunksInColumn+5);
 
 	}
 }

@@ -83,13 +83,13 @@ void Renderer::EndScene()
 
 	glViewport(0, 0, ShadowMapRes, ShadowMapRes);// Shadow render pass
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	//glm::mat4 lightProjection = glm::ortho((float)-1, (float)1, (float)-1, (float)1, 0.1f, 100.0f);
+	glm::mat4 lightProjection = glm::ortho((float)-100, (float)100, (float)-100, (float)100, 0.1f, 1000.0f);
 
 		/*glm::mat4 lightView = glm::lookAt(glm::vec3(-60.f, 21.0f, -5.f),
 		glm::vec3(1.f, -1.0f, 1.f),
 		glm::vec3(0.0f, 1.0f, 0.0f));*/
 
-	glm::mat4 lightProjection = glm::perspective(glm::radians(90.f), screenWidth / (float)screenHeight,0.1f,100.f);
+	//glm::mat4 lightProjection = glm::perspective(glm::radians(90.f), screenWidth / (float)screenHeight,0.1f,100.f);
 
 		glm::mat4 lightView = glm::lookAt(lightPos, //position
 			lightPos + glm::normalize(lightDir), //position + direction
@@ -105,7 +105,7 @@ void Renderer::EndScene()
 	
 	ShadowPassShader->Bind();
 	ShadowPassShader->UploadUniformMat4("lightSpaceMatrix", lightSpaceMatrix);
-	
+	/**/
 	for (auto& m : Meshes)
 	{
 		if (m->getCount() == 0) continue;
@@ -132,8 +132,8 @@ void Renderer::EndScene()
 	glViewport(0, 0, screenWidth, screenHeight); // Normal render pass
 	glClearColor(0.39f, 0.67f, 0.8f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glActiveTexture(GL_TEXTURE7);	//ShadowMap uploading 
-		ShadowMap->BindDepthTexture();
+		glActiveTexture(GL_TEXTURE7);	//ShadowMap uploading, binding slot 7
+		ShadowMap->BindDepthTexture(); // uploading to slot 7
 
 	for (auto& m : Meshes)
 	{
@@ -143,12 +143,10 @@ void Renderer::EndScene()
 
 		m->Bind();
 		if (m->hasUniform("viewProjMatrix")) m->updateUniform("viewProjMatrix", ViewProjectionMatrix);
-		if (m->hasUniform("shadowDepthTexture")) m->updateUniform("shadowDepthTexture", 7);
+		if (m->hasUniform("shadowDepthTexture")) m->updateUniform("shadowDepthTexture", 7); // letting the shader know at which slot the shadowmapTexture is
 
 		if (m->hasUniform("lightSpaceMatrix")) m->updateUniform("lightSpaceMatrix", lightSpaceMatrix);
 
-		//if (m->hasUniform("viewPos")) m->updateUniform("viewPos", CameraPos);
-		//if (m->hasUniform("lightPos")) m->updateUniform("lightPos", lightPos);
 		m->PreDraw();
 		break;
 	}
@@ -156,15 +154,7 @@ void Renderer::EndScene()
 	{
 		if (!m->getReadyForDraw()) continue;
 		m->Bind();
-		//if (m->hasUniform("viewProjMatrix")) m->updateUniform("viewProjMatrix", ViewProjectionMatrix);
-		//if (m->hasUniform("shadowDepthTexture")) m->updateUniform("shadowDepthTexture", 7);
-		//if (m->hasUniform("lightSpaceMatrix")) m->updateUniform("lightSpaceMatrix", lightSpaceMatrix);
-		//
-		//if (m->hasUniform("viewPos")) m->updateUniform("viewPos", CameraPos);
-		//if (m->hasUniform("lightPos")) m->updateUniform("lightPos", lightPos);
-			
-		// if (m->hasUniform("modelMatrix")) m->updateUniform("modelMatrix", m->GetUniformData()["modelMatrix"].data);
-		
+				
 		m->uploadSingleUniform("modelMatrix");
 
 

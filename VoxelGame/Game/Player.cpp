@@ -19,7 +19,6 @@ void Player::Update(float dt)
 	handleRotation();
 	HandleMouseButtons();
 	Move(dt);
-	int* a = &screenWidth;
 
 	cam.SetPosition(Pos);
 	cam.SetRotation(Rot);
