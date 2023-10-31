@@ -1,5 +1,6 @@
 #pragma once
 #include "IBiome.h"
+
 class PlainsBiome : public IBiome {
 public:
 	// Inherited via IBiome

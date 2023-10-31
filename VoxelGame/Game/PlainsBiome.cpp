@@ -1,4 +1,5 @@
 #include "PlainsBiome.h"
+#include <FastNoise/FastNoise.h>
 
 void PlainsBiome::generateLandmass(std::shared_ptr<ChunkColumn> chunkColumn, std::shared_ptr<ChunkManager> chunkManager)
 {

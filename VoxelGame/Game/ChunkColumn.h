@@ -15,19 +15,23 @@ public:
 		return m_Chunks[index];
 	}
 	
-	BlockName getBlockInColumn(glm::vec3 Pos) ///thread unsafe, use mutexes outside!
+	BlockName getBlockInColumn(glm::vec3 Pos) 
 	{
 		int chunkIndex = Pos.y / ChunkSize;
-
-		return (BlockName)m_Chunks[chunkIndex]->blocks[Util::Vec3ToIndex({ Pos.x,(int)Pos.y % ChunkSize,Pos.z })];
+		m_Chunks[chunkIndex]->blockMutex.lock();
+		BlockName name = (BlockName)m_Chunks[chunkIndex]->blocks[Util::Vec3ToIndex({ Pos.x,(int)Pos.y % ChunkSize,Pos.z })];
+		m_Chunks[chunkIndex]->blockMutex.unlock();
+		return name;
 
 	}
-	void setBlockInColumn(glm::vec3 Pos, BlockName block) ///thread unsafe, use mutexes outside!
+	void setBlockInColumn(glm::vec3 Pos, BlockName block) 
 	{
-		int chunkIndex = Pos.y / ChunkSize;
 
+		int chunkIndex = Pos.y / ChunkSize;
+		m_Chunks[chunkIndex]->blockMutex.lock();
 		m_Chunks[chunkIndex]->blocks[Util::Vec3ToIndex({ Pos.x,(int)Pos.y % ChunkSize,Pos.z })] = (unsigned int)block;
-	
+		m_Chunks[chunkIndex]->blockMutex.unlock();
+
 
 	}
 	glm::ivec2 m_Position;

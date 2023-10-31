@@ -2,7 +2,6 @@
 
 #include "Global.h"
 #include "ChunkColumn.h"
-#include <FastNoise/FastNoise.h>
 #include <queue>
 class ChunkManager;
 
