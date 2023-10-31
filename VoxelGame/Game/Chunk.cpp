@@ -51,19 +51,30 @@ void Chunk::GenerateMesh()
 		const BlockInfo& blockInfo = BlockTable[blocks[i]];
 		if (blockInfo.isTransparent) continue;
 		glm::vec3 pos = Util::IndexToVec3(i);
-		if (!isSolidBlock(pos + glm::vec3(1.f, 0.f, 0.f)))
-			FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::EAST, blockInfo.UVside);
-		if (!isSolidBlock(pos + glm::vec3(-1.f, 0.f, 0.f)))
-			FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::WEST, blockInfo.UVside);
-		if (!isSolidBlock(pos + glm::vec3(0.f, 0.f, -1.f)))
-			FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::SOUTH, blockInfo.UVside);
-		if (!isSolidBlock(pos + glm::vec3(0.f, 0.f, 1.f)))
-			FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::NORTH, blockInfo.UVside);
-		if (!isSolidBlock(pos + glm::vec3(0.f, 1.f, 0.f)))
-			FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::UP, blockInfo.UVtop);
-		if (!isSolidBlock(pos + glm::vec3(0.f, -1.f, 0.f)))
-			FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::DOWN, blockInfo.UVbottom);
+		
+		switch (blockInfo.ModelType) {
+		case BlockModelType::Cube:
+			if (!isSolidBlock(pos + glm::vec3(1.f, 0.f, 0.f)))
+				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::EAST, blockInfo.UVside);
+			if (!isSolidBlock(pos + glm::vec3(-1.f, 0.f, 0.f)))
+				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::WEST, blockInfo.UVside);
+			if (!isSolidBlock(pos + glm::vec3(0.f, 0.f, -1.f)))
+				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::SOUTH, blockInfo.UVside);
+			if (!isSolidBlock(pos + glm::vec3(0.f, 0.f, 1.f)))
+				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::NORTH, blockInfo.UVside);
+			if (!isSolidBlock(pos + glm::vec3(0.f, 1.f, 0.f)))
+				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::UP, blockInfo.UVtop);
+			if (!isSolidBlock(pos + glm::vec3(0.f, -1.f, 0.f)))
+				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::DOWN, blockInfo.UVbottom);
 
+			break;
+		case BlockModelType::X:
+			FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::X1, blockInfo.UVside);
+			FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::X2, blockInfo.UVside);
+
+			break;
+		}
+		
 	}
 
 	//m_ChunkSolidMesh.UpdateObjectsOnGPU(); meshing happens on another thread, cant use GLcalls

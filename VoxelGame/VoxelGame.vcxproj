@@ -221,6 +221,7 @@
     <ClInclude Include="Game\FastNoise2\include\FastSIMD\SIMDTypeList.h" />
     <ClInclude Include="Game\Game.h" />
     <ClInclude Include="Game\Global.h" />
+    <ClInclude Include="Game\IBiome.h" />
     <ClInclude Include="Game\Input.h" />
     <ClInclude Include="Game\ITerrainGenerator.h" />
     <ClInclude Include="Game\Player.h" />

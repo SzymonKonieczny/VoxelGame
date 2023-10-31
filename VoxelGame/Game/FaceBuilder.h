@@ -1,11 +1,14 @@
 #include "../Renderer/Mesh.h"
+#include "BlockInfo.h"
 enum class BlockFace {
 	NORTH, //+z
 	EAST, //+x
 	SOUTH, //-z
 	WEST, //-x
 	UP,
-	DOWN
+	DOWN,
+	X1,
+	X2
 };
 class FaceBuilder
 {
@@ -31,7 +34,8 @@ public:
 		//chunkVertex v{ glm::vec3(1.f,2.f,3.f), glm::vec2(1.f,2.f), glm::vec3(1.f,2.f,3.f) };
 		//pushVertToMesh(mesh, v);
 		chunkVertex v;
-
+	
+	
 		switch (Dir)
 		{
 		case BlockFace::NORTH: //+z
@@ -148,9 +152,54 @@ public:
 			v = { pos + glm::vec3(0.f,0.f,0.f),UV + glm::vec2(0.f,0.f), glm::vec3(0.5f,0.5f,0.5f) };
 			pushVertToMesh(mesh, v);
 			break;
+
+
+		case BlockFace::X1:
+			v = { pos + glm::vec3(0.f,0.f,0.f),UV + glm::vec2(0.f,0.f), glm::vec3(0.65f,0.65f,0.65f) };
+			pushVertToMesh(mesh, v);
+			v = { pos + glm::vec3(1.f,0.f,1.f), UV + glm::vec2(0.2f,0.f), glm::vec3(0.65f,0.65f,0.65f) };
+			pushVertToMesh(mesh, v);
+
+			v = { pos + glm::vec3(1.f,1.f,1.f), UV + glm::vec2(0.2f,0.2f), glm::vec3(0.65f,0.65f,0.65f) };
+			pushVertToMesh(mesh, v);
+			//----
+			v = { pos + glm::vec3(1.f,1.f,1.f), UV + glm::vec2(0.2f,0.2f), glm::vec3(0.65f,0.65f,0.65f) };
+			pushVertToMesh(mesh, v);
+
+			v = { pos + glm::vec3(0.f,1.f,0.f), UV + glm::vec2(0.f,0.2f), glm::vec3(0.65f,0.65f,0.65f) };
+			pushVertToMesh(mesh, v);
+
+			v = { pos + glm::vec3(0.f,0.f,0.f), UV + glm::vec2(0.f,0.f), glm::vec3(0.65f,0.65f,0.65f) };
+			pushVertToMesh(mesh, v);
+			break;
+		case BlockFace::X2:
+			v = { pos + glm::vec3(0.f,0.f,1.f),UV + glm::vec2(0.f,0.f), glm::vec3(0.65f,0.65f,0.65f) };
+			pushVertToMesh(mesh, v);
+			v = { pos + glm::vec3(1.f,0.f,0.f), UV + glm::vec2(0.2f,0.f), glm::vec3(0.65f,0.65f,0.65f) };
+			pushVertToMesh(mesh, v);
+
+			v = { pos + glm::vec3(1.f,1.f,0.f), UV + glm::vec2(0.2f,0.2f), glm::vec3(0.65f,0.65f,0.65f) };
+			pushVertToMesh(mesh, v);
+			//----
+			v = { pos + glm::vec3(1.f,1.f,0.f), UV + glm::vec2(0.2f,0.2f), glm::vec3(0.65f,0.65f,0.65f) };
+			pushVertToMesh(mesh, v);
+
+			v = { pos + glm::vec3(0.f,1.f,1.f), UV + glm::vec2(0.f,0.2f), glm::vec3(0.65f,0.65f,0.65f) };
+			pushVertToMesh(mesh, v);
+
+			v = { pos + glm::vec3(0.f,0.f,1.f), UV + glm::vec2(0.f,0.f), glm::vec3(0.65f,0.65f,0.65f) };
+			pushVertToMesh(mesh, v);
+			break;
 		default:
 
 			break;
 		}
+			
+
+
+		
+
+		
+	
 	}
 };

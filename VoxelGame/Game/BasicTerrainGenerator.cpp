@@ -33,6 +33,8 @@ void BasicTerrainGenerator::generateTerrain(std::shared_ptr<ChunkColumn> chunkCo
 void BasicTerrainGenerator::addIcing(std::shared_ptr<ChunkColumn> chunkColumn)
 {
 	std::queue<BlockName> topToBottomSpecialBlocks;
+	(Util::random(1,10) ==2)? topToBottomSpecialBlocks.push(BlockName::BlueRose): topToBottomSpecialBlocks.push(BlockName::Air);
+
 	topToBottomSpecialBlocks.push(BlockName::Grass);
 	topToBottomSpecialBlocks.push(BlockName::Dirt);
 	topToBottomSpecialBlocks.push(BlockName::Dirt);

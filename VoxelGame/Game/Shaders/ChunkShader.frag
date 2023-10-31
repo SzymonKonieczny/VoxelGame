@@ -30,7 +30,7 @@ void main()
 	vec4 pixel;
 
 	 pixel = texture(tex0 , TexCoord);
-
+	 if(pixel.w == 0) discard;
 	 FragColor = vec4( vec4(Col, 1.0f)*pixel);
 
 	//FragColor = vec4( vec4(Col, 1.0f)*pixel*  (1-CalculateShadow( FragPosLightSpace)));
