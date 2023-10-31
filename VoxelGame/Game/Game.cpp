@@ -2,7 +2,7 @@
 #include "Game.h"
 #include "Input.h"
 
-int Game::CHUNK_SIZE = 16;
+//int Game::CHUNK_SIZE = 16;
 std::shared_ptr<Texture> Game::BlockTextureAtlas;
 
 void Game::Init()

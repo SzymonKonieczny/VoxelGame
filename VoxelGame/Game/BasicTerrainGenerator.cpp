@@ -4,13 +4,13 @@
 void BasicTerrainGenerator::generateTerrain(std::shared_ptr<ChunkColumn> chunkColumn)
 {
 
-	// Far lands type EAAAAAA/EwAK1yM9CQAAexSCQQ==
+	// Far lands type EwApXA8+DQAEAAAAexQOQAkAAHsUrj4BEACPwvW/EwCPwvU9//8AAADNzCxA
 
-	//for (auto& chunk : chunkColumn->m_Chunks)
-	for (int nr = 0; nr<3;nr++)
+
+	for (int nr = 0; nr<8;nr++)
 	{
 		auto chunk = chunkColumn->m_Chunks[nr];
-		FastNoise::SmartNode<> fnGenerator = FastNoise::NewFromEncodedNodeTree("EwApXA8+DQAEAAAAexQOQAkAAHsUrj4BEADNzIw/EwAK1yM9//8AAABcj4pB");
+		FastNoise::SmartNode<> fnGenerator = FastNoise::NewFromEncodedNodeTree("EwApXA8+DQAEAAAAexQOQAkAAHsUrj4BEACPwvW/EwCPwvU9//8AAADNzCxA");
 
 		std::vector<float> noiseOutput(16 * 16 * 16);
 		glm::ivec3 ChunkPos =chunk->m_ChunkPos;
@@ -22,7 +22,7 @@ void BasicTerrainGenerator::generateTerrain(std::shared_ptr<ChunkColumn> chunkCo
 
 		for (int i = 0; i < chunk->blocks.size(); i++)
 		{
-			chunk->blocks[i] = noiseOutput[index++] > 0.3f ? (int)BlockName::Stone : (int)BlockName::Air;
+			chunk->blocks[i] = noiseOutput[index++] > 0.07f ? (int)BlockName::Stone : (int)BlockName::Air;
 		}
 
 	}

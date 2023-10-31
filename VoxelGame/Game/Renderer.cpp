@@ -63,7 +63,9 @@ void Renderer::OnWindowResize(GLFWwindow* window, int width, int height)
 {
 	screenHeight = height;
 	screenWidth = width;
-	RendererCommand::SetViewport(0, 0, screenWidth, screenHeight);
+	frame.reset(new Framebuffer(FramebufferOptions(screenWidth, screenHeight)));
+	ShadowMap.reset(new Framebuffer(FramebufferOptions(screenWidth, screenHeight, false)));
+
 
 }
 
@@ -87,7 +89,7 @@ void Renderer::EndScene()
 		glm::vec3(1.f, -1.0f, 1.f),
 		glm::vec3(0.0f, 1.0f, 0.0f));*/
 
-	glm::mat4 lightProjection = glm::perspective(glm::radians(90.f),1.f,0.1f,100.f);
+	glm::mat4 lightProjection = glm::perspective(glm::radians(90.f), screenWidth / (float)screenHeight,0.1f,100.f);
 
 		glm::mat4 lightView = glm::lookAt(lightPos, //position
 			lightPos + glm::normalize(lightDir), //position + direction
@@ -103,7 +105,7 @@ void Renderer::EndScene()
 	
 	ShadowPassShader->Bind();
 	ShadowPassShader->UploadUniformMat4("lightSpaceMatrix", lightSpaceMatrix);
-
+	
 	for (auto& m : Meshes)
 	{
 		if (m->getCount() == 0) continue;
@@ -128,7 +130,7 @@ void Renderer::EndScene()
 	
 	frame->Bind();
 	glViewport(0, 0, screenWidth, screenHeight); // Normal render pass
-	glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
+	glClearColor(0.39f, 0.67f, 0.8f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glActiveTexture(GL_TEXTURE7);	//ShadowMap uploading 
 		ShadowMap->BindDepthTexture();
@@ -180,6 +182,7 @@ void Renderer::EndScene()
 		}
 	}
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glViewport(0, 0, screenWidth, screenHeight); // ScreenQuad draw
 
 	glDisable(GL_DEPTH_TEST);
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);

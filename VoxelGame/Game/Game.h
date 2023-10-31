@@ -16,7 +16,7 @@ public:
 	void RenderWorld(World& world);
 
 	
-	static int CHUNK_SIZE;
+	//static int CHUNK_SIZE;
 	static std::shared_ptr<Texture> BlockTextureAtlas;
 private:
 	bool isChunkColumnInFrustum(std::shared_ptr<ChunkColumn> col);
