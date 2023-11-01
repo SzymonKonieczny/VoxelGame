@@ -4,6 +4,7 @@
 #include "PlainsBiome.h"
 class EarthyTerrainGenerator : public ITerrainGenerator {
 	// Inherited via ITerrainGenerator
+public:
 	PlainsBiome Plains;
 	EarthyTerrainGenerator(std::shared_ptr<ChunkManager> ChunkManagerRef) : ITerrainGenerator(ChunkManagerRef) {};
 	virtual void generateTerrain(std::shared_ptr<ChunkColumn> chunkColumn) override;

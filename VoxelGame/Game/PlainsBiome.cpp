@@ -4,15 +4,36 @@
 void PlainsBiome::generateLandmass(std::shared_ptr<ChunkColumn> chunkColumn, std::shared_ptr<ChunkManager> chunkManager)
 {
 
-	// Far lands type EwApXA8+GgABDQAEAAAAexQOQAkAAHsUrj4BEACPwvW/EwCPwvU9//8AAADNzCxAAQMA16NwPw==
+	for (std::shared_ptr<Chunk> chunk : chunkColumn->m_Chunks)
+					chunk->setIsGenerated(false);
 
-	//cool dziurawy Amplified EwDNzEw9IQANAAQAAAB7FA5ACQAAexSuPgEQAI/C9b8TAI/C9T3//wAAAM3MLEAEAI/CdT0AAAAAcT26wHsUrj8AAAAACtejvAAAAAAAAAAAAArXIzw=
+	FastNoise::SmartNode<> fnGenerator = FastNoise::NewFromEncodedNodeTree("FwAAAEDAAACAPwAAAAAAAIA/EwApXA8+EAAAAABAGQATAMP1KD8NAAIAAADNzJxACQAAUriePgBmZqY/AQQAAAAAAAAAAACamZk+AAAAAAAAAAAAAAAAAACgwAAAAAAAzcxMPg==");
 
-	// With actual bottom. Good base !:
-	// EwDFILC9GQANAAQAAAB7FA5ACQAAexSuPgAAAAAAAQQAAAAAAAAAAAAAAIA/AAAAAAAAAAAAAAAAAACAPwAAAAA=
-	//EwCuR2G+DQAPAAAAhetRQCAADQAEAAAAexQOQAkAAHsUrj4AAAAAAAEEAAAAAAAAAAAACtcDQAAAAAAAAAAAAAAAAAAAgD8AAAAAAM3MzD0APQrXvgAAACBA
+	std::vector<float> noiseOutput(ChunkSize * ChunkSize);
+	glm::ivec2 ColumnPos = chunkColumn->m_Position;
+
+	fnGenerator->GenUniformGrid2D(noiseOutput.data(), ColumnPos.x * ChunkSize, ColumnPos.y * ChunkSize,
+		ChunkSize, ChunkSize, 0.2f, 1337);
+	int BaseGround = 60;
+	int Variation = 50;
+		
+	int index = 0;
+	for (int z = 0; z < ChunkSize; z++)
+		for (int x = 0; x < ChunkSize; x++)
+		{
+			int height = BaseGround+ noiseOutput[index++] * Variation;
+				for (int y = height-1; y >=0; y--)
+				chunkColumn->setBlockInColumn({ x,y,z }, BlockName::Stone);
+		}
+
+		
 
 
+
+	
+
+	for (std::shared_ptr<Chunk> chunk : chunkColumn->m_Chunks)
+			chunk->setIsGenerated(true);
 }
 
 void PlainsBiome::addIcing(std::shared_ptr<ChunkColumn> chunkColumn, std::shared_ptr<ChunkManager> chunkManager)

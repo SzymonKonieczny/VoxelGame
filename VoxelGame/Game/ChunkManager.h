@@ -1,7 +1,7 @@
 #pragma once
 #include "ChunkColumn.h"
-//#include "TerrainGeneratorTest.h"
 #include "HeavenTerrainGenerator.h"
+#include "EarthyTerrainGenerator.h"
 #include <map>
 #include <unordered_set>
 
@@ -13,7 +13,7 @@ class ChunkManager{
 public:
 	ChunkManager()
 	{
-		Generator.reset(new HeavenTerrainGenerator(std::shared_ptr<ChunkManager>(this)));
+		Generator.reset(new EarthyTerrainGenerator(std::shared_ptr<ChunkManager>(this)));
 	
 	}
 	
