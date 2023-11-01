@@ -10,14 +10,17 @@
 #include <thread>
 #include "BlockInfo.h"
 class ChunkManager{
+	std::shared_ptr<ChunkManager> selfSmartPointer; // for chunkColumns
 public:
 	ChunkManager()
 	{
 		Generator.reset(new EarthyTerrainGenerator(std::shared_ptr<ChunkManager>(this)));
-	
+		selfSmartPointer.reset(this);
 	}
 	
 	void SetBlockAtPosition(glm::vec3 Position, BlockName name);
+	BlockName GetBlockAtPosition(glm::vec3 Position);
+
 
 	void GenerateChunksFromQueue(int amount);
 	void MeshChunksFromQueue(int amount);

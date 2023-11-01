@@ -23,6 +23,32 @@ void ChunkManager::SetBlockAtPosition(glm::vec3 Position, BlockName name)
 		// ADD TO BLOCK QUEUE FOR NOT YET CREATED CHUNKS
 	}
 }
+BlockName ChunkManager::GetBlockAtPosition(glm::vec3 Position)
+{
+	BlockName ret = BlockName::Air;
+	glm::vec3 ChunkPos = Util::WorldPosToChunkPos(Position);
+	if (ChunkPos.y < 0 || ChunkPos.y >= ChunksInColumn) {
+		//std::cout << "Trying to set block in a ChunkPos.y <0 OR ChunkPos.y >= ChunksInColumn@ ChunkManager::GetBlockAtPosition \n";
+		return ret; 
+	}
+
+	glm::ivec2 ColumnPos = { ChunkPos.x,ChunkPos.z };
+	if (ChunkMap.contains(ColumnPos))
+	{
+		glm::vec3 LocalPos = Util::WorldPosToLocalPos(Position);
+		auto& column = ChunkMap.at(ColumnPos);
+		auto& chunk = column->getChunk(ChunkPos.y);
+		int index = Util::Vec3ToIndex(LocalPos);
+		if (index < 0) {
+			std::cout << "Reading blocks[<0] @ ChunkManager::GetBlockAtPosition \n";
+			return ret;
+		}
+
+		ret = (BlockName)chunk->blocks[index];
+
+	}
+	return ret;
+}
 void ChunkManager::GenerateChunksFromQueue(int amount )
 {
 	std::list<glm::ivec2> PosList;
@@ -126,7 +152,7 @@ void ChunkManager::UpdateLoadedChunkMap(glm::vec2 CenterPoint)
 
 			}
 			else {								
-				ChunkMap.emplace( glm::ivec2(x, z), new ChunkColumn(glm::ivec2(x, z)));
+				ChunkMap.emplace( glm::ivec2(x, z), new ChunkColumn(glm::ivec2(x, z), selfSmartPointer));
 				ChunksGenerationQueue.push(glm::ivec2(x, z));
 			}
 		}

@@ -10,14 +10,15 @@ struct chunkVerex {
 	glm::vec2 UV;
 	glm::vec3 Color;
 };
-
+class ChunkManager;
 class Chunk {
+	std::shared_ptr<ChunkManager> m_chunkManager;
 public:
 	std::mutex blockMutex;
 	std::mutex MeshMutex;
 
 
-	Chunk(glm::ivec3 pos);
+	Chunk(glm::ivec3 pos, std::shared_ptr<ChunkManager> chunkManager);
 	glm::ivec3 m_ChunkPos;
 		Mesh& getMesh() { return m_ChunkSolidMesh; };
 	void GenerateMesh();

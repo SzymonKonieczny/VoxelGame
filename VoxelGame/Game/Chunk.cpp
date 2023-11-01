@@ -2,7 +2,7 @@
 #include "Chunk.h"
 #include "Game.h"
 std::shared_ptr<Shader>  Chunk::ChunkSolidShader;
-Chunk::Chunk(glm::ivec3 pos) : m_ChunkPos(pos)
+Chunk::Chunk(glm::ivec3 pos, std::shared_ptr<ChunkManager> chunkManager) : m_ChunkPos(pos), m_chunkManager(chunkManager)
 {
 	blocks.resize(ChunkSize* ChunkSize* ChunkSize);
 	//for (auto& block : blocks) block = 2;
@@ -100,7 +100,28 @@ bool Chunk::isValidPosition(glm::vec3 pos)
 
 bool Chunk::isSolidBlock(glm::vec3 pos)
 {
-	if (!isValidPosition(pos)) return false;
+	BlockName block;
+	block = BlockName::Air;
+	if (!isValidPosition(pos)) {
+
+	//	if (pos.x > 15)
+	//		block = m_chunkManager->GetBlockAtPosition(Util::LocPosAndChunkPosToWorldPos({ 0,pos.y,pos.z }, m_ChunkPos + glm::ivec3(1,0,0) ));
+	//	if (pos.x <0)
+	//		block = m_chunkManager->GetBlockAtPosition(Util::LocPosAndChunkPosToWorldPos({ 15,pos.y,pos.z }, m_ChunkPos + glm::ivec3(-1, 0, 0)));
+	//	if (pos.z > 15)
+	//		block = m_chunkManager->GetBlockAtPosition(Util::LocPosAndChunkPosToWorldPos({ pos.x,pos.y,0 }, m_ChunkPos + glm::ivec3(0, 0, 1)));
+	//	if (pos.z < 0)
+	//		block = m_chunkManager->GetBlockAtPosition(Util::LocPosAndChunkPosToWorldPos({ pos.x,pos.y,15 }, m_ChunkPos + glm::ivec3(0, 0, -1)));
+	//
+	//
+	//	if (pos.x > 15)
+	//		block = m_chunkManager->GetBlockAtPosition(Util::LocPosAndChunkPosToWorldPos({ pos.x,0,pos.z }, m_ChunkPos + glm::ivec3(0, 1, 0)));
+	//	if (pos.x < 0)
+	//		block = m_chunkManager->GetBlockAtPosition(Util::LocPosAndChunkPosToWorldPos({ pos.x,15,pos.z }, m_ChunkPos + glm::ivec3(0, -1, 0)));
+	//
+	//	return BlockTable[(int)block].isSold;
+		return false;
+	}
 	
 	const BlockInfo& info = BlockTable[blocks[Util::Vec3ToIndex(pos)]];
 	return info.isSold;
