@@ -35,7 +35,13 @@ glm::vec3 Util::IndexToVec3(int i)
 
 int Util::Vec3ToIndex(glm::vec3 pos)
 {
-	return ChunkSize * ChunkSize * pos.y + ChunkSize * pos.z + pos.x;
+
+	if(pos.x < 0 || pos.y < 0 || pos.z < 0 )
+		return glm::abs(ChunkSize * ChunkSize * pos.y + ChunkSize * pos.z + pos.x);
+
+
+
+	return ChunkSize * ChunkSize * pos.y + ChunkSize *pos.z + pos.x;
 
 }
 

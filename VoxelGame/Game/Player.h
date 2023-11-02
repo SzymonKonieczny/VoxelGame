@@ -3,6 +3,7 @@
 #include "Action.h"
 #include "PointCollider.h"
 #include "BlockInfo.h"
+#include "PointCollider.h"
 #include <queue>
 class Player {
 
@@ -15,6 +16,8 @@ public:
 	const glm::vec3& getPositon() { return Pos; };
 	Action GetAction();
 private:
+	
+	void handleCollisions();
 	void handleRotation();
 	Camera cam;
 	glm::vec3 Pos;
@@ -25,6 +28,7 @@ private:
 	float jumpForce = 0.2f;
 	float BlocksCooldown = 0.1;
 	float drag = 0.2f;
+	bool noClip = true;
 	glm::vec3 velocity;
 	std::queue<Action> actionQueue;
 

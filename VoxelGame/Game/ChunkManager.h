@@ -2,6 +2,8 @@
 #include "ChunkColumn.h"
 #include "HeavenTerrainGenerator.h"
 #include "EarthyTerrainGenerator.h"
+#include "TerrainGeneratorTest.h"
+
 #include <map>
 #include <unordered_set>
 
@@ -14,7 +16,7 @@ class ChunkManager{
 public:
 	ChunkManager()
 	{
-		Generator.reset(new EarthyTerrainGenerator(std::shared_ptr<ChunkManager>(this)));
+		Generator.reset(new TerrainGeneratorTest(std::shared_ptr<ChunkManager>(this)));
 		selfSmartPointer.reset(this);
 	}
 	

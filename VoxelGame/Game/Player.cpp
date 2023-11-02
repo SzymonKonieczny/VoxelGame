@@ -7,7 +7,7 @@
 #include<glm/gtx/rotate_vector.hpp>
 #include<glm/gtx/vector_angle.hpp>
 #include <iostream>
-Player::Player() : Pos(000,150,000), Rot(1,0,1), velocity(0,0,0)
+Player::Player() : Pos( 000,150, 000), Rot(1,0,1), velocity(0,0,0)
 {
 
 }
@@ -65,11 +65,14 @@ void Player::Move(float dt)
 		speed = 10.f;
 	}
 
+	if (!noClip) velocity.y -= 0.8f * dt;
+	if (!noClip)handleCollisions();
 
 	Pos += velocity;
 	velocity.x *= drag * dt;
 	velocity.z *= drag * dt;
-	velocity.y *= drag * dt;
+	if (noClip) velocity.y *= drag * dt;
+
 }
 
 void Player::HandleMouseButtons()
@@ -90,6 +93,27 @@ Action Player::GetAction()
 	Action ret = actionQueue.front();
 	actionQueue.pop();
 	return ret;
+}
+
+void Player::handleCollisions()
+{
+	PointCollider::isBlockAtCollidable()
+		//cant get a reference to chunkManager due to the structure
+		//Maybe somehow thru the action system?
+
+//	if (CheckCollisionSide(glm::vec3(Velocity.x, 0, 0)))
+//	{
+//		velocity.x = 0;
+//
+//	}
+//	if (CheckCollisionSide(glm::vec3(0, Velocity.y, 0)))
+//	{
+//		velocity.y = 0;
+//	}
+//	if (CheckCollisionSide(glm::vec3(0, 0, Velocity.z)))
+//	{
+//		velocity.z = 0;
+//	}
 }
 
 void Player::handleRotation()

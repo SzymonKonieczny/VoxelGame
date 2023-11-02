@@ -104,22 +104,22 @@ bool Chunk::isSolidBlock(glm::vec3 pos)
 	block = BlockName::Air;
 	if (!isValidPosition(pos)) {
 
-	//	if (pos.x > 15)
-	//		block = m_chunkManager->GetBlockAtPosition(Util::LocPosAndChunkPosToWorldPos({ 0,pos.y,pos.z }, m_ChunkPos + glm::ivec3(1,0,0) ));
-	//	if (pos.x <0)
-	//		block = m_chunkManager->GetBlockAtPosition(Util::LocPosAndChunkPosToWorldPos({ 15,pos.y,pos.z }, m_ChunkPos + glm::ivec3(-1, 0, 0)));
-	//	if (pos.z > 15)
-	//		block = m_chunkManager->GetBlockAtPosition(Util::LocPosAndChunkPosToWorldPos({ pos.x,pos.y,0 }, m_ChunkPos + glm::ivec3(0, 0, 1)));
-	//	if (pos.z < 0)
-	//		block = m_chunkManager->GetBlockAtPosition(Util::LocPosAndChunkPosToWorldPos({ pos.x,pos.y,15 }, m_ChunkPos + glm::ivec3(0, 0, -1)));
-	//
-	//
-	//	if (pos.x > 15)
-	//		block = m_chunkManager->GetBlockAtPosition(Util::LocPosAndChunkPosToWorldPos({ pos.x,0,pos.z }, m_ChunkPos + glm::ivec3(0, 1, 0)));
-	//	if (pos.x < 0)
-	//		block = m_chunkManager->GetBlockAtPosition(Util::LocPosAndChunkPosToWorldPos({ pos.x,15,pos.z }, m_ChunkPos + glm::ivec3(0, -1, 0)));
-	//
-	//	return BlockTable[(int)block].isSold;
+		if (pos.x > 15)
+			block = m_chunkManager->GetBlockAtPosition(Util::LocPosAndChunkPosToWorldPos({ 0,pos.y,pos.z }, m_ChunkPos + glm::ivec3(1,0,0) ));
+		if (pos.x <0)
+			block = m_chunkManager->GetBlockAtPosition(Util::LocPosAndChunkPosToWorldPos({ 15,pos.y,pos.z }, m_ChunkPos + glm::ivec3(-1, 0, 0)));
+		if (pos.z > 15)
+			block = m_chunkManager->GetBlockAtPosition(Util::LocPosAndChunkPosToWorldPos({ pos.x,pos.y,0 }, m_ChunkPos + glm::ivec3(0, 0, 1)));
+		if (pos.z < 0)
+			block = m_chunkManager->GetBlockAtPosition(Util::LocPosAndChunkPosToWorldPos({ pos.x,pos.y,15 }, m_ChunkPos + glm::ivec3(0, 0, -1)));
+	
+	
+		if (pos.x > 15)
+			block = m_chunkManager->GetBlockAtPosition(Util::LocPosAndChunkPosToWorldPos({ pos.x,0,pos.z }, m_ChunkPos + glm::ivec3(0, 1, 0)));
+		if (pos.x < 0)
+			block = m_chunkManager->GetBlockAtPosition(Util::LocPosAndChunkPosToWorldPos({ pos.x,15,pos.z }, m_ChunkPos + glm::ivec3(0, -1, 0)));
+	
+		return BlockTable[(int)block].isSold;
 		return false;
 	}
 	
