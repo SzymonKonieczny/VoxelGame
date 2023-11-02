@@ -51,6 +51,8 @@ glm::vec3 Util::WorldPosToChunkPos(glm::vec3 WorldPos)
 glm::vec3 Util::LocPosAndChunkPosToWorldPos(glm::vec3 LocPos, glm::vec3 ChunkPos)
 {
 
+
+
 	return glm::vec3(LocPos.x + ChunkPos.x * ChunkSize, LocPos.y + ChunkPos.y * ChunkSize, LocPos.z + ChunkPos.z  * ChunkSize);
 
 
@@ -58,12 +60,16 @@ glm::vec3 Util::LocPosAndChunkPosToWorldPos(glm::vec3 LocPos, glm::vec3 ChunkPos
 
 glm::vec3 Util::WorldPosToLocalPos(glm::vec3 WorldPos)
 {
-	int x = static_cast<int>(WorldPos.x);
-	int y = static_cast<int>(WorldPos.y);
-	int z = static_cast<int>(WorldPos.z);
+	if (WorldPos.x < 0)WorldPos.x--;
+	if (WorldPos.y < 0)WorldPos.y--;
+	if (WorldPos.z < 0)WorldPos.z--; 
+	// 0 coordinate is in the positives, so negatives start at -1, chence chunkPos X =-1 are blocks -1 to -16, not 0 to 15
 
-	//if (x < 0) x--;
-	//if (z < 0) z--; // 0 coordinate is in the positives, so negatives start at -1, chence chunkPos X =-1 are blocks -1 to -16, not 0 to 15
-	return glm::vec3((ChunkSize + (x % ChunkSize)) % ChunkSize, (ChunkSize + (y % ChunkSize)) % ChunkSize, (ChunkSize + (z % ChunkSize)) % ChunkSize);
+	int x = static_cast<int>(WorldPos.x) %ChunkSize;
+	int y = static_cast<int>(WorldPos.y) %ChunkSize;
+	int z = static_cast<int>(WorldPos.z) %ChunkSize;
+	
+	return glm::vec3(x, y, z);
+	//return glm::vec3((ChunkSize + (x % ChunkSize)) % ChunkSize, (ChunkSize + (y % ChunkSize)) % ChunkSize, (ChunkSize + (z % ChunkSize)) % ChunkSize);
 
 }

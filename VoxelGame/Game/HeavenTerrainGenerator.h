@@ -1,6 +1,6 @@
 #pragma once
 #include "ITerrainGenerator.h"
-#include "PlainsBiome.h"
+#include "Biomes/PlainsBiome.h"
 class ChunkManager;
 
 class HeavenTerrainGenerator : public ITerrainGenerator {

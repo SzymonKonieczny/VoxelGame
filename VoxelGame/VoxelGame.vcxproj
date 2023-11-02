@@ -163,6 +163,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Biomes\DesertBiome.cpp" />
     <ClCompile Include="Game\EarthyTerrainGenerator.cpp" />
     <ClCompile Include="Game\HeavenTerrainGenerator.cpp" />
     <ClCompile Include="Game\BlockInfo.cpp" />
@@ -171,7 +172,7 @@
     <ClCompile Include="Game\Game.cpp" />
     <ClCompile Include="Game\Global.cpp" />
     <ClCompile Include="Game\Input.cpp" />
-    <ClCompile Include="Game\PlainsBiome.cpp" />
+    <ClCompile Include="Game\Biomes\PlainsBiome.cpp" />
     <ClCompile Include="Game\Player.cpp" />
     <ClCompile Include="Game\Ray.cpp" />
     <ClCompile Include="Game\TerrainGeneratorTest.cpp" />
@@ -192,6 +193,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Action.h" />
+    <ClInclude Include="Game\Biomes\DesertBiome.h" />
     <ClInclude Include="Game\EarthyTerrainGenerator.h" />
     <ClInclude Include="Game\HeavenTerrainGenerator.h" />
     <ClInclude Include="Game\BlockInfo.h" />
@@ -224,10 +226,10 @@
     <ClInclude Include="Game\FastNoise2\include\FastSIMD\SIMDTypeList.h" />
     <ClInclude Include="Game\Game.h" />
     <ClInclude Include="Game\Global.h" />
-    <ClInclude Include="Game\IBiome.h" />
+    <ClInclude Include="Game\Biomes\IBiome.h" />
     <ClInclude Include="Game\Input.h" />
     <ClInclude Include="Game\ITerrainGenerator.h" />
-    <ClInclude Include="Game\PlainsBiome.h" />
+    <ClInclude Include="Game\Biomes\PlainsBiome.h" />
     <ClInclude Include="Game\Player.h" />
     <ClInclude Include="Game\PointCollider.h" />
     <ClInclude Include="Game\Ray.h" />

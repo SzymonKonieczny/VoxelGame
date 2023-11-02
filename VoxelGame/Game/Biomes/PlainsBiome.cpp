@@ -7,13 +7,10 @@ void PlainsBiome::generateLandmass(std::shared_ptr<ChunkColumn> chunkColumn, std
 	for (std::shared_ptr<Chunk> chunk : chunkColumn->m_Chunks)
 					chunk->setIsGenerated(false);
 
-	FastNoise::SmartNode<> fnGenerator = FastNoise::NewFromEncodedNodeTree("FwAAAEDAAACAPwAAAAAAAIA/EwApXA8+EAAAAABAGQATAMP1KD8NAAIAAADNzJxACQAAUriePgBmZqY/AQQAAAAAAAAAAACamZk+AAAAAAAAAAAAAAAAAACgwAAAAAAAzcxMPg==");
-
 	std::vector<float> noiseOutput(ChunkSize * ChunkSize);
-	glm::ivec2 ColumnPos = chunkColumn->m_Position;
+	
+	generateJustHeightmap(chunkColumn, noiseOutput);
 
-	fnGenerator->GenUniformGrid2D(noiseOutput.data(), ColumnPos.x * ChunkSize, ColumnPos.y * ChunkSize,
-		ChunkSize, ChunkSize, 0.2f, 1337);
 	int BaseGround = 60;
 	int Variation = 50;
 		
@@ -27,23 +24,13 @@ void PlainsBiome::generateLandmass(std::shared_ptr<ChunkColumn> chunkColumn, std
 		}
 
 		
-
-
-
-	
-
 	for (std::shared_ptr<Chunk> chunk : chunkColumn->m_Chunks)
 			chunk->setIsGenerated(true);
 }
 
 void PlainsBiome::addIcing(std::shared_ptr<ChunkColumn> chunkColumn, std::shared_ptr<ChunkManager> chunkManager)
 {
-	std::queue<BlockName> topToBottomSpecialBlocks;
 
-	topToBottomSpecialBlocks.push(BlockName::Grass);
-	topToBottomSpecialBlocks.push(BlockName::Dirt);
-	topToBottomSpecialBlocks.push(BlockName::Dirt);
-	topToBottomSpecialBlocks.push(BlockName::Dirt);
 
 
 	for (int z = 0; z < ChunkSize; z++)
@@ -67,5 +54,36 @@ void PlainsBiome::addDecoration(std::shared_ptr<ChunkColumn> chunk, std::shared_
 }
 
 void PlainsBiome::generateFeatures(std::shared_ptr<ChunkColumn> chunk, std::shared_ptr<ChunkManager> chunkManager)
+{
+}
+
+void PlainsBiome::generateJustHeightmap(std::shared_ptr<ChunkColumn> chunkColumn, std::vector<float>& Output)
+{
+	FastNoise::SmartNode<> fnGenerator = FastNoise::NewFromEncodedNodeTree("FwAAAEDAAACAPwAAAAAAAIA/EwApXA8+EAAAAABAGQATAMP1KD8NAAIAAADNzJxACQAAUriePgBmZqY/AQQAAAAAAAAAAACamZk+AAAAAAAAAAAAAAAAAACgwAAAAAAAzcxMPg==");
+
+	glm::ivec2 ColumnPos = chunkColumn->m_Position;
+
+	fnGenerator->GenUniformGrid2D(Output.data(), ColumnPos.x * ChunkSize, ColumnPos.y * ChunkSize,
+		ChunkSize, ChunkSize, 0.2f, 1337);
+}
+
+void PlainsBiome::addIcingRow(std::shared_ptr<ChunkColumn> chunkColumn, std::shared_ptr<ChunkManager> chunkManager, glm::vec2 LocCoords)
+{
+
+		
+			std::queue<BlockName> topToBottomSpecialBlocksCopy(topToBottomSpecialBlocks);
+			for (int y = (chunkColumn->m_Chunks.size() * ChunkSize) - 1; y >= 0; y--)
+			{
+				if (chunkColumn->getBlockInColumn({ LocCoords.x,y,LocCoords.y }) != BlockName::Air)
+				{
+					chunkColumn->setBlockInColumn({ LocCoords.x,y,LocCoords.y }, topToBottomSpecialBlocksCopy.front());
+					topToBottomSpecialBlocksCopy.pop();
+					if (topToBottomSpecialBlocksCopy.empty()) break;
+				}
+			}
+		
+}
+
+void PlainsBiome::addDecorationRow(std::shared_ptr<ChunkColumn> chunk, std::shared_ptr<ChunkManager> chunkManager, glm::vec2 LocCoords)
 {
 }

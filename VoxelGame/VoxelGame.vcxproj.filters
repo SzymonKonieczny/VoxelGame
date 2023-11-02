@@ -87,10 +87,13 @@
     <ClCompile Include="Game\Global.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="Game\PlainsBiome.cpp">
+    <ClCompile Include="Game\Biomes\PlainsBiome.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
     <ClCompile Include="Game\EarthyTerrainGenerator.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Biomes\DesertBiome.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
   </ItemGroup>
@@ -248,13 +251,16 @@
     <ClInclude Include="Game\FastNoise2\include\FastSIMD\SIMDTypeList.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="Game\IBiome.h">
+    <ClInclude Include="Game\Biomes\IBiome.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="Game\PlainsBiome.h">
+    <ClInclude Include="Game\Biomes\PlainsBiome.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
     <ClInclude Include="Game\EarthyTerrainGenerator.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Biomes\DesertBiome.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
   </ItemGroup>
