@@ -82,7 +82,7 @@ public:
 		case BlockFace::EAST:
 			v = { pos + glm::vec3(1.f,0.f,0.f),UV + glm::vec2(0.f,0.f), glm::vec3(0.65f,0.65f,0.65f) };
 			pushVertToMesh(mesh, v);
-			v = { pos + glm::vec3(1.f,1.f,0.f),UV + glm::vec2(0.2f,0.f), glm::vec3(0.65f,0.65f,0.65f) };
+			v = { pos + glm::vec3(1.f,1.f,0.f),UV + glm::vec2(0.f,0.2f), glm::vec3(0.65f,0.65f,0.65f) };
 			pushVertToMesh(mesh, v);
 
 			v = { pos + glm::vec3(1.f,1.f,1.f),UV + glm::vec2(0.2f,0.2f), glm::vec3(0.65f,0.65f,0.65f) };
@@ -91,7 +91,7 @@ public:
 			v = { pos + glm::vec3(1.f,1.f,1.f),UV + glm::vec2(0.2f,0.2f), glm::vec3(0.65f,0.65f,0.65f) };
 			pushVertToMesh(mesh, v);
 
-			v = { pos + glm::vec3(1.f,0.f,1.f),UV + glm::vec2(0.f,0.2f), glm::vec3(0.65f,0.65f,0.65f) };
+			v = { pos + glm::vec3(1.f,0.f,1.f),UV + glm::vec2(0.2f,0.f), glm::vec3(0.65f,0.65f,0.65f) };
 			pushVertToMesh(mesh, v);
 
 			v = { pos + glm::vec3(1.f,0.f,0.f),UV + glm::vec2(0.f,0.f), glm::vec3(0.65f,0.65f,0.65f) };
@@ -101,7 +101,8 @@ public:
 		case BlockFace::WEST:
 			v = { pos + glm::vec3(0.f,0.f,0.f),UV + glm::vec2(0.f,0.f), glm::vec3(0.65f,0.65f,0.65f) };
 			pushVertToMesh(mesh, v);
-			v = { pos + glm::vec3(0.f,1.f,0.f),UV + glm::vec2(0.2f,0.f), glm::vec3(0.65f,0.65f,0.65f) };
+
+			v = { pos + glm::vec3(0.f,1.f,0.f),UV + glm::vec2(0.f,0.2f), glm::vec3(0.65f,0.65f,0.65f) };
 			pushVertToMesh(mesh, v);
 
 			v = { pos + glm::vec3(0.f,1.f,1.f),UV + glm::vec2(0.2f,0.2f), glm::vec3(0.65f,0.65f,0.65f) };
@@ -110,7 +111,7 @@ public:
 			v = { pos + glm::vec3(0.f,1.f,1.f),UV + glm::vec2(0.2f,0.2f), glm::vec3(0.65f,0.65f,0.65f) };
 			pushVertToMesh(mesh, v);
 
-			v = { pos + glm::vec3(0.f,0.f,1.f),UV + glm::vec2(0.f,0.2f), glm::vec3(0.65f,0.65f,0.65f) };
+			v = { pos + glm::vec3(0.f,0.f,1.f),UV + glm::vec2(0.2f,0.f), glm::vec3(0.65f,0.65f,0.65f) };
 			pushVertToMesh(mesh, v);
 
 			v = { pos + glm::vec3(0.f,0.f,0.f),UV + glm::vec2(0.f,0.f), glm::vec3(0.65f,0.65f,0.65f) };
