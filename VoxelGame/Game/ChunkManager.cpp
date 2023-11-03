@@ -16,6 +16,7 @@ void ChunkManager::SetBlockAtPosition(glm::vec3 Position, BlockName name)
 		if (index < 0) return;
 		chunk->blocks[index] = (unsigned int)name;
 		chunk->setIsDirty(true);
+
 		AddToMeshQueue(ChunkPos);
 	}
 	else
@@ -76,8 +77,7 @@ void ChunkManager::MeshChunksFromQueue(int amount)
 	for (int i = 0; i < amount; i++)
 	{
 		if (ChunksMeshingQueue.empty()) break;
-		glm::ivec3 Pos =ChunksMeshingQueue.front();
-		ChunksMeshingQueue.pop();
+		glm::ivec3 Pos = GetFromMeshQueue();
 		//if (ChunkMap.at({ Pos.x,Pos.z})->m_Chunks[Pos.y]->isDirty() //Checking if the chunk is dirty
 		//	&& ChunksInMeshQueue.contains(Pos))
 		{
@@ -187,7 +187,25 @@ void ChunkManager::UpdateLoadedChunkMap(glm::vec2 CenterPoint)
 
 void ChunkManager::AddToMeshQueue(glm::ivec3 Coord)
 {
-	if (ChunksInMeshQueue.contains(Coord))  return;
+	MeshingQueueMutex.lock();
+	if (ChunksInMeshQueue.contains(Coord))
+	{
+		MeshingQueueMutex.unlock();
+		return;
+
+	}
 	ChunksMeshingQueue.push(Coord);
 	ChunksInMeshQueue.emplace(Coord);
+	MeshingQueueMutex.unlock();
+
+}
+glm::ivec3 ChunkManager::GetFromMeshQueue()
+{
+	MeshingQueueMutex.lock();
+
+	glm::ivec3 ret =ChunksMeshingQueue.front();
+	ChunksMeshingQueue.pop();
+	MeshingQueueMutex.unlock();
+	return ret;
+
 }

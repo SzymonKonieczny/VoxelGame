@@ -13,8 +13,9 @@ public:
 	void Move(float dt);
 	void HandleMouseButtons();
 	Camera& getCamera() { return cam; }
-	const glm::vec3& getPositon() { return Pos; };
+	 glm::vec3& getPositon() { return Pos; };
 	Action GetAction();
+	float lastActionTime = 0;
 private:
 	
 	void handleCollisions();

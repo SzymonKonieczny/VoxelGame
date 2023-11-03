@@ -24,6 +24,8 @@ public:
 	void GenerateMesh();
 	
 	std::vector<unsigned int> blocks;
+	std::vector<char> lightLevels;
+
 	static std::shared_ptr<Shader>  ChunkSolidShader;
 	void setIsGenerated(bool flag) { m_isGenerated = flag; }
 	void setIsMeshed(bool flag) { m_isMeshed = flag; m_ChunkSolidMesh.setReadyForDraw(flag); }

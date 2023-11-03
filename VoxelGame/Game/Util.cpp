@@ -79,3 +79,23 @@ glm::vec3 Util::WorldPosToLocalPos(glm::vec3 WorldPos)
 	//return glm::vec3((ChunkSize + (x % ChunkSize)) % ChunkSize, (ChunkSize + (y % ChunkSize)) % ChunkSize, (ChunkSize + (z % ChunkSize)) % ChunkSize);
 
 }
+
+CommandType Util::ParseCommand(std::string command, std::vector<float>& args)
+{
+	std::stringstream ss;
+	std::string commandType;
+	CommandType ret = CommandType::None;
+	ss << command;
+	ss >> commandType;
+	int temp;
+
+	if (commandType == "tp") ret = CommandType::Teleport;
+	if (commandType == "genswap") ret = CommandType::GeneratorSwap;
+
+
+	while (ss >> temp)
+	{
+		args.push_back(temp);
+	}
+	return ret;
+}

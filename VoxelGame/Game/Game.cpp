@@ -52,7 +52,7 @@ void Game::Start()
 
 void Game::RenderWorld(World& world)
 {
-	for (auto& chunkCol : world.chunkManager.getChunks())
+	for (auto& chunkCol : world.chunkManager->getChunks())
 	{
 		if (isChunkColumnInFrustum(chunkCol.second))
 		{

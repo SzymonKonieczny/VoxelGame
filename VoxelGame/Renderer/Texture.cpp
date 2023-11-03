@@ -23,7 +23,6 @@ Texture::Texture(std::string path)
 	glTextureSubImage2D(m_ID, 0, 0, 0, m_Width, m_Height, GL_RGBA, GL_UNSIGNED_BYTE, DataBuffer);
 
 	stbi_image_free(DataBuffer);
-	std::cout << "Texture generated with info :" << m_ID;
 }
 
 void Texture::Bind(unsigned int slot)

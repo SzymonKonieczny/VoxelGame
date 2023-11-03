@@ -2,7 +2,7 @@
 #include <glm/glm.hpp>
 #include "BlockInfo.h"
 enum class ActionType {
-	None, Break, Place
+	None, Break, Place, OpenConsole, PrintInfo
 };
 struct Action{
 	//Action(ActionType type_ = ActionType::None, glm::vec3 Coordinates = {0,0,0}, 
@@ -35,6 +35,18 @@ public:
 		a.Direction = Direction;
 		a.type = ActionType::Place;
 		a.Range = Range;
+		return a;
+	}
+	static Action OpenConsoleAction() {
+		Action a;
+
+		a.type = ActionType::OpenConsole;
+		return a;
+	}
+	static Action PrintInfoAction() {
+		Action a;
+
+		a.type = ActionType::PrintInfo;
 		return a;
 	}
 };

@@ -13,10 +13,11 @@
 #include "BlockInfo.h"
 class ChunkManager{
 	std::shared_ptr<ChunkManager> selfSmartPointer; // for chunkColumns
+	std::mutex MeshingQueueMutex;
 public:
 	ChunkManager()
 	{
-		Generator.reset(new TerrainGeneratorTest(std::shared_ptr<ChunkManager>(this)));
+		Generator.reset(new EarthyTerrainGenerator(std::shared_ptr<ChunkManager>(this)));
 		selfSmartPointer.reset(this);
 	}
 	
@@ -35,6 +36,7 @@ public:
 
 	void UpdateLoadedChunkMap(glm::vec2 CenterPoint);
 	void AddToMeshQueue(glm::ivec3 Coord);
+	glm::ivec3 GetFromMeshQueue();
 
 	std::unordered_map<glm::ivec2,std::shared_ptr<ChunkColumn>> ChunkMap;
 	std::queue<glm::ivec2> ChunksGenerationQueue;

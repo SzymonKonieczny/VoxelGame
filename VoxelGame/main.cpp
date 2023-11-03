@@ -4,12 +4,10 @@
 
 int main()
 {
-	std::cout << "Hello swiat xd\n";
 	Game  game;
 	game.Init();
 
 	game.Start();
-
 
 
 	Renderer::Shutdown();

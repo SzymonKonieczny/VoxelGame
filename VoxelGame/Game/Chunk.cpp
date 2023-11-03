@@ -5,6 +5,8 @@ std::shared_ptr<Shader>  Chunk::ChunkSolidShader;
 Chunk::Chunk(glm::ivec3 pos, std::shared_ptr<ChunkManager> chunkManager) : m_ChunkPos(pos), m_chunkManager(chunkManager)
 {
 	blocks.resize(ChunkSize* ChunkSize* ChunkSize);
+	lightLevels.resize(ChunkSize * ChunkSize * ChunkSize);
+
 	//for (auto& block : blocks) block = 2;
 
 
@@ -55,22 +57,22 @@ void Chunk::GenerateMesh()
 		switch (blockInfo.ModelType) {
 		case BlockModelType::Cube:
 			if (!isSolidBlock(pos + glm::vec3(1.f, 0.f, 0.f)))
-				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::EAST, blockInfo.UVside);
+				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::EAST, blockInfo.UVside,lightLevels[i]);
 			if (!isSolidBlock(pos + glm::vec3(-1.f, 0.f, 0.f)))
-				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::WEST, blockInfo.UVside);
+				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::WEST, blockInfo.UVside, lightLevels[i]);
 			if (!isSolidBlock(pos + glm::vec3(0.f, 0.f, -1.f)))
-				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::SOUTH, blockInfo.UVside);
+				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::SOUTH, blockInfo.UVside, lightLevels[i]);
 			if (!isSolidBlock(pos + glm::vec3(0.f, 0.f, 1.f)))
-				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::NORTH, blockInfo.UVside);
+				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::NORTH, blockInfo.UVside, lightLevels[i]);
 			if (!isSolidBlock(pos + glm::vec3(0.f, 1.f, 0.f)))
-				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::UP, blockInfo.UVtop);
+				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::UP, blockInfo.UVtop, lightLevels[i]);
 			if (!isSolidBlock(pos + glm::vec3(0.f, -1.f, 0.f)))
-				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::DOWN, blockInfo.UVbottom);
+				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::DOWN, blockInfo.UVbottom, lightLevels[i]);
 
 			break;
 		case BlockModelType::X:
-			FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::X1, blockInfo.UVside);
-			FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::X2, blockInfo.UVside);
+			FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::X1, blockInfo.UVside, lightLevels[i]);
+			FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::X2, blockInfo.UVside, lightLevels[i]);
 
 			break;
 		}
@@ -103,7 +105,6 @@ bool Chunk::isSolidBlock(glm::vec3 pos)
 	BlockName block;
 	block = BlockName::Air;
 	if (!isValidPosition(pos)) {
-
 		if (pos.x > 15)
 			block = m_chunkManager->GetBlockAtPosition(Util::LocPosAndChunkPosToWorldPos({ 0,pos.y,pos.z }, m_ChunkPos + glm::ivec3(1,0,0) ));
 		if (pos.x <0)
@@ -112,11 +113,9 @@ bool Chunk::isSolidBlock(glm::vec3 pos)
 			block = m_chunkManager->GetBlockAtPosition(Util::LocPosAndChunkPosToWorldPos({ pos.x,pos.y,0 }, m_ChunkPos + glm::ivec3(0, 0, 1)));
 		if (pos.z < 0)
 			block = m_chunkManager->GetBlockAtPosition(Util::LocPosAndChunkPosToWorldPos({ pos.x,pos.y,15 }, m_ChunkPos + glm::ivec3(0, 0, -1)));
-	
-	
-		if (pos.x > 15)
+		if (pos.y > 15)
 			block = m_chunkManager->GetBlockAtPosition(Util::LocPosAndChunkPosToWorldPos({ pos.x,0,pos.z }, m_ChunkPos + glm::ivec3(0, 1, 0)));
-		if (pos.x < 0)
+		if (pos.y < 0)
 			block = m_chunkManager->GetBlockAtPosition(Util::LocPosAndChunkPosToWorldPos({ pos.x,15,pos.z }, m_ChunkPos + glm::ivec3(0, -1, 0)));
 	
 		return BlockTable[(int)block].isSold;

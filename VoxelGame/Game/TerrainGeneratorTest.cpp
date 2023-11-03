@@ -16,7 +16,7 @@ void TerrainGeneratorTest::generateTerrain(std::shared_ptr<ChunkColumn> chunkCol
 		}
 		else
 		{
-			for (int y = 0; y < Util::random(2, 6); y++)
+			for (int y = 0; y < Util::random(2, 8); y++)
 			{
 				for (int z = 0; z < ChunkSize; z++)
 					for (int x = 0; x < ChunkSize; x++)

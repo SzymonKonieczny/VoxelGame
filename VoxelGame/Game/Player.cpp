@@ -27,9 +27,11 @@ void Player::Update(float dt)
 
 void Player::Move(float dt)
 {
-	if (Input::isPressed(GLFW_KEY_P))
+	if (Input::isPressed(GLFW_KEY_P) && lastActionTime + 0.1f < glfwGetTime())
 	{
-		std::cout << "Pos : " << Pos.x << ' ' << Pos.y << ' ' << Pos.z << "Rot :" << Rot.x << ' ' << Rot.y << ' ' << Rot.z << '\n';
+		lastActionTime = glfwGetTime();
+		actionQueue.push(ActionBuilder::PrintInfoAction());
+
 	}
 
 	if (Input::isPressed(GLFW_KEY_W))
@@ -64,7 +66,13 @@ void Player::Move(float dt)
 	{
 		speed = 10.f;
 	}
+	if (Input::isPressed(GLFW_KEY_SLASH) && lastActionTime + 0.1f < glfwGetTime())
+	{
+		lastActionTime = glfwGetTime();
 
+		actionQueue.push(ActionBuilder::OpenConsoleAction());
+
+	}
 	if (!noClip) velocity.y -= 0.8f * dt;
 	if (!noClip)handleCollisions();
 
@@ -77,12 +85,16 @@ void Player::Move(float dt)
 
 void Player::HandleMouseButtons()
 {
-	if (Input::mouseIsPressed(GLFW_MOUSE_BUTTON_LEFT))
+	if (Input::mouseIsPressed(GLFW_MOUSE_BUTTON_LEFT) && lastActionTime + 0.1f< glfwGetTime() )
 	{
+		lastActionTime = glfwGetTime();
+
 		actionQueue.push(ActionBuilder::BreakAction(cam.GetPosition(), cam.GetRotation(), 25));
 	}
-	else if (Input::mouseIsPressed(GLFW_MOUSE_BUTTON_RIGHT))
+	else if (Input::mouseIsPressed(GLFW_MOUSE_BUTTON_RIGHT)&& lastActionTime + 0.1f < glfwGetTime())
 	{
+		lastActionTime = glfwGetTime();
+
 		actionQueue.push(ActionBuilder::PlaceAction(cam.GetPosition(), cam.GetRotation(), 25, BlockName::Wood));
 	}
 }
@@ -97,7 +109,7 @@ Action Player::GetAction()
 
 void Player::handleCollisions()
 {
-	PointCollider::isBlockAtCollidable()
+	//PointCollider::isBlockAtCollidable()
 		//cant get a reference to chunkManager due to the structure
 		//Maybe somehow thru the action system?
 
