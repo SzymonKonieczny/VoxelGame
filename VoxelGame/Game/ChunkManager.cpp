@@ -103,16 +103,19 @@ void ChunkManager::AsyncGenerateChunks(std::list<glm::ivec2> List, bool& isChunk
 	//isChunkGenerationThreadDoneFlag = false; Jest robione przed wywolaniem GenerateChunksFromQueue
 	for (auto& Pos : List)
 	{
+
 		if (ChunkMap.contains(Pos)) {
 			auto col = ChunkMap.at(Pos);
 			
 			Generator->generateTerrain(col); 
-			
-			
-			for (auto& chunk : col->m_Chunks) {
-			
-				AddToMeshQueue(chunk->m_ChunkPos);
-			}
+			AddColumnToMeshQueue(Pos);
+
+			AddColumnToMeshQueue(glm::ivec2(Pos.x, Pos.y-1));
+			//AddColumnToMeshQueue(glm::ivec2(Pos.x+1, Pos.y));
+			//AddColumnToMeshQueue(glm::ivec2(Pos.x, Pos.y-1));
+			//AddColumnToMeshQueue(glm::ivec2(Pos.x, Pos.y+1));
+
+
 		}
 	}
 
@@ -198,6 +201,18 @@ void ChunkManager::AddToMeshQueue(glm::ivec3 Coord)
 	ChunksInMeshQueue.emplace(Coord);
 	MeshingQueueMutex.unlock();
 
+}
+void ChunkManager::AddColumnToMeshQueue(glm::ivec2 Pos)
+{
+	if (ChunkMap.contains(Pos))
+	{
+		auto col = ChunkMap.at(Pos);
+		if (col->nrOfRemeshes >2) return;
+		col->nrOfRemeshes += 1;
+			for (auto& chunk : col->m_Chunks)
+				AddToMeshQueue(chunk->m_ChunkPos);
+
+	}
 }
 glm::ivec3 ChunkManager::GetFromMeshQueue()
 {

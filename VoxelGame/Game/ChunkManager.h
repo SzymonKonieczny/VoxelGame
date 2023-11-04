@@ -36,6 +36,8 @@ public:
 
 	void UpdateLoadedChunkMap(glm::vec2 CenterPoint);
 	void AddToMeshQueue(glm::ivec3 Coord);
+	void AddColumnToMeshQueue(glm::ivec2 Pos);
+
 	glm::ivec3 GetFromMeshQueue();
 
 	std::unordered_map<glm::ivec2,std::shared_ptr<ChunkColumn>> ChunkMap;

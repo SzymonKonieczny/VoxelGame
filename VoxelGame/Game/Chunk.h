@@ -17,7 +17,6 @@ public:
 	std::mutex blockMutex;
 	std::mutex MeshMutex;
 
-
 	Chunk(glm::ivec3 pos, std::shared_ptr<ChunkManager> chunkManager);
 	glm::ivec3 m_ChunkPos;
 		Mesh& getMesh() { return m_ChunkSolidMesh; };
@@ -25,6 +24,8 @@ public:
 	
 	std::vector<unsigned int> blocks;
 	std::vector<char> lightLevels;
+	std::vector<char> sunLightLevels;
+
 
 	static std::shared_ptr<Shader>  ChunkSolidShader;
 	void setIsGenerated(bool flag) { m_isGenerated = flag; }

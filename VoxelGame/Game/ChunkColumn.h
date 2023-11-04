@@ -7,6 +7,8 @@ class ChunkManager;
 class ChunkColumn {
 	std::shared_ptr<ChunkManager> m_chunkManager;
 public:
+	unsigned int nrOfRemeshes;
+
 	ChunkColumn(glm::ivec2 Pos, std::shared_ptr<ChunkManager> chunkManager) : m_Position(Pos), m_chunkManager(chunkManager){
 		for (int i = 0; i < ChunksInColumn; i++) {
 			m_Chunks.emplace_back(new Chunk(glm::ivec3(Pos.x, i, Pos.y), m_chunkManager));

@@ -6,6 +6,8 @@ Chunk::Chunk(glm::ivec3 pos, std::shared_ptr<ChunkManager> chunkManager) : m_Chu
 {
 	blocks.resize(ChunkSize* ChunkSize* ChunkSize);
 	lightLevels.resize(ChunkSize * ChunkSize * ChunkSize);
+	sunLightLevels.resize(ChunkSize * ChunkSize * ChunkSize);
+
 
 	//for (auto& block : blocks) block = 2;
 
