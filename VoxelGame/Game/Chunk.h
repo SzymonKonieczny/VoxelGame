@@ -49,7 +49,7 @@ private:
 	void PropagateLight(glm::vec3 Pos, int strength);
 	std::unordered_map<glm::vec3, int> lightSources;
 	std::vector<unsigned int> blocks;
-	std::vector<char> lightLevels;
+	std::vector<int> lightLevels;
 	std::vector<char> sunLightLevels;
 	bool isValidPosition(glm::vec3 pos);
 	bool isSolidBlock(glm::vec3 pos);
@@ -57,6 +57,7 @@ private:
 	bool m_isGenerated = false;
 	bool m_isDirty = true; //Means that the mesh doesnt match the blocks vector
 
+	int getLightLevel(glm::vec3 pos);
 	bool m_isMeshed = false; //is meshing complete, is the Mesh ready to be drawn
 	bool m_isGPU_BufferOutdated = true; // after meshing is complete we have to upload the buffer to the GPU FROM THE MAIN THREAD
 	// this flag tells us wether the buffer on teh GPU is outdated

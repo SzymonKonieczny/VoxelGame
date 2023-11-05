@@ -164,11 +164,11 @@ void ChunkManager::UpdateLoadedChunkMap(glm::vec2 CenterPoint)
 		}
 	}
 	//Remove outside (renderdistance + a little bit)
-	minX  -= RenderDistance ;//*0.5;
-	minZ  -= RenderDistance ;//* 0.5;
-	maxX  += RenderDistance ;//* 0.5;
-	maxZ  += RenderDistance ;//* 0.5;
-
+	minX  -= RenderDistance  *0.5;
+	minZ  -= RenderDistance  * 0.5;
+	maxX  += RenderDistance  * 0.5;
+	maxZ  += RenderDistance  * 0.5;
+							 
 	for (auto it = ChunkMap.begin(); it!= ChunkMap.end();)
 	{
 		glm::ivec2 ColPos = it->first;

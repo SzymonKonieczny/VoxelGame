@@ -59,23 +59,17 @@ void Chunk::GenerateMesh()
 		switch (blockInfo.ModelType) {
 		case BlockModelType::Cube:
 			if (!isSolidBlock(pos + glm::vec3(1.f, 0.f, 0.f)))
-				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::EAST, blockInfo.UVside,lightLevels[Util::Vec3ToIndex(pos + glm::vec3(1.f, 0.f, 0.f))]);
+				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::EAST, blockInfo.UVside, getLightLevel(pos + glm::vec3(1.f, 0.f, 0.f)));
 			if (!isSolidBlock(pos + glm::vec3(-1.f, 0.f, 0.f)))
-				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::WEST, blockInfo.UVside, lightLevels[Util::Vec3ToIndex(pos + glm::vec3(-1.f, 0.f, 0.f))]);
+				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::WEST, blockInfo.UVside, getLightLevel(pos + glm::vec3(-1.f, 0.f, 0.f)));
 			if (!isSolidBlock(pos + glm::vec3(0.f, 0.f, -1.f)))
-				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::SOUTH, blockInfo.UVside, lightLevels[Util::Vec3ToIndex(pos + glm::vec3(0.f, 0.f, -1.f))]);
+				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::SOUTH, blockInfo.UVside, getLightLevel(pos + glm::vec3(0.f, 0.f, -1.f)));
 			if (!isSolidBlock(pos + glm::vec3(0.f, 0.f, 1.f)))
-				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::NORTH, blockInfo.UVside, lightLevels[Util::Vec3ToIndex(pos + glm::vec3(0.f, 0.f, 1.f))]);
+				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::NORTH, blockInfo.UVside, getLightLevel(pos + glm::vec3(0.f, 0.f, 1.f)));
 			if (!isSolidBlock(pos + glm::vec3(0.f, 1.f, 0.f)))
-			{ // temporary hack before i add cross-chunk light propagation
-				glm::vec3 modif = (i < 16*16*16) ? glm::vec3(0.f, 1.f, 0.f) : glm::vec3(0.f, 0.f, 0.f);
-				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::UP, blockInfo.UVtop, lightLevels[Util::Vec3ToIndex(pos + modif)]);
-			}
+				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::UP, blockInfo.UVtop, getLightLevel(pos + glm::vec3(0.f, 1.f, 0.f)));
 			if (!isSolidBlock(pos + glm::vec3(0.f, -1.f, 0.f)))
-			{
-				glm::vec3 modif = (i >= 0) ? glm::vec3(0.f, -1.f, 0.f) : glm::vec3(0.f, 0.f, 0.f);
-				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::DOWN, blockInfo.UVbottom, lightLevels[Util::Vec3ToIndex(pos + modif)]);
-			}
+				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::DOWN, blockInfo.UVbottom, getLightLevel(pos + glm::vec3(0.f, -1.f, 0.f)));
 
 			break;
 		case BlockModelType::X:
@@ -198,6 +192,14 @@ bool Chunk::isSolidBlock(glm::vec3 pos)
 	
 	const BlockInfo& info = BlockTable[blocks[Util::Vec3ToIndex(pos)]];
 	return info.isSold;
+}
+
+int Chunk::getLightLevel(glm::vec3 pos)
+{
+
+	if (!isValidPosition(pos)) return 0;
+	int ret = lightLevels[Util::Vec3ToIndex(pos)]; //for debubbing
+	return ret;
 }
 
 

@@ -23,7 +23,10 @@ void EarthyTerrainGenerator::generateTerrain(std::shared_ptr<ChunkColumn> chunkC
 		{
 			float height = BiomeDecisionNoise[index++];
 			if (height < 0.0f)
+			{
 				Plains.addIcingRow(chunkColumn, chunkManager, glm::vec2(x, z));
+				Plains.addDecorationRow(chunkColumn, chunkManager, glm::vec2(x, z));
+			}
 			else
 				Desert.addIcingRow(chunkColumn, chunkManager, glm::vec2(x, z));
 		}

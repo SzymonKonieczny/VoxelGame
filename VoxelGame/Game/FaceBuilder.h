@@ -29,7 +29,7 @@ class FaceBuilder
 		}
 	}
 public:
-	static void BuildFace(Mesh& mesh, glm::vec3 pos, BlockFace Dir, glm::vec2 UV, char lightLevel) {
+	static void BuildFace(Mesh& mesh, glm::vec3 pos, BlockFace Dir, glm::vec2 UV, int lightLevel) {
 		
 		//chunkVertex v{ glm::vec3(1.f,2.f,3.f), glm::vec2(1.f,2.f), glm::vec3(1.f,2.f,3.f) };
 		//pushVertToMesh(mesh, v);
