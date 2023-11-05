@@ -14,7 +14,7 @@ void ChunkManager::SetBlockAtPosition(glm::vec3 Position, BlockName name)
 		auto& chunk = column->getChunk(ChunkPos.y);
 		int index = Util::Vec3ToIndex(LocalPos);
 		if (index < 0) return;
-		chunk->blocks[index] = (unsigned int)name;
+		chunk->setBlock(name, index);;
 		chunk->setIsDirty(true);
 
 		AddToMeshQueue(ChunkPos);
@@ -45,7 +45,7 @@ BlockName ChunkManager::GetBlockAtPosition(glm::vec3 Position)
 			return ret;
 		}
 
-		ret = (BlockName)chunk->blocks[index];
+		ret = (BlockName)chunk->getBlock(index);
 
 	}
 	return ret;
@@ -129,8 +129,11 @@ void ChunkManager::AsyncMeshChunks(std::list<glm::ivec3> List, bool& isChunkMesh
 	{
 		if (ChunkMap.contains({ Pos.x,Pos.z })) {
 			auto col = ChunkMap.at({ Pos.x,Pos.z });
-			if(Pos.y< col->m_Chunks.size())
+			if (Pos.y < col->m_Chunks.size())
+			{
+				col->m_Chunks[Pos.y]->GenerateLightmap();
 				col->m_Chunks[Pos.y]->GenerateMesh();
+			}
 			
 		}
 	}

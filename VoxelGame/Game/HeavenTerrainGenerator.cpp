@@ -34,9 +34,9 @@ void HeavenTerrainGenerator::generateTerrain(std::shared_ptr<ChunkColumn> chunkC
 
 		int index = 0;
 
-		for (int i = 0; i < chunk->blocks.size(); i++)
+		for (int i = 0; i < chunk->getBlockVectorSize(); i++)
 		{
-			chunk->blocks[i] = noiseOutput[index++] < 0.0f ? (int)BlockName::Stone : (int)BlockName::Air;
+			chunk->setBlock(noiseOutput[index++] < 0.0f ? BlockName::Stone : BlockName::Air,	i);
 		}
 		chunk->blockMutex.unlock();
 

@@ -52,10 +52,10 @@ void EarthyTerrainGenerator::generateCaves(std::shared_ptr<ChunkColumn>& chunkCo
 
 		int index = 0;
 
-		for (int i = 0; i < chunk->blocks.size(); i++)
+		for (int i = 0; i < chunk->getBlockVectorSize(); i++)
 		{
-			if (noiseOutput[index++] <  0.0f)
-				chunk->blocks[i] = (int)BlockName::Air;
+			if (noiseOutput[index++] < 0.0f)
+				chunk->setBlock(BlockName::Air, i);
 		}
 		chunk->blockMutex.unlock();
 

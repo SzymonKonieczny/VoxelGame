@@ -30,7 +30,7 @@ void TerrainGeneratorTest::generateTerrain(std::shared_ptr<ChunkColumn> chunkCol
 							block = BlockName::Stone;
 						if (chunkColumn->m_Position.x >= 0 && chunkColumn->m_Position.y >= 0)
 							block = BlockName::Grass;
-						chunk->blocks[index] = (unsigned int)block;
+						chunk->setBlock(block, index);
 						index++;
 					}
 			}

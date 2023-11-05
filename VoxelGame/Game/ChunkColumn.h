@@ -22,7 +22,7 @@ public:
 	{
 		int chunkIndex = Pos.y / ChunkSize;
 		m_Chunks[chunkIndex]->blockMutex.lock();
-		BlockName name = (BlockName)m_Chunks[chunkIndex]->blocks[Util::Vec3ToIndex({ Pos.x,(int)Pos.y % ChunkSize,Pos.z })];
+		BlockName name = (BlockName)m_Chunks[chunkIndex]->getBlock(Util::Vec3ToIndex({ Pos.x,(int)Pos.y % ChunkSize,Pos.z }));
 		m_Chunks[chunkIndex]->blockMutex.unlock();
 		return name;
 
@@ -32,7 +32,7 @@ public:
 
 		int chunkIndex = Pos.y / ChunkSize;
 		m_Chunks[chunkIndex]->blockMutex.lock();
-		m_Chunks[chunkIndex]->blocks[Util::Vec3ToIndex({ Pos.x,(int)Pos.y % ChunkSize,Pos.z })] = (unsigned int)block;
+		m_Chunks[chunkIndex]->setBlock(block, Util::Vec3ToIndex({ Pos.x,(int)Pos.y % ChunkSize,Pos.z }));
 		m_Chunks[chunkIndex]->blockMutex.unlock();
 
 

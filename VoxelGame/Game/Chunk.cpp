@@ -90,6 +90,66 @@ void Chunk::GenerateMesh()
 
 
 }
+void Chunk::PropagateLight(glm::vec3 Pos, int strength)
+{
+	if (strength <= 0) return;
+	if (LightPropagationMarkSet.contains(Pos)) return;
+	if (!BlockTable[getBlock(Pos)].isTransparent) return;
+	
+	if (!isValidPosition(Pos)) return; //FOR NOW WE ARENT PROPAGATING BETWEEN CHUNKS
+
+
+	LightPropagationMarkSet.emplace(Pos);
+	int currentStrength = lightLevels[Util::Vec3ToIndex(Pos)];
+	lightLevels[Util::Vec3ToIndex(Pos)] = (currentStrength>strength) ? currentStrength:  strength;
+
+	PropagateLight({ Pos.x+1,Pos.y,Pos.z }, strength - 1);
+	PropagateLight({ Pos.x-1,Pos.y,Pos.z }, strength - 1);
+	PropagateLight({ Pos.x,Pos.y+1,Pos.z }, strength - 1);
+	PropagateLight({ Pos.x,Pos.y-1,Pos.z }, strength - 1);
+	PropagateLight({ Pos.x,Pos.y,Pos.z+1 }, strength - 1);
+	PropagateLight({ Pos.x,Pos.y,Pos.z-1 }, strength - 1);
+
+}
+void Chunk::GenerateLightmap()
+{
+	blockMutex.lock();
+
+	for (auto source : lightSources)
+	{
+		LightPropagationMarkSet.clear();
+		PropagateLight(source.first, source.second);
+	}
+	blockMutex.unlock();
+
+}
+
+void Chunk::setBlock(BlockName Block, int index)
+{
+	if (BlockTable[(int)Block].LightEmission > 0)
+		lightSources.insert( std::make_pair(Util::IndexToVec3(index), BlockTable[(int)Block].LightEmission ));
+
+	if(BlockTable[getBlock(index)].LightEmission > 0)
+		lightSources.erase( Util::IndexToVec3(index));
+	blocks[index] = (unsigned int)Block;
+}
+
+void Chunk::setBlock(BlockName Block, glm::vec3 Position)
+{
+		
+	setBlock(Block, Util::Vec3ToIndex(Position));
+}
+
+unsigned int& Chunk::getBlock(int index)
+{
+	return blocks[index];
+	// TODO: insert return statement here
+}
+
+unsigned int& Chunk::getBlock(glm::vec3 Position) 
+{
+	return getBlock(Util::Vec3ToIndex(Position));
+}
 
 bool Chunk::isValidPosition(glm::vec3 pos)
 {

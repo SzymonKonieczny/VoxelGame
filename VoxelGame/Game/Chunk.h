@@ -5,11 +5,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <mutex>
-struct chunkVerex {
-	glm::vec3 Position;
-	glm::vec2 UV;
-	glm::vec3 Color;
-};
+#include <unordered_map>
+#include <glm/gtx/hash.hpp>
 class ChunkManager;
 class Chunk {
 	std::shared_ptr<ChunkManager> m_chunkManager;
@@ -21,10 +18,9 @@ public:
 	glm::ivec3 m_ChunkPos;
 		Mesh& getMesh() { return m_ChunkSolidMesh; };
 	void GenerateMesh();
-	
-	std::vector<unsigned int> blocks;
-	std::vector<char> lightLevels;
-	std::vector<char> sunLightLevels;
+	void GenerateLightmap();
+
+
 
 
 	static std::shared_ptr<Shader>  ChunkSolidShader;
@@ -40,8 +36,21 @@ public:
 
 	void setIsDirty(bool flag) { m_isDirty=flag; }
 	bool hasTransparentBlocks() { return m_hasTransparentBlocks; }
+	void setBlock(BlockName Block,int index );
+	void setBlock(BlockName Block, glm::vec3 Position);
+
+	unsigned int& getBlock(int index);
+	unsigned int& getBlock(glm::vec3 Position);
+
+	int getBlockVectorSize() { return blocks.size(); }
 
 private:
+	std::unordered_set<glm::vec3> LightPropagationMarkSet;
+	void PropagateLight(glm::vec3 Pos, int strength);
+	std::unordered_map<glm::vec3, int> lightSources;
+	std::vector<unsigned int> blocks;
+	std::vector<char> lightLevels;
+	std::vector<char> sunLightLevels;
 	bool isValidPosition(glm::vec3 pos);
 	bool isSolidBlock(glm::vec3 pos);
 	bool m_hasTransparentBlocks = false;
