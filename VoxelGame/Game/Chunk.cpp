@@ -67,9 +67,15 @@ void Chunk::GenerateMesh()
 			if (!isSolidBlock(pos + glm::vec3(0.f, 0.f, 1.f)))
 				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::NORTH, blockInfo.UVside, lightLevels[Util::Vec3ToIndex(pos + glm::vec3(0.f, 0.f, 1.f))]);
 			if (!isSolidBlock(pos + glm::vec3(0.f, 1.f, 0.f)))
-				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::UP, blockInfo.UVtop, lightLevels[Util::Vec3ToIndex(pos + glm::vec3(0.f, 1.f, 0.f))]);
+			{ // temporary hack before i add cross-chunk light propagation
+				glm::vec3 modif = (i < 16*16*16) ? glm::vec3(0.f, 1.f, 0.f) : glm::vec3(0.f, 0.f, 0.f);
+				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::UP, blockInfo.UVtop, lightLevels[Util::Vec3ToIndex(pos + modif)]);
+			}
 			if (!isSolidBlock(pos + glm::vec3(0.f, -1.f, 0.f)))
-				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::DOWN, blockInfo.UVbottom, lightLevels[Util::Vec3ToIndex(pos + glm::vec3(0.f, -1.f, 0.f))]);
+			{
+				glm::vec3 modif = (i >= 0) ? glm::vec3(0.f, -1.f, 0.f) : glm::vec3(0.f, 0.f, 0.f);
+				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::DOWN, blockInfo.UVbottom, lightLevels[Util::Vec3ToIndex(pos + modif)]);
+			}
 
 			break;
 		case BlockModelType::X:
@@ -118,7 +124,7 @@ void Chunk::PropagateLight(glm::vec3 Pos, int strength)
 void Chunk::GenerateLightmap()
 {
 	blockMutex.lock();
-
+	std::fill(lightLevels.begin(), lightLevels.end(), 0);
 	for (auto source : lightSources)
 	{
 		LightPropagationMarkSet.clear();

@@ -89,7 +89,7 @@ void Game::FillBlockTable()
 	BlockTable.push_back(BlockInfo({ 0.4f,0.f }, BlockModelType::Cube, false, true, true)); //Stone
 	BlockTable.push_back(BlockInfo({ 0.6f,0.f }, BlockModelType::Cube, false, true, true)); //Dirt
 	BlockTable.push_back(BlockInfo({ 0.8f,0.f }, BlockModelType::Cube, false, false, true,10)); //Wood
-	BlockTable.push_back(BlockInfo({ 0.8f,0.4f }, BlockModelType::X, false, false, true)); //Rose
+	BlockTable.push_back(BlockInfo({ 0.8f,0.4f }, BlockModelType::X, false, false, true, 7)); //Rose
 	BlockTable.push_back(BlockInfo({ 0.2f,0.2f }, BlockModelType::Cube, false, true, true)); //Sand
 
 
