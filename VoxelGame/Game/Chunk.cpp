@@ -59,17 +59,17 @@ void Chunk::GenerateMesh()
 		switch (blockInfo.ModelType) {
 		case BlockModelType::Cube:
 			if (!isSolidBlock(pos + glm::vec3(1.f, 0.f, 0.f)))
-				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::EAST, blockInfo.UVside,lightLevels[i]);
+				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::EAST, blockInfo.UVside,lightLevels[Util::Vec3ToIndex(pos + glm::vec3(1.f, 0.f, 0.f))]);
 			if (!isSolidBlock(pos + glm::vec3(-1.f, 0.f, 0.f)))
-				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::WEST, blockInfo.UVside, lightLevels[i]);
+				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::WEST, blockInfo.UVside, lightLevels[Util::Vec3ToIndex(pos + glm::vec3(-1.f, 0.f, 0.f))]);
 			if (!isSolidBlock(pos + glm::vec3(0.f, 0.f, -1.f)))
-				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::SOUTH, blockInfo.UVside, lightLevels[i]);
+				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::SOUTH, blockInfo.UVside, lightLevels[Util::Vec3ToIndex(pos + glm::vec3(0.f, 0.f, -1.f))]);
 			if (!isSolidBlock(pos + glm::vec3(0.f, 0.f, 1.f)))
-				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::NORTH, blockInfo.UVside, lightLevels[i]);
+				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::NORTH, blockInfo.UVside, lightLevels[Util::Vec3ToIndex(pos + glm::vec3(0.f, 0.f, 1.f))]);
 			if (!isSolidBlock(pos + glm::vec3(0.f, 1.f, 0.f)))
-				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::UP, blockInfo.UVtop, lightLevels[i]);
+				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::UP, blockInfo.UVtop, lightLevels[Util::Vec3ToIndex(pos + glm::vec3(0.f, 1.f, 0.f))]);
 			if (!isSolidBlock(pos + glm::vec3(0.f, -1.f, 0.f)))
-				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::DOWN, blockInfo.UVbottom, lightLevels[i]);
+				FaceBuilder::BuildFace(m_ChunkSolidMesh, Util::IndexToVec3(i), BlockFace::DOWN, blockInfo.UVbottom, lightLevels[Util::Vec3ToIndex(pos + glm::vec3(0.f, -1.f, 0.f))]);
 
 			break;
 		case BlockModelType::X:
@@ -92,16 +92,16 @@ void Chunk::GenerateMesh()
 }
 void Chunk::PropagateLight(glm::vec3 Pos, int strength)
 {
-	if (strength <= 0) return;
-	if (LightPropagationMarkSet.contains(Pos)) return;
-	if (!BlockTable[getBlock(Pos)].isTransparent) return;
-	
 	if (!isValidPosition(Pos)) return; //FOR NOW WE ARENT PROPAGATING BETWEEN CHUNKS
 
 
-	LightPropagationMarkSet.emplace(Pos);
-	int currentStrength = lightLevels[Util::Vec3ToIndex(Pos)];
-	lightLevels[Util::Vec3ToIndex(Pos)] = (currentStrength>strength) ? currentStrength:  strength;
+	if (strength <= 0) return;
+	if (LightPropagationMarkSet.contains(Pos)) return;
+	if (BlockTable[getBlock(Pos)].isSold) return;
+	if (lightLevels[Util::Vec3ToIndex(Pos)] >= strength) return;
+
+
+
 
 	PropagateLight({ Pos.x+1,Pos.y,Pos.z }, strength - 1);
 	PropagateLight({ Pos.x-1,Pos.y,Pos.z }, strength - 1);
@@ -110,6 +110,10 @@ void Chunk::PropagateLight(glm::vec3 Pos, int strength)
 	PropagateLight({ Pos.x,Pos.y,Pos.z+1 }, strength - 1);
 	PropagateLight({ Pos.x,Pos.y,Pos.z-1 }, strength - 1);
 
+
+//	LightPropagationMarkSet.emplace(Pos);
+	int currentStrength = lightLevels[Util::Vec3ToIndex(Pos)];
+	lightLevels[Util::Vec3ToIndex(Pos)] = (currentStrength>strength) ? currentStrength:  strength;
 }
 void Chunk::GenerateLightmap()
 {
@@ -126,11 +130,13 @@ void Chunk::GenerateLightmap()
 
 void Chunk::setBlock(BlockName Block, int index)
 {
+
+	
+	lightSources.erase( Util::IndexToVec3(index));
+	
 	if (BlockTable[(int)Block].LightEmission > 0)
 		lightSources.insert( std::make_pair(Util::IndexToVec3(index), BlockTable[(int)Block].LightEmission ));
 
-	if(BlockTable[getBlock(index)].LightEmission > 0)
-		lightSources.erase( Util::IndexToVec3(index));
 	blocks[index] = (unsigned int)Block;
 }
 

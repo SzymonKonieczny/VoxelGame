@@ -5,7 +5,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <mutex>
-#include <unordered_map>
+#include <unordered_set>
 #include <glm/gtx/hash.hpp>
 class ChunkManager;
 class Chunk {
