@@ -15,10 +15,11 @@ struct BlockInfo {
 	BlockModelType ModelType;
 	bool isTransparent=false;
 	bool isSold=true;
+	bool isCollidable = true;
 	int LightEmission;
-	BlockInfo(glm::vec2 UVCoord, BlockModelType blockModelType, bool transparent, bool solid, int lightEmission = 0) :
+	BlockInfo(glm::vec2 UVCoord, BlockModelType blockModelType, bool transparent, bool solid, bool collidable, int lightEmission = 0) :
 		UVtop(UVCoord), UVside(UVCoord), UVbottom(UVCoord), //UVs
-		 isTransparent(transparent), isSold(solid), ModelType(blockModelType),  //misc
+		 isTransparent(transparent), isSold(solid), ModelType(blockModelType), isCollidable(collidable),  //misc
 		LightEmission(lightEmission) //light
 	{};
 	BlockInfo(glm::vec2 UVCoordTop, glm::vec2 UVCoordSide, glm::vec2 UVCoordBottom, 
