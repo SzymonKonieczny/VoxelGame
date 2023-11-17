@@ -1,7 +1,28 @@
 #include "DesertBiome.h"
+#include <FastNoise/FastNoise.h>
+
 void DesertBiome::generateLandmass(std::shared_ptr<ChunkColumn> chunkColumn, std::shared_ptr<ChunkManager> chunkManager)
 {
+	for (std::shared_ptr<Chunk> chunk : chunkColumn->m_Chunks)
+		chunk->setIsGenerated(false);
 
+	std::vector<float> noiseOutput(ChunkSize * ChunkSize);
+
+	generateJustHeightmap(chunkColumn, noiseOutput);
+
+
+	int index = 0;
+	for (int z = 0; z < ChunkSize; z++)
+		for (int x = 0; x < ChunkSize; x++)
+		{
+			int height = noiseOutput[index++];
+			for (int y = height - 1; y >= 0; y--)
+				chunkColumn->setBlockInColumn({ x,y,z }, BlockName::Stone);
+		}
+
+
+	for (std::shared_ptr<Chunk> chunk : chunkColumn->m_Chunks)
+		chunk->setIsGenerated(true);
 }
 
 void DesertBiome::addIcing(std::shared_ptr<ChunkColumn> chunkColumn, std::shared_ptr<ChunkManager> chunkManager)
@@ -54,4 +75,16 @@ void DesertBiome::addDecorationRow(std::shared_ptr<ChunkColumn> chunk, std::shar
 
 void DesertBiome::generateJustHeightmap(std::shared_ptr<ChunkColumn> chunkColumn, std::vector<float>& Output)
 {
+	FastNoise::SmartNode<> fnGenerator = FastNoise::NewFromEncodedNodeTree("FwAAAEDAAACAPwAAAAAAAIA/EwApXA8+GQATAMP1KD8NAAMAAADNzEw/CQAAPQpnQADXo3A/AQQAAAAAAAAAAACamZk+AAAAAAAAAAAAAAAAAACgwAAAAAA=");
+
+	glm::ivec2 ColumnPos = chunkColumn->m_Position;
+
+	fnGenerator->GenUniformGrid2D(Output.data(), ColumnPos.x * ChunkSize, ColumnPos.y * ChunkSize,
+		ChunkSize, ChunkSize, 0.2f, 1337);
+
+	for (auto& val : Output)
+	{
+		val *= Variation;
+		val += BaseGround;
+	}
 }

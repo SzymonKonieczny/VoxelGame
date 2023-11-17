@@ -11,14 +11,12 @@ void PlainsBiome::generateLandmass(std::shared_ptr<ChunkColumn> chunkColumn, std
 	
 	generateJustHeightmap(chunkColumn, noiseOutput);
 
-	int BaseGround = 60;
-	int Variation = 50;
 		
 	int index = 0;
 	for (int z = 0; z < ChunkSize; z++)
 		for (int x = 0; x < ChunkSize; x++)
 		{
-			int height = BaseGround+ noiseOutput[index++] * Variation;
+			int height = noiseOutput[index++];
 				for (int y = height-1; y >=0; y--)
 				chunkColumn->setBlockInColumn({ x,y,z }, BlockName::Stone);
 		}
@@ -65,6 +63,12 @@ void PlainsBiome::generateJustHeightmap(std::shared_ptr<ChunkColumn> chunkColumn
 
 	fnGenerator->GenUniformGrid2D(Output.data(), ColumnPos.x * ChunkSize, ColumnPos.y * ChunkSize,
 		ChunkSize, ChunkSize, 0.2f, 1337);
+
+	for (auto& val : Output)
+	{
+		val *= Variation;
+		val += BaseGround;
+	}
 }
 
 void PlainsBiome::addIcingRow(std::shared_ptr<ChunkColumn> chunkColumn, std::shared_ptr<ChunkManager> chunkManager, glm::vec2 LocCoords)

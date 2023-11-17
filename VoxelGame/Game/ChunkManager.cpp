@@ -137,7 +137,6 @@ void ChunkManager::AsyncMeshChunks(std::list<glm::ivec3> List, bool& isChunkMesh
 			
 		}
 	}
-	//Sleep(10);  function too fast, causes meshes to dissapear. Sleep(100) stops it xd
 	isChunkMeshThreadDoneFlag = true;
 }
 void ChunkManager::UpdateLoadedChunkMap(glm::vec2 CenterPoint)

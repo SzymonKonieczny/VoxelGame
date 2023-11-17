@@ -3,6 +3,9 @@
 
 class PlainsBiome : public IBiome {
 public:
+		int BaseGround =90;
+		int Variation = 60;
+
 	PlainsBiome() {
 		topToBottomSpecialBlocks;
 

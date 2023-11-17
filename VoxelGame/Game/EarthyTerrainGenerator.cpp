@@ -3,38 +3,50 @@
 
 void EarthyTerrainGenerator::generateTerrain(std::shared_ptr<ChunkColumn> chunkColumn)
 {
-	Plains.generateLandmass(chunkColumn, this->chunkManager);
 
-	//EADsUbg/EwDsUbg+DAABAAAAzczMPQkAAOF6lD8ACtejPg==
 
-	//Plains.addIcing(chunkColumn, this->chunkManager);
 
-	std::vector<float> BiomeDecisionNoise(16 * 16 );
-
-	FastNoise::SmartNode<> fnGenerator = FastNoise::NewFromEncodedNodeTree("EABmZoZAEwAK1yM8DAABAAAAzczMPQkAAOF6lD8AuB6FPw==");
+	FastNoise::SmartNode<> fnGenerator = FastNoise::NewFromEncodedNodeTree(BiomeDecisionTreeNode.c_str());
 
 	glm::ivec2 ColumnPos = chunkColumn->m_Position;
 
 	fnGenerator->GenUniformGrid2D(BiomeDecisionNoise.data(), ColumnPos.x * ChunkSize, ColumnPos.y * ChunkSize,
 		ChunkSize, ChunkSize, 0.2f, 1337);
-	int index = 0;
-	for (int z = 0; z < ChunkSize; z++)
-		for (int x = 0; x < ChunkSize; x++)
-		{
-			float height = BiomeDecisionNoise[index++];
-			if (height < 0.0f)
+
+	bool isMultiBiomeChunk = CheckForMultiBiomeChunk(*chunkColumn); 
+		if(isMultiBiomeChunk)	FillHeightMapMultiBiome(chunkColumn);
+		else {
+			switch (DecideBiomeFromNoiseOutput(BiomeDecisionNoise[0]))
 			{
-				Plains.addIcingRow(chunkColumn, chunkManager, glm::vec2(x, z));
-				Plains.addDecorationRow(chunkColumn, chunkManager, glm::vec2(x, z));
+			case EarthBiomes::Desert:
+				Desert.generateLandmass(chunkColumn, chunkManager);
+				Desert.addDecoration(chunkColumn, chunkManager);
+
+				break;
+			case EarthBiomes::Plains:
+				Plains.generateLandmass(chunkColumn, chunkManager);
+				Plains.addDecoration(chunkColumn, chunkManager);
+				break;
+			default:
+				break;
 			}
-			else
-				Desert.addIcingRow(chunkColumn, chunkManager, glm::vec2(x, z));
+
+
 		}
+	generateLandMass(chunkColumn);
+
+	addIcing(chunkColumn);
+
+
+	
+
+	//EADsUbg/EwDsUbg+DAABAAAAzczMPQkAAOF6lD8ACtejPg==
+
+	//Plains.addIcing(chunkColumn, this->chunkManager);
+
+
 
 	generateCaves(chunkColumn);
-
-
-
 }
 
 void EarthyTerrainGenerator::generateCaves(std::shared_ptr<ChunkColumn>& chunkColumn)
@@ -45,7 +57,7 @@ void EarthyTerrainGenerator::generateCaves(std::shared_ptr<ChunkColumn>& chunkCo
 
 		chunk->blockMutex.lock();
 
-		FastNoise::SmartNode<> fnGenerator = FastNoise::NewFromEncodedNodeTree("FwAAAEDAAABAQAAAgL8AAIA/EwCPwvU9GgABEQACAAAAAADgQBAAAACIQR8AFgABAAAACwADAAAAAgAAAAMAAAAEAAAAAAAAAD8BFAD//wAAAAAAAD8AAAAAPwAAAAA/AAAAAD8BFwAAAIC/AACAPz0KF0BSuB5AEwAAAKBABgAAj8J1PACamZk+AAAAAAABFwAAAIC/AACAPwAAAL8AAAA///8CAA==");
+		FastNoise::SmartNode<> fnGenerator = FastNoise::NewFromEncodedNodeTree(CaveCarvingTreeNode.c_str());
 
 		std::vector<float> noiseOutput(16 * 16 * 16);
 		glm::ivec3 ChunkPos = chunk->m_ChunkPos;
@@ -63,4 +75,82 @@ void EarthyTerrainGenerator::generateCaves(std::shared_ptr<ChunkColumn>& chunkCo
 		chunk->blockMutex.unlock();
 
 	}
+}
+
+void EarthyTerrainGenerator::FillHeightMapMultiBiome(std::shared_ptr<ChunkColumn>& chunkColumn)
+{
+	std::fill(HeightDecisionNoise.begin(), HeightDecisionNoise.end(), 0);
+
+	
+
+
+
+}
+
+EarthBiomes EarthyTerrainGenerator::DecideBiomeFromNoiseOutput(float noise)
+{
+	if (noise < 0.0f) return EarthBiomes::Plains;
+	else return EarthBiomes::Desert;
+
+}
+
+bool  EarthyTerrainGenerator::CheckForMultiBiomeChunk(ChunkColumn& chunkColumn)
+{
+	EarthBiomes last = DecideBiomeFromNoiseOutput(BiomeDecisionNoise[0]);
+	bool multiBiomeChunk = false;
+
+	for (float val : BiomeDecisionNoise)
+	{
+		int temp = (int)DecideBiomeFromNoiseOutput(val);
+		if ((int)last != temp)
+		{
+			 multiBiomeChunk = true;
+			 break;
+		}
+	}
+	return multiBiomeChunk;
+}
+
+
+
+void EarthyTerrainGenerator::generateLandMass(std::shared_ptr<ChunkColumn>& chunkColumn)
+{
+
+	int index = 0;
+	for (int z = 0; z < ChunkSize; z++)
+		for (int x = 0; x < ChunkSize; x++)
+		{
+			int height = HeightDecisionNoise[index++];
+			for (int y = height - 1; y >= 0; y--)
+				chunkColumn->setBlockInColumn({ x,y,z }, BlockName::Stone);
+		}
+
+
+}
+
+void EarthyTerrainGenerator::addIcing(std::shared_ptr<ChunkColumn>& chunkColumn)
+{
+	int index = 0;
+	for (int z = 0; z < ChunkSize; z++)
+		for (int x = 0; x < ChunkSize; x++)
+		{
+		
+			switch (DecideBiomeFromNoiseOutput(BiomeDecisionNoise[index++]))
+			{
+			case EarthBiomes::Plains:
+				Plains.addIcingRow(chunkColumn, chunkManager, glm::vec2(x, z));
+				Plains.addDecorationRow(chunkColumn, chunkManager, glm::vec2(x, z));
+				break;
+			case EarthBiomes::Desert:
+				Desert.addIcingRow(chunkColumn, chunkManager, glm::vec2(x, z));
+				break;
+			default:
+				std::cout << "INVALID CHUNK FOR ICING\n";
+				break;
+
+
+			}
+			
+			
+		}
 }

@@ -69,7 +69,14 @@ glm::vec3 Util::LocPosAndChunkPosToWorldPos(glm::vec3 LocPos, glm::vec3 ChunkPos
 
 
 }
-
+float Util::BilinearInterpolation(float q11, float q12, float q21, float q22, glm::vec2 p1, glm::vec2 p2, glm::vec2 p)
+{
+	//p1 and p2 are the corners that defince the rectangle, most cases for terrain gen 0,0 and 15,15 (-1,-1 and 16,16 when "peeking")
+	//p is the point you want to get the interpolated value for
+	float r1 = ((p2.x - p.x) / (p2.x - p1.x)) * q11 + ((p.x - p1.x) / (p2.x - p1.x)) * q21;
+	float r2 = ((p2.x - p.x) / (p2.x - p1.x)) * q12 + ((p.x - p1.x) / (p2.x - p1.x)) * q22;
+	return ((p2.y - p.y) / (p2.y - p1.y)) * r1 + ((p.y - p1.y) / (p2.y - p1.y)) * r2;
+}
 glm::vec3 Util::WorldPosToLocalPos(glm::vec3 WorldPos)
 {	
 

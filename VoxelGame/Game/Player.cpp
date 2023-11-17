@@ -7,7 +7,7 @@
 #include<glm/gtx/rotate_vector.hpp>
 #include<glm/gtx/vector_angle.hpp>
 #include <iostream>
-Player::Player() : Pos( 4000,150, 3000), Rot(1,0,1), velocity(0,0,0)
+Player::Player() : Pos( 650,150, 650), Rot(1,0,1), velocity(0,0,0)
 {
 
 }

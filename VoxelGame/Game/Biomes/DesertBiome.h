@@ -3,6 +3,8 @@
 
 class DesertBiome : public IBiome {
 public:
+	int BaseGround = 20;
+	int Variation = 80;
 	DesertBiome() {
 		topToBottomSpecialBlocks;
 
