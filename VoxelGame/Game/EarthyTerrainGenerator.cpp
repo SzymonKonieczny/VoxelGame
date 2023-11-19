@@ -79,10 +79,10 @@ void EarthyTerrainGenerator::FillHeightMapMultiBiome(std::shared_ptr<ChunkColumn
 
 	FastNoise::SmartNode<> fnGenerator = FastNoise::NewFromEncodedNodeTree(BiomeDecisionTreeNode.c_str());
 	glm::ivec2 ColumnPos = chunkColumn->m_Position;
-	glm::vec2 CornerCoords[4] = { glm::vec2(ColumnPos.x* ChunkSize,  ColumnPos.y  * ChunkSize),// - - 
-								 glm::vec2(ColumnPos.x * ChunkSize, ColumnPos.y  * ChunkSize +15), // - + 
-								 glm::vec2(ColumnPos.x * ChunkSize + 15, ColumnPos.y  * ChunkSize ), // + -
-								 glm::vec2(ColumnPos.x * ChunkSize + 15, ColumnPos.y  * ChunkSize + 15)};// + + 
+	glm::vec2 CornerCoords[4] = { glm::vec2((ColumnPos.x* ChunkSize) -1,  (ColumnPos.y  * ChunkSize)-1),// - - 
+								 glm::vec2( (ColumnPos.x * ChunkSize)-1, (ColumnPos.y+1)  * ChunkSize), // - + 
+								 glm::vec2((ColumnPos.x+1) * ChunkSize , (ColumnPos.y  * ChunkSize )-1), // + -
+								 glm::vec2((ColumnPos.x + 1) * ChunkSize , (ColumnPos.y+1)  * ChunkSize)};// + + 
 
 	/*	glm::vec2 CornerCoords[4] = { glm::vec2((ColumnPos.x)*ChunkSize-1, (ColumnPos.y) * ChunkSize-1),
 								 glm::vec2((ColumnPos.x) * ChunkSize-1,(ColumnPos.y) * ChunkSize+1), 
@@ -100,16 +100,19 @@ void EarthyTerrainGenerator::FillHeightMapMultiBiome(std::shared_ptr<ChunkColumn
 		Biomes[BiomeID]->getHeightAtWorldCoords(CornerCoords[i], &corners[i]);
 
 	}
+	//1243, 1324, 1342, 1423, 1432, 2134, 2143, 2314, 2341, 2413, 1431, 3124, 3142, 3214, 3241, 3412, 3421, 4123, 4132, 4213, 4231, 4312, 4321.
+	
 	float q11 = corners[0];
-	float q12 = corners[1];//for easier reading, probs the compiler skips this anyways
-	float q21 = corners[2];
+	float q12 = corners[2];
+	float q21 = corners[1];
 	float q22 = corners[3];
+
 
 	int index = 0;
 	for (int z = 0; z < ChunkSize; z++)
 		for (int x = 0; x < ChunkSize; x++)
 		{		
-			int height = (Util::BilinearInterpolation(q11, q12, q21, q22, glm::vec2(-1, -1), glm::vec2(16, 16), glm::vec2(x, z)));
+			int height = (Util::BilinearInterpolation(q11, q12, q21, q22, glm::vec2(0, 0), glm::vec2(17, 17), glm::vec2(x, z)));
 			HeightDecisionNoise[index++] = height;
 			
 			
@@ -189,7 +192,7 @@ void EarthyTerrainGenerator::addIcing(std::shared_ptr<ChunkColumn>& chunkColumn)
 	for (int z = 0; z < ChunkSize; z++)
 		for (int x = 0; x < ChunkSize; x++)
 		{
-			int BiomeID = (int)DecideBiomeFromNoiseOutput(BiomeDecisionNoise[0]);
+			int BiomeID = (int)DecideBiomeFromNoiseOutput(BiomeDecisionNoise[index++]);
 			Biomes[BiomeID]->addIcingRow(chunkColumn, chunkManager, glm::vec2(x, z));
 			Biomes[BiomeID]->addDecorationRow(chunkColumn, chunkManager, glm::vec2(x, z));
 	
