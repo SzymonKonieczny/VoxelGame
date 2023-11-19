@@ -88,8 +88,8 @@ void EarthyTerrainGenerator::FillHeightMapMultiBiome(std::shared_ptr<ChunkColumn
 								 glm::vec2((ColumnPos.x) * ChunkSize-1,(ColumnPos.y) * ChunkSize+1), 
 								 glm::vec2((ColumnPos.x) * ChunkSize+1,(ColumnPos.y) * ChunkSize-1), 
 								 glm::vec2((ColumnPos.x) * ChunkSize+1,(ColumnPos.y) * ChunkSize+1)};*/
-	float corners[4];
 
+	std::vector<float> corners = {0,0,0,0};
 	for (int i = 0; i < 4; i++)
 	{
 		float BiomeVal[MinFastNoiseDim * MinFastNoiseDim];
@@ -100,8 +100,7 @@ void EarthyTerrainGenerator::FillHeightMapMultiBiome(std::shared_ptr<ChunkColumn
 		Biomes[BiomeID]->getHeightAtWorldCoords(CornerCoords[i], &corners[i]);
 
 	}
-	//1243, 1324, 1342, 1423, 1432, 2134, 2143, 2314, 2341, 2413, 1431, 3124, 3142, 3214, 3241, 3412, 3421, 4123, 4132, 4213, 4231, 4312, 4321.
-	
+
 	float q11 = corners[0];
 	float q12 = corners[2];
 	float q21 = corners[1];
@@ -116,8 +115,7 @@ void EarthyTerrainGenerator::FillHeightMapMultiBiome(std::shared_ptr<ChunkColumn
 			HeightDecisionNoise[index++] = height;
 			
 			
-			//for (int y = height - 1; y >= 0; y--) 
-			//	chunkColumn->setBlockInColumn({ x,y,z }, BlockName::Stone);
+
 		}
 
 }

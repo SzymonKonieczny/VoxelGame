@@ -28,6 +28,8 @@ public:
 	void setIsMeshed(bool flag) { m_isMeshed = flag; m_ChunkSolidMesh.setReadyForDraw(flag); }
 	void setIsGPU_BufferOutdated(bool flag) { m_isGPU_BufferOutdated = flag; }
 
+	void setLightLevel(glm::vec3 LocPos, int strength);
+	int getLightLevel(glm::vec3 pos);
 
 
 	bool isMeshed() { return m_isMeshed; }
@@ -57,7 +59,6 @@ private:
 	bool m_isGenerated = false;
 	bool m_isDirty = true; //Means that the mesh doesnt match the blocks vector
 
-	int getLightLevel(glm::vec3 pos);
 	bool m_isMeshed = false; //is meshing complete, is the Mesh ready to be drawn
 	bool m_isGPU_BufferOutdated = true; // after meshing is complete we have to upload the buffer to the GPU FROM THE MAIN THREAD
 	// this flag tells us wether the buffer on teh GPU is outdated

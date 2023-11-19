@@ -209,12 +209,47 @@ void ChunkManager::AddColumnToMeshQueue(glm::ivec2 Pos)
 	if (ChunkMap.contains(Pos))
 	{
 		auto col = ChunkMap.at(Pos);
-		if (col->nrOfRemeshes >2) return;
+		if (col->nrOfRemeshes > 2)
+		{
+			return;
+		}
 		col->nrOfRemeshes += 1;
 			for (auto& chunk : col->m_Chunks)
 				AddToMeshQueue(chunk->m_ChunkPos);
 
 	}
+}
+void ChunkManager::PropagateLightToChunks(glm::vec3 Pos, int strength)
+{
+
+		if (strength <= 0) return;
+		glm::vec3 ChunkPos = Util::WorldPosToChunkPos(Pos);
+
+		if (ChunkMap.contains(ChunkPos))
+		{
+			glm::ivec2 ColumnPos = { ChunkPos.x,ChunkPos.z };
+			glm::vec3 LocPos = Util::WorldPosToLocalPos(Pos);
+			auto& chunk = ChunkMap.at(ColumnPos)->m_Chunks[ChunkPos.y];
+			
+			if (BlockTable[chunk->getBlock(LocPos)].isSold) return;
+			if (chunk->getLightLevel(LocPos) >= strength) return;
+
+
+			PropagateLightToChunks({ Pos.x + 1,Pos.y,Pos.z }, strength - 1);
+			PropagateLightToChunks({ Pos.x - 1,Pos.y,Pos.z }, strength - 1);
+			PropagateLightToChunks({ Pos.x,Pos.y + 1,Pos.z }, strength - 1);
+			PropagateLightToChunks({ Pos.x,Pos.y - 1,Pos.z }, strength - 1);
+			PropagateLightToChunks({ Pos.x,Pos.y,Pos.z + 1 }, strength - 1);
+			PropagateLightToChunks({ Pos.x,Pos.y,Pos.z - 1 }, strength - 1);
+
+
+			chunk->setLightLevel(LocPos, strength);
+
+
+		}
+
+
+
 }
 glm::ivec3 ChunkManager::GetFromMeshQueue()
 {

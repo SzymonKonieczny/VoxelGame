@@ -38,6 +38,8 @@ public:
 	void AddToMeshQueue(glm::ivec3 Coord);
 	void AddColumnToMeshQueue(glm::ivec2 Pos);
 
+	void PropagateLightToChunks(glm::vec3 Pos, int strength);
+
 	glm::ivec3 GetFromMeshQueue();
 
 	std::unordered_map<glm::ivec2,std::shared_ptr<ChunkColumn>> ChunkMap;
