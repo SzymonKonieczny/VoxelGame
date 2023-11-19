@@ -96,7 +96,8 @@ void DesertBiome::getHeightAtWorldCoords(glm::vec2 WorldPos, float* Output)
 	float temp[MinFastNoiseDim * MinFastNoiseDim];
 	fnGenerator->GenUniformGrid2D(Output, WorldPos.x, WorldPos.y,
 		MinFastNoiseDim, MinFastNoiseDim, 0.2f, 1337);
-	temp[0] *= Variation;
-	temp[0] += BaseGround;
-	*Output = temp[0];
+	int index = MinFastNoiseDim * MinFastNoiseDim - 1;
+	temp[index] *= Variation;
+	temp[index] += BaseGround;
+	*Output = temp[index];
 }

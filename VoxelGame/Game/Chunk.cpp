@@ -122,8 +122,12 @@ void Chunk::GenerateLightmap()
 	std::fill(lightLevels.begin(), lightLevels.end(), 0);
 	for (auto source : lightSources)
 	{
-		//m_chunkManager->PropagateLightToChunks(Util::LocPosAndChunkPosToWorldPos(source.first, m_ChunkPos), source.second);
+
+#if LightPropagationInChunkManager
+		m_chunkManager->PropagateLightToChunks(Util::LocPosAndChunkPosToWorldPos(source.first, m_ChunkPos), source.second);
+#else
 		PropagateLight(source.first, source.second);
+#endif
 	}
 	blockMutex.unlock();
 
