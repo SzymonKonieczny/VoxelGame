@@ -25,4 +25,8 @@ public:
 	virtual void addIcingRow(std::shared_ptr<ChunkColumn> chunkColumn, std::shared_ptr<ChunkManager> chunkManager, glm::vec2 LocCoords) override;
 	virtual void addDecorationRow(std::shared_ptr<ChunkColumn> chunk, std::shared_ptr<ChunkManager> chunkManager, glm::vec2 LocCoords) override;
 
+
+	// Inherited via IBiome
+	virtual void getHeightAtWorldCoords(glm::vec2 WorldPos, float* Output) override;
+
 };

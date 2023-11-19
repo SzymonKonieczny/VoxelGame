@@ -5,8 +5,8 @@
 #include "Biomes/DesertBiome.h"
 
 enum class EarthBiomes {
-	Plains = 1,
-	Desert = (1 << 1)
+	Plains,
+	Desert
 };
 
 class EarthyTerrainGenerator : public ITerrainGenerator {
@@ -18,12 +18,14 @@ public:
 
 	std::vector<float> BiomeDecisionNoise= std::vector<float>(16 * 16);
 	std::vector<float> HeightDecisionNoise = std::vector<float>(16 * 16);
-	PlainsBiome Plains;
-	DesertBiome Desert;
-	EarthyTerrainGenerator(std::shared_ptr<ChunkManager> ChunkManagerRef) : ITerrainGenerator(ChunkManagerRef) {};
+	std::vector<std::unique_ptr<IBiome>> Biomes;
+
+	EarthyTerrainGenerator(std::shared_ptr<ChunkManager> ChunkManagerRef);
+
 	virtual void generateTerrain(std::shared_ptr<ChunkColumn> chunkColumn) override;
 	void generateCaves(std::shared_ptr<ChunkColumn>& chunkColumn);
 	void FillHeightMapMultiBiome(std::shared_ptr<ChunkColumn>& chunkColumn);
+	float getHeightAtBlock(glm::vec2 WorldPos);
 	EarthBiomes DecideBiomeFromNoiseOutput(float noise);
 	bool CheckForMultiBiomeChunk(ChunkColumn& chunkColumn);
 	void generateLandMass(std::shared_ptr<ChunkColumn>& chunkColumn);

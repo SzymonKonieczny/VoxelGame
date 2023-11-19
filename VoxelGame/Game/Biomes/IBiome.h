@@ -14,5 +14,6 @@ public:
 	virtual void addDecorationRow(std::shared_ptr<ChunkColumn> chunk, std::shared_ptr<ChunkManager> chunkManager, glm::vec2 LocCoords) = 0;
 	virtual void generateFeatures(std::shared_ptr<ChunkColumn> chunk, std::shared_ptr<ChunkManager> chunkManager) = 0;
 	virtual void generateJustHeightmap(std::shared_ptr<ChunkColumn> chunkColumn, std::vector<float>& Output) = 0;
+	virtual void getHeightAtWorldCoords(glm::vec2 WorldPos, float* Output) = 0;
 
 };

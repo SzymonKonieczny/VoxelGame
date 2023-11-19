@@ -37,8 +37,8 @@ void Game::Start()
 			glfwSetWindowTitle(Renderer::window.GetHandle(), newTitle.c_str());
 		}
 
-		Update(deltaTime);
 		Renderer::BeginScene(world.player.getCamera());
+		Update(deltaTime);
 
 		RenderWorld(world);
 
