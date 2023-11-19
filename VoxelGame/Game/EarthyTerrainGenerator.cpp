@@ -89,7 +89,7 @@ void EarthyTerrainGenerator::FillHeightMapMultiBiome(std::shared_ptr<ChunkColumn
 								 glm::vec2((ColumnPos.x) * ChunkSize+1,(ColumnPos.y) * ChunkSize-1), 
 								 glm::vec2((ColumnPos.x) * ChunkSize+1,(ColumnPos.y) * ChunkSize+1)};*/
 
-	std::vector<float> corners = {0,0,0,0};
+	float corners[4] = {0,0,0,0};
 	for (int i = 0; i < 4; i++)
 	{
 		float BiomeVal[MinFastNoiseDim * MinFastNoiseDim];

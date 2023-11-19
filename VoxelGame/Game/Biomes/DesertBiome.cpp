@@ -92,7 +92,7 @@ void DesertBiome::generateJustHeightmap(std::shared_ptr<ChunkColumn> chunkColumn
 void DesertBiome::getHeightAtWorldCoords(glm::vec2 WorldPos, float* Output)
 {
 	FastNoise::SmartNode<> fnGenerator = FastNoise::NewFromEncodedNodeTree("FwAAAEDAAACAPwAAAAAAAIA/EwApXA8+GQATAMP1KD8NAAMAAADNzEw/CQAAPQpnQADXo3A/AQQAAAAAAAAAAACamZk+AAAAAAAAAAAAAAAAAACgwAAAAAA=");
-	
+
 	float temp[MinFastNoiseDim * MinFastNoiseDim];
 	fnGenerator->GenUniformGrid2D(Output, WorldPos.x, WorldPos.y,
 		MinFastNoiseDim, MinFastNoiseDim, 0.2f, 1337);

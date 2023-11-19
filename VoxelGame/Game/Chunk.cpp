@@ -95,20 +95,8 @@ void Chunk::PropagateLight(glm::vec3 Pos, int strength)
 
 
 
-if (!isValidPosition(Pos))  //MOVE THE WHOLE THING TO CHUNK MANAGER, OTHERWISE ITS HELL TO DO BETWEEN CHUNK PROPAGATION
-	{
-		glm::vec3 WorldPos = Util::LocPosAndChunkPosToWorldPos(Pos, m_ChunkPos);
-		glm::vec3 ChunkPos = Util::WorldPosToChunkPos(WorldPos);
-		glm::vec3 Pos = Util::WorldPosToLocalPos(WorldPos);
-		if (m_chunkManager->ChunkMap.contains(ChunkPos))
-		{
-			m_chunkManager->ChunkMap.at({ ChunkPos.x, ChunkPos.z })->m_Chunks[ChunkPos.y]->PropagateLight(Pos,strength);
+	if (!isValidPosition(Pos)) return; //MOVE THE WHOLE THING TO CHUNK MANAGER, OTHERWISE ITS HELL TO DO BETWEEN CHUNK PROPAGATION
 
-
-
-		}
-		return;
-	}
 	if (strength <= 0) return;
 	if (BlockTable[getBlock(Pos)].isSold) return;
 	if (lightLevels[Util::Vec3ToIndex(Pos)] >= strength) return;
@@ -134,8 +122,8 @@ void Chunk::GenerateLightmap()
 	std::fill(lightLevels.begin(), lightLevels.end(), 0);
 	for (auto source : lightSources)
 	{
-		m_chunkManager->PropagateLightToChunks(Util::LocPosAndChunkPosToWorldPos(source.first, m_ChunkPos), source.second);
-		//PropagateLight(source.first, source.second);
+		//m_chunkManager->PropagateLightToChunks(Util::LocPosAndChunkPosToWorldPos(source.first, m_ChunkPos), source.second);
+		PropagateLight(source.first, source.second);
 	}
 	blockMutex.unlock();
 
