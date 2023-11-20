@@ -18,6 +18,12 @@ void ChunkManager::SetBlockAtPosition(glm::vec3 Position, BlockName name)
 		chunk->setIsDirty(true);
 
 		AddToMeshQueue(ChunkPos);
+
+		AddToMeshQueue(ChunkPos + glm::vec3(1,0,0));
+		AddToMeshQueue(ChunkPos + glm::vec3(-1, 0, 0));
+		AddToMeshQueue(ChunkPos + glm::vec3(0, 0, 1));
+		AddToMeshQueue(ChunkPos + glm::vec3(0, 0, -1));
+
 	}
 	else
 	{
@@ -224,10 +230,10 @@ void ChunkManager::PropagateLightToChunks(glm::vec3 Pos, int strength)
 
 		if (strength <= 0) return;
 		glm::vec3 ChunkPos = Util::WorldPosToChunkPos(Pos);
+		glm::ivec2 ColumnPos = { ChunkPos.x,ChunkPos.z };
 
-		if (ChunkMap.contains(ChunkPos))
+		if (ChunkMap.contains(ColumnPos))
 		{
-			glm::ivec2 ColumnPos = { ChunkPos.x,ChunkPos.z };
 			glm::vec3 LocPos = Util::WorldPosToLocalPos(Pos);
 			auto& chunk = ChunkMap.at(ColumnPos)->m_Chunks[ChunkPos.y];
 			
@@ -247,7 +253,6 @@ void ChunkManager::PropagateLightToChunks(glm::vec3 Pos, int strength)
 
 
 		}
-
 
 
 }

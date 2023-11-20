@@ -119,7 +119,7 @@ void Chunk::PropagateLight(glm::vec3 Pos, int strength)
 void Chunk::GenerateLightmap()
 {
 	blockMutex.lock();
-	std::fill(lightLevels.begin(), lightLevels.end(), 0);
+ 	std::fill(lightLevels.begin(), lightLevels.end(), 0);
 	for (auto source : lightSources)
 	{
 

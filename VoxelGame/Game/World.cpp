@@ -35,6 +35,10 @@ void World::HandleActionQueue(int amount)
 				{
 
 					SetBlockOnPosition(info.HitPos, BlockName::Air);
+					
+
+
+
 
 				}
 			}

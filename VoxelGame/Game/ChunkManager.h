@@ -17,7 +17,7 @@ class ChunkManager{
 public:
 	ChunkManager()
 	{
-		Generator.reset(new EarthyTerrainGenerator(std::shared_ptr<ChunkManager>(this)));
+		Generator.reset(new TerrainGeneratorTest(std::shared_ptr<ChunkManager>(this)));
 		selfSmartPointer.reset(this);
 	}
 	
@@ -45,6 +45,7 @@ public:
 	std::unordered_map<glm::ivec2,std::shared_ptr<ChunkColumn>> ChunkMap;
 	std::queue<glm::ivec2> ChunksGenerationQueue;
 	std::queue<glm::ivec3> ChunksMeshingQueue;
+
 	std::unordered_set<glm::ivec3> ChunksInMeshQueue;
 
 

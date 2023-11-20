@@ -2,7 +2,7 @@
 #ifndef GLOBAL_H;
 #define GLOBAL_H
 
-#define LightPropagationInChunkManager false
+#define LightPropagationInChunkManager true
 
 extern  int ChunkSize;		// = 16;
 extern  int screenWidth;	//	= 800; //1280;
