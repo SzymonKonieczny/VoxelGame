@@ -20,6 +20,10 @@ void EarthyTerrainGenerator::generateTerrain(std::shared_ptr<ChunkColumn> chunkC
 	fnGenerator->GenUniformGrid2D(BiomeDecisionNoise.data(), ColumnPos.x * ChunkSize, ColumnPos.y * ChunkSize,
 		ChunkSize, ChunkSize, 0.2f, 1337);
 
+	int BiomeID = (int)DecideBiomeFromNoiseOutput(BiomeDecisionNoise[0]); // shouldnt be here, should be in the else below 
+//	(so only if its NOT a multibiome chunk)
+
+
 	bool isMultiBiomeChunk = CheckForMultiBiomeChunk(*chunkColumn); 
 	if (isMultiBiomeChunk)
 	{
@@ -28,14 +32,13 @@ void EarthyTerrainGenerator::generateTerrain(std::shared_ptr<ChunkColumn> chunkC
 		 generateLandMass(chunkColumn);
 	}
 	else {
-			int BiomeID = (int)DecideBiomeFromNoiseOutput(BiomeDecisionNoise[0]);
 			Biomes[BiomeID]->generateLandmass(chunkColumn, chunkManager);
 			Biomes[BiomeID]->addDecoration(chunkColumn, chunkManager);
-
 		}
 
 
 	addIcing(chunkColumn);
+	Biomes[BiomeID]->generateFeatures(chunkColumn, chunkManager);
 
 	generateCaves(chunkColumn);
 
