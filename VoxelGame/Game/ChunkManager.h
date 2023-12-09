@@ -11,6 +11,18 @@
 #include <queue>
 #include <thread>
 #include "BlockInfo.h"
+struct WaitingBlock {
+	glm::vec3 WorldPos;
+	BlockName block;
+};
+
+class WaitingBlockColumn {
+public:
+	WaitingBlockColumn() {
+		WaitingBlocks.resize(ChunksInColumn);
+	}
+	std::vector<std::vector<WaitingBlock>> WaitingBlocks;
+};
 class ChunkManager{
 	std::shared_ptr<ChunkManager> selfSmartPointer; // for chunkColumns
 	std::mutex MeshingQueueMutex;
@@ -43,6 +55,8 @@ public:
 	glm::ivec3 GetFromMeshQueue();
 
 	std::unordered_map<glm::ivec2,std::shared_ptr<ChunkColumn>> ChunkMap;
+	std::unordered_map<glm::ivec2, WaitingBlockColumn> WaitingBlockMap;
+
 	std::queue<glm::ivec2> ChunksGenerationQueue;
 	std::queue<glm::ivec3> ChunksMeshingQueue;
 
@@ -51,4 +65,5 @@ public:
 
 	std::shared_ptr<ITerrainGenerator> Generator;
 	std::unordered_map<glm::ivec2, std::shared_ptr<ChunkColumn>>& getChunks() { return ChunkMap; }
+
 };

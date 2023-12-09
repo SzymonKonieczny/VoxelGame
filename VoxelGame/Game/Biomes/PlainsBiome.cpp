@@ -56,25 +56,29 @@ void PlainsBiome::generateFeatures(std::shared_ptr<ChunkColumn> chunkColumn, std
 	if (Util::random(1, 15) > 3) return;
 	glm::vec3 WorldPos = {0,0,0}; 
 
-	glm::vec2 LocCoords = { 13,13 };
+	glm::vec2 LocCoords = { 2,2 };
 
 	for (int y = (chunkColumn->m_Chunks.size() * ChunkSize) - 1; y >= 0; y--)
 	{
 		if (chunkColumn->getBlockInColumn({ LocCoords.x,y,LocCoords.y }) != BlockName::Air)
 		{
-			WorldPos = Util::LocPosAndChunkPosToWorldPos({ LocCoords.x,y,LocCoords.y }, chunkColumn->m_Chunks[y/ChunkSize]->m_ChunkPos);
+			float localY = Util::WorldPosToLocalPos({ 0.f, (float)y, 0.f }).y;
+			WorldPos = Util::LocPosAndChunkPosToWorldPos({ LocCoords.x,localY,LocCoords.y }, chunkColumn->m_Chunks[y/ChunkSize]->m_ChunkPos);
+			break;
 		}
+
 	}
 	for (int i = 0; i < 5; i++)
+		chunkManager->SetBlockAtPosition(WorldPos + glm::vec3(0, i, 0), BlockName::Wood);
+	for (int i = 0; i < 5; i++)
 	{
-		chunkManager->SetBlockAtPosition(WorldPos + glm::vec3(i, 0, 0), BlockName::Ore);
-		chunkManager->SetBlockAtPosition(WorldPos + glm::vec3(-i, 0, 0), BlockName::Ore);
-		chunkManager->SetBlockAtPosition(WorldPos + glm::vec3(0, 0, i), BlockName::Ore);
-		chunkManager->SetBlockAtPosition(WorldPos + glm::vec3(0, 0, -i), BlockName::Ore);
+		chunkManager->SetBlockAtPosition(WorldPos + glm::vec3(i, 4, 0), BlockName::Ore);
+		chunkManager->SetBlockAtPosition(WorldPos + glm::vec3(-i, 4, 0), BlockName::Ore);
+		chunkManager->SetBlockAtPosition(WorldPos + glm::vec3(0, 4, i), BlockName::Ore);
+		chunkManager->SetBlockAtPosition(WorldPos + glm::vec3(0, 4, -i), BlockName::Ore);
 
 
 	}
-	std::cout << "Plus spawned at" << WorldPos.x <<' ' << WorldPos.y<< ' '<< WorldPos.z<< '\n';
 }
 
 void PlainsBiome::generateJustHeightmap(std::shared_ptr<ChunkColumn> chunkColumn, std::vector<float>& Output)
@@ -102,7 +106,7 @@ void PlainsBiome::addIcingRow(std::shared_ptr<ChunkColumn> chunkColumn, std::sha
 
 			for (int y = (chunkColumn->m_Chunks.size() * ChunkSize) - 1; y >= 0; y--)
 			{
-				if (chunkColumn->getBlockInColumn({ LocCoords.x,y,LocCoords.y }) != BlockName::Air)
+				if (chunkColumn->getBlockInColumn({ LocCoords.x,y,LocCoords.y }) == BlockName::Stone)
 				{
 					chunkColumn->setBlockInColumn({ LocCoords.x,y,LocCoords.y }, topToBottomSpecialBlocksCopy.front());
 					topToBottomSpecialBlocksCopy.pop();

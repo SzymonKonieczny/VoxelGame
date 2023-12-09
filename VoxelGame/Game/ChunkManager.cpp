@@ -7,9 +7,12 @@ void ChunkManager::SetBlockAtPosition(glm::vec3 Position, BlockName name)
 	if (ChunkPos.y < 0 || ChunkPos.y >= ChunksInColumn) { std::cout << "Trying to set block in a ChunkPos.y <0 OR ChunkPos.y >= ChunksInColumn@ ChunkManager::SetBlockAtPosition \n";  return; }
 
 	glm::ivec2 ColumnPos = { ChunkPos.x,ChunkPos.z };
+
+	glm::vec3 LocalPos = Util::WorldPosToLocalPos(Position);
+
+
 	if (ChunkMap.contains(ColumnPos))
 	{
-		glm::vec3 LocalPos = Util::WorldPosToLocalPos(Position);
 		auto& column = ChunkMap.at(ColumnPos);
 		auto& chunk = column->getChunk(ChunkPos.y);
 		int index = Util::Vec3ToIndex(LocalPos);
@@ -27,6 +30,15 @@ void ChunkManager::SetBlockAtPosition(glm::vec3 Position, BlockName name)
 	}
 	else
 	{
+		if (WaitingBlockMap.contains(ColumnPos))
+		{
+			WaitingBlockMap.at(ColumnPos).WaitingBlocks[LocalPos.y / ChunkSize].push_back({ Position,name });
+
+		}
+		else {
+			WaitingBlockMap.emplace(ColumnPos, WaitingBlockColumn());
+			WaitingBlockMap.at(ColumnPos).WaitingBlocks[LocalPos.y / ChunkSize].push_back({ Position,name });
+		}
 		// ADD TO BLOCK QUEUE FOR NOT YET CREATED CHUNKS
 	}
 }
@@ -114,6 +126,18 @@ void ChunkManager::AsyncGenerateChunks(std::list<glm::ivec2> List, bool& isChunk
 			auto col = ChunkMap.at(Pos);
 			
 			Generator->generateTerrain(col); 
+			
+			if (WaitingBlockMap.contains(Pos))
+			{
+				for(auto chunk : WaitingBlockMap.at(Pos).WaitingBlocks)
+					for (auto block : chunk)
+					{
+						SetBlockAtPosition(block.WorldPos, block.block);
+					}
+			}
+
+
+
 			AddColumnToMeshQueue(Pos);
 
 			AddColumnToMeshQueue(glm::ivec2(Pos.x, Pos.y-1));
@@ -179,6 +203,10 @@ void ChunkManager::UpdateLoadedChunkMap(glm::vec2 CenterPoint)
 		glm::ivec2 ColPos = it->first;
 		if (ColPos.x > maxX || ColPos.x < minX ||
 			ColPos.y >maxZ || ColPos.y < minZ) {
+			if (WaitingBlockMap.contains(it->first))
+			{
+				WaitingBlockMap.erase(it->first);
+			}
 			it = ChunkMap.erase(it);
 		}
 		else it++;
