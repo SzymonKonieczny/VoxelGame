@@ -29,7 +29,16 @@ class ChunkManager{
 public:
 	ChunkManager()
 	{
-		Generator.reset(new EarthyTerrainGenerator(std::shared_ptr<ChunkManager>(this)));
+
+#ifndef _DEBUG
+		Generator.reset(new EarthyTerrainGenerator(std::shared_ptr<ChunkManager>(this)));;
+
+#else
+		Generator.reset(new TerrainGeneratorTest(std::shared_ptr<ChunkManager>(this)));
+#endif	
+		
+
+
 		selfSmartPointer.reset(this);
 	}
 	

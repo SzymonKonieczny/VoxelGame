@@ -77,7 +77,7 @@ void ChunkManager::GenerateChunksFromQueue(int amount )
 		PosList.push_back(ChunksGenerationQueue.front());
 		ChunksGenerationQueue.pop();
 	}
-#if 1 //async chunk gen off
+#ifndef _DEBUG
 	isChunkGenerationThreadDone = false;
 
 	std::thread ChunkGenerationThread(&ChunkManager::AsyncGenerateChunks, this, PosList, std::ref(isChunkGenerationThreadDone));
@@ -255,9 +255,14 @@ void ChunkManager::AddColumnToMeshQueue(glm::ivec2 Pos)
 }
 void ChunkManager::PropagateLightToChunks(glm::vec3 Pos, int strength)
 {
+	glm::vec3 ChunkPos = Util::WorldPosToChunkPos(Pos);
 
-		if (strength <= 0) return;
-		glm::vec3 ChunkPos = Util::WorldPosToChunkPos(Pos);
+	if (strength <= 0)
+	{
+		if(ChunkMap.contains(ChunkPos))
+			AddToMeshQueue(Util::WorldPosToChunkPos(ChunkPos));
+		return;
+	}
 		glm::ivec2 ColumnPos = { ChunkPos.x,ChunkPos.z };
 
 		if (ChunkMap.contains(ColumnPos))

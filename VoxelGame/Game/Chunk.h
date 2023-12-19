@@ -48,7 +48,7 @@ public:
 
 private:
 	std::unordered_set<glm::vec3> LightPropagationMarkSet;
-	void PropagateLight(glm::vec3 Pos, int strength);
+//	void PropagateLight(glm::vec3 Pos, int strength);
 	std::unordered_map<glm::vec3, int> lightSources;
 	std::vector<unsigned int> blocks;
 	std::vector<int> lightLevels;
