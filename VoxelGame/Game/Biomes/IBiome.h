@@ -16,4 +16,5 @@ public:
 	virtual void generateJustHeightmap(std::shared_ptr<ChunkColumn> chunkColumn, std::vector<float>& Output) = 0;
 	virtual void getHeightAtWorldCoords(glm::vec2 WorldPos, float* Output) = 0;
 
+
 };

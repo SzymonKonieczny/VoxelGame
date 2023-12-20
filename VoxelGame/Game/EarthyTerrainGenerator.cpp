@@ -24,7 +24,7 @@ void EarthyTerrainGenerator::generateTerrain(std::shared_ptr<ChunkColumn> chunkC
 //	(so only if its NOT a multibiome chunk)
 
 
-	bool isMultiBiomeChunk = CheckForMultiBiomeChunk(*chunkColumn); 
+	bool isMultiBiomeChunk = true;//CheckForMultiBiomeChunk(*chunkColumn); 
 	if (isMultiBiomeChunk)
 	{
 
@@ -80,12 +80,12 @@ void EarthyTerrainGenerator::FillHeightMapMultiBiome(std::shared_ptr<ChunkColumn
 
 
 
-	FastNoise::SmartNode<> fnGenerator = FastNoise::NewFromEncodedNodeTree(BiomeDecisionTreeNode.c_str());
+
 	glm::ivec2 ColumnPos = chunkColumn->m_Position;
 	glm::vec2 CornerCoords[4] = { glm::vec2((ColumnPos.x* ChunkSize) -1,  (ColumnPos.y  * ChunkSize)-1),// - - 
-								 glm::vec2( (ColumnPos.x * ChunkSize)-1, (ColumnPos.y+1)  * ChunkSize), // - + 
-								 glm::vec2((ColumnPos.x+1) * ChunkSize , (ColumnPos.y  * ChunkSize )-1), // + -
-								 glm::vec2((ColumnPos.x + 1) * ChunkSize , (ColumnPos.y+1)  * ChunkSize)};// + + 
+								 glm::vec2( (ColumnPos.x * ChunkSize)-1, (ColumnPos.y)  * ChunkSize), // - + 
+								 glm::vec2((ColumnPos.x) * ChunkSize +15, (ColumnPos.y  * ChunkSize )-1), // + -
+								 glm::vec2((ColumnPos.x) * ChunkSize , (ColumnPos.y)  * ChunkSize +15) };// + + 
 
 	/*	glm::vec2 CornerCoords[4] = { glm::vec2((ColumnPos.x)*ChunkSize-1, (ColumnPos.y) * ChunkSize-1),
 								 glm::vec2((ColumnPos.x) * ChunkSize-1,(ColumnPos.y) * ChunkSize+1), 
@@ -93,20 +93,35 @@ void EarthyTerrainGenerator::FillHeightMapMultiBiome(std::shared_ptr<ChunkColumn
 								 glm::vec2((ColumnPos.x) * ChunkSize+1,(ColumnPos.y) * ChunkSize+1)};*/
 
 	float corners[4] = {0,0,0,0};
-	for (int i = 0; i < 4; i++)
-	{
-		float BiomeVal[MinFastNoiseDim * MinFastNoiseDim];
-		fnGenerator->GenUniformGrid2D( BiomeVal, CornerCoords[i].x, CornerCoords[i].y,
-			MinFastNoiseDim, MinFastNoiseDim, 0.2f, 1337);
+	
+		
+		for (int i = 0; i < 4; i++)
+		{
 
-		int BiomeID = (int)DecideBiomeFromNoiseOutput(BiomeVal[0]);
-		Biomes[BiomeID]->getHeightAtWorldCoords(CornerCoords[i], &corners[i]);
+			float temp = 0;
 
-	}
+			temp += getMapHeightAtPosition(CornerCoords[i]);
+			temp += getMapHeightAtPosition(CornerCoords[i] + glm::vec2(1, 0));
+			temp += getMapHeightAtPosition(CornerCoords[i] + glm::vec2(0, 1));
+			temp += getMapHeightAtPosition(CornerCoords[i] + glm::vec2(1, 1));
+
+			corners[i] = temp / 4;
+
+
+
+			//float BiomeVal[MinFastNoiseDim * MinFastNoiseDim];
+			//fnGenerator->GenUniformGrid2D( BiomeVal, CornerCoords[i].x, CornerCoords[i].y,
+			//	MinFastNoiseDim, MinFastNoiseDim, 0.2f, 1337);
+			//int BiomeID = (int)DecideBiomeFromNoiseOutput(BiomeVal[0]);
+			//Biomes[BiomeID]->getHeightAtWorldCoords(CornerCoords[i], &temp);
+
+
+		}
+
 
 	float q11 = corners[0];
-	float q12 = corners[2];
-	float q21 = corners[1];
+	float q12 = corners[1];
+	float q21 = corners[2];
 	float q22 = corners[3];
 
 
@@ -200,4 +215,16 @@ void EarthyTerrainGenerator::addIcing(std::shared_ptr<ChunkColumn>& chunkColumn)
 			
 			
 		}
+}
+
+float EarthyTerrainGenerator::getMapHeightAtPosition(glm::vec2 worldPos)
+{
+	FastNoise::SmartNode<> fnGenerator = FastNoise::NewFromEncodedNodeTree(BiomeDecisionTreeNode.c_str());
+	float temp;
+	float BiomeVal[MinFastNoiseDim * MinFastNoiseDim];
+	fnGenerator->GenUniformGrid2D(BiomeVal, worldPos.x, worldPos.y,
+		MinFastNoiseDim, MinFastNoiseDim, 0.2f, 1337);
+	int BiomeID = (int)DecideBiomeFromNoiseOutput(BiomeVal[0]);
+	Biomes[BiomeID]->getHeightAtWorldCoords(worldPos, &temp);
+	return temp;
 }

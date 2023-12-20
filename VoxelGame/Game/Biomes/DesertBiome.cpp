@@ -94,9 +94,9 @@ void DesertBiome::getHeightAtWorldCoords(glm::vec2 WorldPos, float* Output)
 	FastNoise::SmartNode<> fnGenerator = FastNoise::NewFromEncodedNodeTree("FwAAAEDAAACAPwAAAAAAAIA/EwApXA8+GQATAMP1KD8NAAMAAADNzEw/CQAAPQpnQADXo3A/AQQAAAAAAAAAAACamZk+AAAAAAAAAAAAAAAAAACgwAAAAAA=");
 
 	float temp[MinFastNoiseDim * MinFastNoiseDim];
-	fnGenerator->GenUniformGrid2D(Output, WorldPos.x, WorldPos.y,
+	fnGenerator->GenUniformGrid2D(temp, WorldPos.x, WorldPos.y,
 		MinFastNoiseDim, MinFastNoiseDim, 0.2f, 1337);
-	int index = MinFastNoiseDim * MinFastNoiseDim - 1;
+	int index = 0;// MinFastNoiseDim * MinFastNoiseDim - 1;
 	temp[index] *= Variation;
 	temp[index] += BaseGround;
 	*Output = temp[index];

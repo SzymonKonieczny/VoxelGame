@@ -78,11 +78,7 @@ void Renderer::BeginScene(Camera& camera) // argument : vec<ligtsources>
 
 void Renderer::EndScene()
 {
-	ShadowMap->Bind();
-	glEnable(GL_DEPTH_TEST);
 
-	glViewport(0, 0, ShadowMapRes, ShadowMapRes);// Shadow render pass
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glm::mat4 lightProjection = glm::ortho((float)-100, (float)100, (float)-100, (float)100, 0.1f, 1000.0f);
 
 		/*glm::mat4 lightView = glm::lookAt(glm::vec3(-60.f, 21.0f, -5.f),
@@ -102,10 +98,15 @@ void Renderer::EndScene()
 		std::cout << "Teleporting the lightsource to player ...\n";
 	}
 
-	
+#if 0 // Shadowmap render	
+	ShadowMap->Bind();
+
+
+	glViewport(0, 0, ShadowMapRes, ShadowMapRes);// Shadow render pass
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	ShadowPassShader->Bind();
 	ShadowPassShader->UploadUniformMat4("lightSpaceMatrix", lightSpaceMatrix);
-	/**/
+
 	for (auto& m : Meshes)
 	{
 		if (m->getCount() == 0) continue;
@@ -127,7 +128,7 @@ void Renderer::EndScene()
 			break;
 		}
 	}
-	
+#endif
 	frame->Bind();
 	glViewport(0, 0, screenWidth, screenHeight); // Normal render pass
 	glClearColor(0.39f, 0.67f, 0.8f, 1.0f);
@@ -183,7 +184,7 @@ void Renderer::EndScene()
 
 	ScreenQuad->PreDraw();
 	RendererCommand::DrawNotIndexed(*ScreenQuad);
-
+	glEnable(GL_DEPTH_TEST);
 	Meshes.clear();
 
 

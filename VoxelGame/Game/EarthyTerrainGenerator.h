@@ -30,4 +30,6 @@ public:
 	bool CheckForMultiBiomeChunk(ChunkColumn& chunkColumn);
 	void generateLandMass(std::shared_ptr<ChunkColumn>& chunkColumn);
 	void addIcing(std::shared_ptr<ChunkColumn>& chunkColumn);
+	float getMapHeightAtPosition(glm::vec2 worldPos);
+	
 };
