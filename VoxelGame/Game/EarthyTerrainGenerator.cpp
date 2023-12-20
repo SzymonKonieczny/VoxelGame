@@ -82,15 +82,14 @@ void EarthyTerrainGenerator::FillHeightMapMultiBiome(std::shared_ptr<ChunkColumn
 
 
 	glm::ivec2 ColumnPos = chunkColumn->m_Position;
-	glm::vec2 CornerCoords[4] = { glm::vec2((ColumnPos.x* ChunkSize) -1,  (ColumnPos.y  * ChunkSize)-1),// - - 
-								 glm::vec2( (ColumnPos.x * ChunkSize)-1, (ColumnPos.y)  * ChunkSize), // - + 
-								 glm::vec2((ColumnPos.x) * ChunkSize +15, (ColumnPos.y  * ChunkSize )-1), // + -
-								 glm::vec2((ColumnPos.x) * ChunkSize , (ColumnPos.y)  * ChunkSize +15) };// + + 
-
-	/*	glm::vec2 CornerCoords[4] = { glm::vec2((ColumnPos.x)*ChunkSize-1, (ColumnPos.y) * ChunkSize-1),
-								 glm::vec2((ColumnPos.x) * ChunkSize-1,(ColumnPos.y) * ChunkSize+1), 
-								 glm::vec2((ColumnPos.x) * ChunkSize+1,(ColumnPos.y) * ChunkSize-1), 
-								 glm::vec2((ColumnPos.x) * ChunkSize+1,(ColumnPos.y) * ChunkSize+1)};*/
+	//glm::vec2 CornerCoords[4] = { glm::vec2((ColumnPos.x* ChunkSize) -1,  (ColumnPos.y  * ChunkSize)-1),// - - 
+	//							 glm::vec2( (ColumnPos.x * ChunkSize)-1, (ColumnPos.y)  * ChunkSize), // - + 
+	//							 glm::vec2((ColumnPos.x+1) * ChunkSize, (ColumnPos.y  * ChunkSize )-1), // + -
+	//							 glm::vec2((ColumnPos.x) * ChunkSize , (ColumnPos.y+1)  * ChunkSize ) };// + + 
+	glm::vec2 CornerCoords[4] = { glm::vec2((ColumnPos.x * ChunkSize) - 1,  (ColumnPos.y * ChunkSize) - 1),// - - 
+								 glm::vec2((ColumnPos.x * ChunkSize) - 1, (ColumnPos.y + 1) * ChunkSize), // - + 
+								 glm::vec2((ColumnPos.x + 1) * ChunkSize , (ColumnPos.y * ChunkSize) - 1), // + -
+								 glm::vec2((ColumnPos.x + 1) * ChunkSize , (ColumnPos.y + 1) * ChunkSize) };// + + 
 
 	float corners[4] = {0,0,0,0};
 	
@@ -101,11 +100,11 @@ void EarthyTerrainGenerator::FillHeightMapMultiBiome(std::shared_ptr<ChunkColumn
 			float temp = 0;
 
 			temp += getMapHeightAtPosition(CornerCoords[i]);
-			temp += getMapHeightAtPosition(CornerCoords[i] + glm::vec2(1, 0));
-			temp += getMapHeightAtPosition(CornerCoords[i] + glm::vec2(0, 1));
-			temp += getMapHeightAtPosition(CornerCoords[i] + glm::vec2(1, 1));
+			//temp += getMapHeightAtPosition(CornerCoords[i] + glm::vec2(1, 0));
+			//temp += getMapHeightAtPosition(CornerCoords[i] + glm::vec2(0, 1));
+			//temp += getMapHeightAtPosition(CornerCoords[i] + glm::vec2(1, 1));
 
-			corners[i] = temp / 4;
+			corners[i] = temp;// / 4;
 
 
 
