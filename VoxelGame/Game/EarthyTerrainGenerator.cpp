@@ -24,7 +24,7 @@ void EarthyTerrainGenerator::generateTerrain(std::shared_ptr<ChunkColumn> chunkC
 //	(so only if its NOT a multibiome chunk)
 
 
-	bool isMultiBiomeChunk = true;//CheckForMultiBiomeChunk(*chunkColumn); 
+	bool isMultiBiomeChunk = true;// KEEP AS PERMA TRUE FOR METHOD B //CheckForMultiBiomeChunk(*chunkColumn); 
 	if (isMultiBiomeChunk)
 	{
 
@@ -87,9 +87,9 @@ void EarthyTerrainGenerator::FillHeightMapMultiBiome(std::shared_ptr<ChunkColumn
 	//							 glm::vec2((ColumnPos.x+1) * ChunkSize, (ColumnPos.y  * ChunkSize )-1), // + -
 	//							 glm::vec2((ColumnPos.x) * ChunkSize , (ColumnPos.y+1)  * ChunkSize ) };// + + 
 	glm::vec2 CornerCoords[4] = { glm::vec2((ColumnPos.x * ChunkSize) - 1,  (ColumnPos.y * ChunkSize) - 1),// - - 
-								 glm::vec2((ColumnPos.x * ChunkSize) - 1, (ColumnPos.y + 1) * ChunkSize), // - + 
-								 glm::vec2((ColumnPos.x + 1) * ChunkSize , (ColumnPos.y * ChunkSize) - 1), // + -
-								 glm::vec2((ColumnPos.x + 1) * ChunkSize , (ColumnPos.y + 1) * ChunkSize) };// + + 
+								 glm::vec2((ColumnPos.x * ChunkSize) - 1, (ColumnPos.y) * ChunkSize +15), // - + 
+								 glm::vec2((ColumnPos.x) * ChunkSize +15 , (ColumnPos.y * ChunkSize) - 1), // + -
+								 glm::vec2((ColumnPos.x ) * ChunkSize+15 , (ColumnPos.y) * ChunkSize +15) };// + + 
 
 	float corners[4] = {0,0,0,0};
 	
