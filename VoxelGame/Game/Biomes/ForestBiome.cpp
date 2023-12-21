@@ -15,7 +15,6 @@ void ForestBiome::addDecoration(std::shared_ptr<ChunkColumn> chunk, std::shared_
 
 void ForestBiome::generateFeatures(std::shared_ptr<ChunkColumn> chunk, std::shared_ptr<ChunkManager> chunkManager)
 {
-
 	for (int i = 0; i < 6; i++)
 	{
 		if(Util::random(1,100) > 30)

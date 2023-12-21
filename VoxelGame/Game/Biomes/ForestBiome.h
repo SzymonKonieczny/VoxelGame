@@ -3,7 +3,7 @@
 
 class ForestBiome : public IBiome {
 public:
-	int BaseGround = 50;
+	int BaseGround = 40;
 	int Variation = 150;
 	ForestBiome(std::string encodedTreeForTerraingGeneration) : IBiome(encodedTreeForTerraingGeneration) {
 		topToBottomSpecialBlocks;

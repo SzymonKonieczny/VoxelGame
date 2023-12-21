@@ -5,7 +5,7 @@ EarthyTerrainGenerator::EarthyTerrainGenerator(std::shared_ptr<ChunkManager> Chu
 {
 	Biomes.push_back(std::make_unique<PlainsBiome>("FwAAAEDAAACAPwAAAAAAAIA/EwApXA8+EAAAAABAGQATAMP1KD8NAAIAAADNzJxACQAAUriePgBmZqY/AQQAAAAAAAAAAACamZk+AAAAAAAAAAAAAAAAAACgwAAAAAAAzcxMPg==") );
 	Biomes.push_back(std::make_unique<DesertBiome>("FwAAAEDAAACAPwAAAAAAAIA/EwApXA8+GQATAMP1KD8NAAMAAADNzEw/CQAAPQpnQADXo3A/AQQAAAAAAAAAAACamZk+AAAAAAAAAAAAAAAAAACgwAAAAAA="));
-	Biomes.push_back(std::make_unique<ForestBiome>("FwAAAEDAAACAPwAAAAAAAIA/EwApXA8+GQATAMP1KD8NAAMAAADNzEw/CQAAPQpnQADXo3A/AQQAAAAAAAAAAACamZk+AAAAAAAAAAAAAAAAAACgwAAAAAA="));
+	Biomes.push_back(std::make_unique<ForestBiome>("FwAAAEDAAACAPwAAAAAAAIA/EwAK1yM9GQATAMP1KD8NAAMAAADNzEw/CQAA7FFoQAAAAAAAAQQAAAAAAAAAAACamZk+AAAAAAAAAAAAAAAAAACgwAAAAAA="));
 	Biomes.push_back(std::make_unique<FallForestBiome>("FwAAAEDAAACAPwAAAAAAAIA/EwApXA8+GQATAMP1KD8NAAMAAADNzEw/CQAAPQpnQADXo3A/AQQAAAAAAAAAAACamZk+AAAAAAAAAAAAAAAAAACgwAAAAAA="));
 
 
@@ -42,7 +42,7 @@ void EarthyTerrainGenerator::generateTerrain(std::shared_ptr<ChunkColumn> chunkC
 
 
 	addIcing(chunkColumn);
-	generateCaves(chunkColumn);
+	//generateCaves(chunkColumn);
 	Biomes[BiomeID]->generateFeatures(chunkColumn, chunkManager);
 
 

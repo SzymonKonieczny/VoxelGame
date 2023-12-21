@@ -3,7 +3,7 @@
 
 class FallForestBiome : public IBiome {
 public:
-	int BaseGround = 60;
+	int BaseGround = 40;
 	int Variation = 130;
 	FallForestBiome(std::string encodedTreeForTerraingGeneration) : IBiome(encodedTreeForTerraingGeneration) {
 		topToBottomSpecialBlocks;
@@ -30,4 +30,5 @@ public:
 
 	void generateTree(glm::vec2 LocCoords, std::shared_ptr<ChunkColumn>& chunk, std::shared_ptr<ChunkManager>& chunkManager);
 
+	void generateBush(glm::vec2 LocCoords, std::shared_ptr<ChunkColumn>& chunk, std::shared_ptr<ChunkManager>& chunkManager);
 };

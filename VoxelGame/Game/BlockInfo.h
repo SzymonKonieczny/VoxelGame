@@ -2,7 +2,7 @@
 #include <vector>
 #include <glm/glm.hpp>
 enum class BlockName {
-	Air, Grass, Ore, Stone, Dirt, Wood, BlueRose, Sand, Leaves, RedGrass, RedLeaves
+	Air, Grass, Ore, Stone, Dirt, Wood, BlueRose, Sand, Leaves, RedGrass, RedLeaves, GlowWood
 };
 enum class BlockModelType {
 	Cube, X
