@@ -53,32 +53,8 @@ void PlainsBiome::addDecoration(std::shared_ptr<ChunkColumn> chunk, std::shared_
 
 void PlainsBiome::generateFeatures(std::shared_ptr<ChunkColumn> chunkColumn, std::shared_ptr<ChunkManager> chunkManager)
 {
-	if (Util::random(1, 15) > 3) return;
-	glm::vec3 WorldPos = {0,0,0}; 
-
-	glm::vec2 LocCoords = { 2,2 };
-
-	for (int y = (chunkColumn->m_Chunks.size() * ChunkSize) - 1; y >= 0; y--)
-	{
-		if (chunkColumn->getBlockInColumn({ LocCoords.x,y,LocCoords.y }) != BlockName::Air)
-		{
-			float localY = Util::WorldPosToLocalPos({ 0.f, (float)y, 0.f }).y;
-			WorldPos = Util::LocPosAndChunkPosToWorldPos({ LocCoords.x,localY,LocCoords.y }, chunkColumn->m_Chunks[y/ChunkSize]->m_ChunkPos);
-			break;
-		}
-
-	}
-	for (int i = 0; i < 5; i++)
-		chunkManager->SetBlockAtPosition(WorldPos + glm::vec3(0, i, 0), BlockName::Wood);
-	for (int i = 0; i < 5; i++)
-	{
-		chunkManager->SetBlockAtPosition(WorldPos + glm::vec3(i, 4, 0), BlockName::Ore);
-		chunkManager->SetBlockAtPosition(WorldPos + glm::vec3(-i, 4, 0), BlockName::Ore);
-		chunkManager->SetBlockAtPosition(WorldPos + glm::vec3(0, 4, i), BlockName::Ore);
-		chunkManager->SetBlockAtPosition(WorldPos + glm::vec3(0, 4, -i), BlockName::Ore);
-
-
-	}
+	
+	
 }
 
 void PlainsBiome::generateJustHeightmap(std::shared_ptr<ChunkColumn> chunkColumn, std::vector<float>& Output)
@@ -121,7 +97,7 @@ void PlainsBiome::addDecorationRow(std::shared_ptr<ChunkColumn> chunkColumn, std
 
 	for (int y = (chunkColumn->m_Chunks.size() * ChunkSize) - 1; y >= 0; y--)
 	{
-		if (chunkColumn->getBlockInColumn({ LocCoords.x,y,LocCoords.y }) != BlockName::Air)
+		if (chunkColumn->getBlockInColumn({ LocCoords.x,y,LocCoords.y }) == BlockName::Grass)
 		{
 			if(Util::random(1,15) ==1)
 			chunkColumn->setBlockInColumn({ LocCoords.x,y+1,LocCoords.y }, BlockName::BlueRose);

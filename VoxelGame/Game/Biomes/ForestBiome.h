@@ -3,12 +3,12 @@
 
 class ForestBiome : public IBiome {
 public:
-	int BaseGround = 20;
-	int Variation = 80;
+	int BaseGround = 50;
+	int Variation = 150;
 	ForestBiome(std::string encodedTreeForTerraingGeneration) : IBiome(encodedTreeForTerraingGeneration) {
 		topToBottomSpecialBlocks;
 
-		topToBottomSpecialBlocks.push(BlockName::Dirt);
+		topToBottomSpecialBlocks.push(BlockName::Grass);
 		topToBottomSpecialBlocks.push(BlockName::Dirt);
 		topToBottomSpecialBlocks.push(BlockName::Dirt);
 	}
@@ -26,4 +26,7 @@ public:
 
 	// Inherited via IBiome
 	virtual void getHeightAtWorldCoords(glm::vec2 WorldPos, float* Output) override;
+
+	void generateTree(glm::vec2 LocCoords, std::shared_ptr<ChunkColumn>& chunk, std::shared_ptr<ChunkManager>& chunkManager);
+
 };

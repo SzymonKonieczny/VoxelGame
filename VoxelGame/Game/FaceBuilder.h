@@ -101,22 +101,22 @@ public:
 			break;
 		case BlockFace::WEST:
 			
-			v = { pos + glm::vec3(0.f,0.f,0.f),UV + glm::vec2(0.f,0.f), Light };
+			v = { pos + glm::vec3(0.f,0.f,0.f),UV + glm::vec2(0.f,0.f), glm::vec3(0.25f,0.25f,0.25f) + Light };
 			pushVertToMesh(mesh, v);
 
-			v = { pos + glm::vec3(0.f,1.f,0.f),UV + glm::vec2(0.f,0.2f), Light };
+			v = { pos + glm::vec3(0.f,1.f,0.f),UV + glm::vec2(0.f,0.2f), glm::vec3(0.25f,0.25f,0.25f) + Light };
 			pushVertToMesh(mesh, v);
 
-			v = { pos + glm::vec3(0.f,1.f,1.f),UV + glm::vec2(0.2f,0.2f), Light };
+			v = { pos + glm::vec3(0.f,1.f,1.f),UV + glm::vec2(0.2f,0.2f),glm::vec3(0.25f,0.25f,0.25f) + Light };
 			pushVertToMesh(mesh, v);
 			//----
-			v = { pos + glm::vec3(0.f,1.f,1.f),UV + glm::vec2(0.2f,0.2f), Light };
+			v = { pos + glm::vec3(0.f,1.f,1.f),UV + glm::vec2(0.2f,0.2f), glm::vec3(0.25f,0.25f,0.25f) + Light };
 			pushVertToMesh(mesh, v);
 
-			v = { pos + glm::vec3(0.f,0.f,1.f),UV + glm::vec2(0.2f,0.f),Light };
+			v = { pos + glm::vec3(0.f,0.f,1.f),UV + glm::vec2(0.2f,0.f),glm::vec3(0.25f,0.25f,0.25f) + Light };
 			pushVertToMesh(mesh, v);
 
-			v = { pos + glm::vec3(0.f,0.f,0.f),UV + glm::vec2(0.f,0.f), Light };
+			v = { pos + glm::vec3(0.f,0.f,0.f),UV + glm::vec2(0.f,0.f), glm::vec3(0.25f,0.25f,0.25f) + Light };
 			pushVertToMesh(mesh, v);
 			break;
 		case BlockFace::UP:

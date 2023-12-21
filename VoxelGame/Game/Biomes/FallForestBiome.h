@@ -3,14 +3,15 @@
 
 class FallForestBiome : public IBiome {
 public:
-	int BaseGround = 20;
-	int Variation = 80;
+	int BaseGround = 60;
+	int Variation = 130;
 	FallForestBiome(std::string encodedTreeForTerraingGeneration) : IBiome(encodedTreeForTerraingGeneration) {
 		topToBottomSpecialBlocks;
 
-		topToBottomSpecialBlocks.push(BlockName::Sand);
-		topToBottomSpecialBlocks.push(BlockName::Sand);
-		topToBottomSpecialBlocks.push(BlockName::Sand);
+		topToBottomSpecialBlocks.push(BlockName::RedGrass);
+		topToBottomSpecialBlocks.push(BlockName::Dirt);
+		topToBottomSpecialBlocks.push(BlockName::Dirt);
+		topToBottomSpecialBlocks.push(BlockName::Dirt);
 	}
 	std::queue<BlockName> topToBottomSpecialBlocks;
 
@@ -26,4 +27,7 @@ public:
 
 	// Inherited via IBiome
 	virtual void getHeightAtWorldCoords(glm::vec2 WorldPos, float* Output) override;
+
+	void generateTree(glm::vec2 LocCoords, std::shared_ptr<ChunkColumn>& chunk, std::shared_ptr<ChunkManager>& chunkManager);
+
 };

@@ -38,7 +38,7 @@ void EarthyTerrainGenerator::generateTerrain(std::shared_ptr<ChunkColumn> chunkC
 	else {
 			Biomes[BiomeID]->generateLandmass(chunkColumn, chunkManager);
 			Biomes[BiomeID]->addDecoration(chunkColumn, chunkManager);
-		}
+	}
 
 
 	addIcing(chunkColumn);
@@ -162,7 +162,7 @@ float EarthyTerrainGenerator::getHeightAtBlock(glm::vec2 WorldPos)
 EarthBiomes EarthyTerrainGenerator::DecideBiomeFromNoiseOutput(float noise)
 {
 	if (noise < 0.0f) return EarthBiomes::Forest;
-	else return EarthBiomes::Desert;
+	else return EarthBiomes::FallForest;
 
 }
 
