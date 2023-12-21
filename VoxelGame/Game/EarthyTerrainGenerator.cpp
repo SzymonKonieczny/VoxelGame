@@ -3,8 +3,8 @@
 
 EarthyTerrainGenerator::EarthyTerrainGenerator(std::shared_ptr<ChunkManager> ChunkManagerRef) : ITerrainGenerator(ChunkManagerRef)
 {
-	Biomes.push_back(std::make_unique<PlainsBiome>() );
-	Biomes.push_back(std::make_unique<DesertBiome>());
+	Biomes.push_back(std::make_unique<PlainsBiome>("FwAAAEDAAACAPwAAAAAAAIA/EwApXA8+EAAAAABAGQATAMP1KD8NAAIAAADNzJxACQAAUriePgBmZqY/AQQAAAAAAAAAAACamZk+AAAAAAAAAAAAAAAAAACgwAAAAAAAzcxMPg==") );
+	Biomes.push_back(std::make_unique<DesertBiome>("FwAAAEDAAACAPwAAAAAAAIA/EwApXA8+GQATAMP1KD8NAAMAAADNzEw/CQAAPQpnQADXo3A/AQQAAAAAAAAAAACamZk+AAAAAAAAAAAAAAAAAACgwAAAAAA="));
 }
 
 void EarthyTerrainGenerator::generateTerrain(std::shared_ptr<ChunkColumn> chunkColumn)

@@ -83,7 +83,7 @@ void PlainsBiome::generateFeatures(std::shared_ptr<ChunkColumn> chunkColumn, std
 
 void PlainsBiome::generateJustHeightmap(std::shared_ptr<ChunkColumn> chunkColumn, std::vector<float>& Output)
 {
-	FastNoise::SmartNode<> fnGenerator = FastNoise::NewFromEncodedNodeTree("FwAAAEDAAACAPwAAAAAAAIA/EwApXA8+EAAAAABAGQATAMP1KD8NAAIAAADNzJxACQAAUriePgBmZqY/AQQAAAAAAAAAAACamZk+AAAAAAAAAAAAAAAAAACgwAAAAAAAzcxMPg==");
+	FastNoise::SmartNode<> fnGenerator = FastNoise::NewFromEncodedNodeTree(EncodedTree.c_str());
 
 	glm::ivec2 ColumnPos = chunkColumn->m_Position;
 
@@ -132,7 +132,7 @@ void PlainsBiome::addDecorationRow(std::shared_ptr<ChunkColumn> chunkColumn, std
 
 void PlainsBiome::getHeightAtWorldCoords(glm::vec2 WorldPos, float* Output)
 {
-	FastNoise::SmartNode<> fnGenerator = FastNoise::NewFromEncodedNodeTree("FwAAAEDAAACAPwAAAAAAAIA/EwApXA8+GQATAMP1KD8NAAMAAADNzEw/CQAAPQpnQADXo3A/AQQAAAAAAAAAAACamZk+AAAAAAAAAAAAAAAAAACgwAAAAAA=");
+	FastNoise::SmartNode<> fnGenerator = FastNoise::NewFromEncodedNodeTree(EncodedTree.c_str());
 	float temp[MinFastNoiseDim * MinFastNoiseDim];
 
 	fnGenerator->GenUniformGrid2D(temp, WorldPos.x, WorldPos.y,

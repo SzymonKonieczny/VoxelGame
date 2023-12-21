@@ -164,6 +164,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Game\Biomes\DesertBiome.cpp" />
+    <ClCompile Include="Game\Biomes\FallForestBiome.cpp" />
+    <ClCompile Include="Game\Biomes\ForestBiome.cpp" />
+    <ClCompile Include="Game\Biomes\IBiome.cpp" />
     <ClCompile Include="Game\EarthyTerrainGenerator.cpp" />
     <ClCompile Include="Game\HeavenTerrainGenerator.cpp" />
     <ClCompile Include="Game\BlockInfo.cpp" />
@@ -195,6 +198,8 @@
   <ItemGroup>
     <ClInclude Include="Game\Action.h" />
     <ClInclude Include="Game\Biomes\DesertBiome.h" />
+    <ClInclude Include="Game\Biomes\FallForestBiome.h" />
+    <ClInclude Include="Game\Biomes\ForestBiome.h" />
     <ClInclude Include="Game\EarthyTerrainGenerator.h" />
     <ClInclude Include="Game\HeavenTerrainGenerator.h" />
     <ClInclude Include="Game\BlockInfo.h" />

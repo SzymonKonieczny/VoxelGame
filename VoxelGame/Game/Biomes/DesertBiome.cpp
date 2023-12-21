@@ -75,7 +75,7 @@ void DesertBiome::addDecorationRow(std::shared_ptr<ChunkColumn> chunk, std::shar
 
 void DesertBiome::generateJustHeightmap(std::shared_ptr<ChunkColumn> chunkColumn, std::vector<float>& Output)
 {
-	FastNoise::SmartNode<> fnGenerator = FastNoise::NewFromEncodedNodeTree("FwAAAEDAAACAPwAAAAAAAIA/EwApXA8+GQATAMP1KD8NAAMAAADNzEw/CQAAPQpnQADXo3A/AQQAAAAAAAAAAACamZk+AAAAAAAAAAAAAAAAAACgwAAAAAA=");
+	FastNoise::SmartNode<> fnGenerator = FastNoise::NewFromEncodedNodeTree(EncodedTree.c_str());
 
 	glm::ivec2 ColumnPos = chunkColumn->m_Position;
 
@@ -91,7 +91,7 @@ void DesertBiome::generateJustHeightmap(std::shared_ptr<ChunkColumn> chunkColumn
 
 void DesertBiome::getHeightAtWorldCoords(glm::vec2 WorldPos, float* Output)
 {
-	FastNoise::SmartNode<> fnGenerator = FastNoise::NewFromEncodedNodeTree("FwAAAEDAAACAPwAAAAAAAIA/EwApXA8+GQATAMP1KD8NAAMAAADNzEw/CQAAPQpnQADXo3A/AQQAAAAAAAAAAACamZk+AAAAAAAAAAAAAAAAAACgwAAAAAA=");
+	FastNoise::SmartNode<> fnGenerator = FastNoise::NewFromEncodedNodeTree(EncodedTree.c_str());
 
 	float temp[MinFastNoiseDim * MinFastNoiseDim];
 	fnGenerator->GenUniformGrid2D(temp, WorldPos.x, WorldPos.y,
