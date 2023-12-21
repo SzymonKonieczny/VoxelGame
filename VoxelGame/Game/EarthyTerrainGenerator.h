@@ -3,10 +3,13 @@
 #include "ITerrainGenerator.h"
 #include "Biomes/PlainsBiome.h"
 #include "Biomes/DesertBiome.h"
-
+#include "Biomes/ForestBiome.h"
+#include "Biomes/FallForestBiome.h"
 enum class EarthBiomes {
 	Plains,
-	Desert
+	Desert,
+	Forest,
+	FallForest
 };
 
 class EarthyTerrainGenerator : public ITerrainGenerator {

@@ -8,9 +8,9 @@ public:
 	ForestBiome(std::string encodedTreeForTerraingGeneration) : IBiome(encodedTreeForTerraingGeneration) {
 		topToBottomSpecialBlocks;
 
-		topToBottomSpecialBlocks.push(BlockName::Sand);
-		topToBottomSpecialBlocks.push(BlockName::Sand);
-		topToBottomSpecialBlocks.push(BlockName::Sand);
+		topToBottomSpecialBlocks.push(BlockName::Dirt);
+		topToBottomSpecialBlocks.push(BlockName::Dirt);
+		topToBottomSpecialBlocks.push(BlockName::Dirt);
 	}
 	std::queue<BlockName> topToBottomSpecialBlocks;
 

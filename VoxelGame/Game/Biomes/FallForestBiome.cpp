@@ -21,14 +21,6 @@ void FallForestBiome::generateFeatures(std::shared_ptr<ChunkColumn> chunk, std::
 
 void FallForestBiome::addIcingRow(std::shared_ptr<ChunkColumn> chunkColumn, std::shared_ptr<ChunkManager> chunkManager, glm::vec2 LocCoords)
 {
-}
-
-void FallForestBiome::addDecorationRow(std::shared_ptr<ChunkColumn> chunk, std::shared_ptr<ChunkManager> chunkManager, glm::vec2 LocCoords)
-{
-}
-
-void FallForestBiome::generateJustHeightmap(std::shared_ptr<ChunkColumn> chunkColumn, std::vector<float>& Output)
-{
 	std::queue<BlockName> topToBottomSpecialBlocksCopy(topToBottomSpecialBlocks);
 	for (int y = (chunkColumn->m_Chunks.size() * ChunkSize) - 1; y >= 0; y--)
 	{
@@ -39,6 +31,15 @@ void FallForestBiome::generateJustHeightmap(std::shared_ptr<ChunkColumn> chunkCo
 			if (topToBottomSpecialBlocksCopy.empty()) break;
 		}
 	}
+}
+
+void FallForestBiome::addDecorationRow(std::shared_ptr<ChunkColumn> chunk, std::shared_ptr<ChunkManager> chunkManager, glm::vec2 LocCoords)
+{
+}
+
+void FallForestBiome::generateJustHeightmap(std::shared_ptr<ChunkColumn> chunkColumn, std::vector<float>& Output)
+{
+	
 
 }
 

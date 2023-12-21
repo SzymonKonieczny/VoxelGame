@@ -5,6 +5,10 @@ EarthyTerrainGenerator::EarthyTerrainGenerator(std::shared_ptr<ChunkManager> Chu
 {
 	Biomes.push_back(std::make_unique<PlainsBiome>("FwAAAEDAAACAPwAAAAAAAIA/EwApXA8+EAAAAABAGQATAMP1KD8NAAIAAADNzJxACQAAUriePgBmZqY/AQQAAAAAAAAAAACamZk+AAAAAAAAAAAAAAAAAACgwAAAAAAAzcxMPg==") );
 	Biomes.push_back(std::make_unique<DesertBiome>("FwAAAEDAAACAPwAAAAAAAIA/EwApXA8+GQATAMP1KD8NAAMAAADNzEw/CQAAPQpnQADXo3A/AQQAAAAAAAAAAACamZk+AAAAAAAAAAAAAAAAAACgwAAAAAA="));
+	Biomes.push_back(std::make_unique<ForestBiome>("FwAAAEDAAACAPwAAAAAAAIA/EwApXA8+GQATAMP1KD8NAAMAAADNzEw/CQAAPQpnQADXo3A/AQQAAAAAAAAAAACamZk+AAAAAAAAAAAAAAAAAACgwAAAAAA="));
+	Biomes.push_back(std::make_unique<FallForestBiome>("FwAAAEDAAACAPwAAAAAAAIA/EwApXA8+GQATAMP1KD8NAAMAAADNzEw/CQAAPQpnQADXo3A/AQQAAAAAAAAAAACamZk+AAAAAAAAAAAAAAAAAACgwAAAAAA="));
+
+
 }
 
 void EarthyTerrainGenerator::generateTerrain(std::shared_ptr<ChunkColumn> chunkColumn)
@@ -157,7 +161,7 @@ float EarthyTerrainGenerator::getHeightAtBlock(glm::vec2 WorldPos)
 
 EarthBiomes EarthyTerrainGenerator::DecideBiomeFromNoiseOutput(float noise)
 {
-	if (noise < 0.0f) return EarthBiomes::Plains;
+	if (noise < 0.0f) return EarthBiomes::Forest;
 	else return EarthBiomes::Desert;
 
 }
