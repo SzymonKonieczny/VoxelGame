@@ -161,7 +161,10 @@ float EarthyTerrainGenerator::getHeightAtBlock(glm::vec2 WorldPos)
 
 EarthBiomes EarthyTerrainGenerator::DecideBiomeFromNoiseOutput(float noise)
 {
-	if (noise < 0.0f) return EarthBiomes::Forest;
+	if (noise < -0.1f) return EarthBiomes::Forest;
+	if (noise < 0.0f) return EarthBiomes::Plains;
+	if (noise < 0.4f) return EarthBiomes::Desert;
+
 	else return EarthBiomes::FallForest;
 
 }

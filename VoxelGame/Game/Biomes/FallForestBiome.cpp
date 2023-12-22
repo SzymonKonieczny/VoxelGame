@@ -97,6 +97,7 @@ void FallForestBiome::generateTree(glm::vec2 LocCoords, std::shared_ptr<ChunkCol
 		{
 			for (int x = -2; x <= 2; x++)
 			{
+				if(!(std::abs(x) == 2 && std::abs(z) == 2))
 				chunkManager->SetBlockAtPosition(WorldPos + glm::vec3(x, y, z), BlockName::RedLeaves);
 
 
@@ -104,6 +105,9 @@ void FallForestBiome::generateTree(glm::vec2 LocCoords, std::shared_ptr<ChunkCol
 		}
 	chunkManager->SetBlockAtPosition(WorldPos, BlockName::Wood);
 	chunkManager->SetBlockAtPosition(WorldPos + glm::vec3(0, 1, 0), BlockName::Wood);
+
+
+
 }
 
 void FallForestBiome::generateBush(glm::vec2 LocCoords, std::shared_ptr<ChunkColumn>& chunkColumn, std::shared_ptr<ChunkManager>& chunkManager)

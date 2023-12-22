@@ -94,6 +94,7 @@ void ForestBiome::generateTree(glm::vec2 LocCoords, std::shared_ptr<ChunkColumn>
 		{
 			for (int x = -2; x <= 2; x++)
 			{
+				if (!(std::abs(x) == 2 && std::abs(z) == 2))
 				chunkManager->SetBlockAtPosition(WorldPos + glm::vec3(x, y, z), BlockName::Leaves);
 
 
