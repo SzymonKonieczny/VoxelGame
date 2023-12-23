@@ -98,7 +98,7 @@ void Renderer::EndScene()
 		std::cout << "Teleporting the lightsource to player ...\n";
 	}
 
-#if 0 // Shadowmap render	
+#if 1 // Shadowmap render	
 	ShadowMap->Bind();
 
 
@@ -153,7 +153,9 @@ void Renderer::EndScene()
 	}
 	for (auto& m : Meshes)
 	{
+		if (m->getCount() == 0) continue;
 		if (!m->getReadyForDraw()) continue;
+
 		m->Bind();
 				
 		m->uploadSingleUniform("modelMatrix");

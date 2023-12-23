@@ -5,6 +5,8 @@ in vec2 TexCoord;
 
 in vec4  FragPosLightSpace;
 
+
+//uniform int flatSunlightLevel;
 uniform sampler2D tex0;
 uniform sampler2D shadowDepthTexture;
 float linearizeDepth(float depth, float nearClip, float farClip)
@@ -32,6 +34,12 @@ void main()
 	 pixel = texture(tex0 , TexCoord);
 	 if(pixel.w == 0) discard;
 	 FragColor = vec4( vec4(Col, 1.0f)*pixel);
+	
+	
+	vec3 light = (CalculateShadow( FragPosLightSpace) > 0.01f) ? vec3(1.0f) : Col;
+
+
+	FragColor = vec4( vec4(Col,light)*pixel);
 
 	//FragColor = vec4( vec4(Col, 1.0f)*pixel*  (1-CalculateShadow( FragPosLightSpace)));
 	
