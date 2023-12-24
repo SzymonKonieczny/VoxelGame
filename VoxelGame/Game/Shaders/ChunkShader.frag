@@ -37,7 +37,7 @@ void main()
 
 
 
-	float BrightnessInShadow = 0.6;
+	float BrightnessInShadow = 0.;
 	vec3 light ;
 
 	if (CalculateShadow( FragPosLightSpace) > 0.f) 

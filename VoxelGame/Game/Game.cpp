@@ -87,7 +87,7 @@ bool Game::isChunkColumnInFrustum(std::shared_ptr<ChunkColumn> col)
 	float Opposite;//Opposite side to the angle on the triangle
 	Opposite = glm::tan(world.player.FOV / 2) * FarPlane; //glm::sin(world.player.FOV / 2) / (FarPlane / glm::cos(world.player.FOV / 2));
 	Opposite = 900; //temp
-	Cam = glm::vec3(0);
+	Cam = glm::vec3(0,0,-50);
 	Left = Cam + glm::vec3(-Opposite,0, FarPlane );
 	Right = Cam + glm::vec3(Opposite,0, FarPlane );
 	glm::mat4 Transformation(1);
@@ -123,7 +123,7 @@ void Game::FillBlockTable()
 	BlockTable.push_back(BlockInfo({ 0.4f,0.f }, BlockModelType::Cube, false, true, true)); //Stone
 	BlockTable.push_back(BlockInfo({ 0.6f,0.f }, BlockModelType::Cube, false, true, true)); //Dirt
 	BlockTable.push_back(BlockInfo({ 0.8f,0.f }, BlockModelType::Cube, false, false, true)); //Wood
-	BlockTable.push_back(BlockInfo({ 0.8f,0.4f }, BlockModelType::X, false, false, true, 7)); //Rose
+	BlockTable.push_back(BlockInfo({ 0.8f,0.4f }, BlockModelType::X, false, false, true, 15)); //Rose
 	BlockTable.push_back(BlockInfo({ 0.2f,0.2f }, BlockModelType::Cube, false, true, true)); //Sand
 	BlockTable.push_back(BlockInfo({ 0.0f,0.2f }, BlockModelType::Cube, false, false, true)); //Leaves
 	BlockTable.push_back(BlockInfo({ 0.6f,0.6f }, { 0.4f,0.6f }, { 0.6f,0.f }, BlockModelType::Cube, false, true)); //RedGraass
