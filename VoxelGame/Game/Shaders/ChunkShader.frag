@@ -33,13 +33,19 @@ void main()
 
 	 pixel = texture(tex0 , TexCoord);
 	 if(pixel.w == 0) discard;
-	 FragColor = vec4( vec4(Col, 1.0f)*pixel);
-	
-	
-	vec3 light = (CalculateShadow( FragPosLightSpace) > 0.01f) ? vec3(1.0f) : Col;
+	 //FragColor = vec4( vec4(Col, 1.0f)*pixel);
 
 
-	FragColor = vec4( vec4(Col,light)*pixel);
+
+	float BrightnessInShadow = 0.6;
+	vec3 light ;
+
+	if (CalculateShadow( FragPosLightSpace) > 0.f) 
+	 light = vec3(max(BrightnessInShadow, Col.x)); 
+	else 
+	light = Col;
+
+	FragColor = vec4( vec4(light, 1.0f)*pixel);
 
 	//FragColor = vec4( vec4(Col, 1.0f)*pixel*  (1-CalculateShadow( FragPosLightSpace)));
 	

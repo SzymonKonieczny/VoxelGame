@@ -42,7 +42,7 @@ void EarthyTerrainGenerator::generateTerrain(std::shared_ptr<ChunkColumn> chunkC
 
 
 	addIcing(chunkColumn);
-	//generateCaves(chunkColumn);
+	generateCaves(chunkColumn);
 	Biomes[BiomeID]->generateFeatures(chunkColumn, chunkManager);
 
 

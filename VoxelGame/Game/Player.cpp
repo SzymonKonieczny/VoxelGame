@@ -7,8 +7,10 @@
 #include<glm/gtx/rotate_vector.hpp>
 #include<glm/gtx/vector_angle.hpp>
 #include <iostream>
-Player::Player() : Pos( 650,150, 650), Rot(1,0,1), velocity(0,0,0)
+Player::Player() : Pos( 650,150, 650), Rot(2,0,1), velocity(0,0,0)
 {
+	cam.SetFarPlane(1000.f);
+	cam.SetNearPlane(0.1f);
 
 }
 
@@ -22,7 +24,7 @@ void Player::Update(float dt)
 
 	cam.SetPosition(Pos);
 	cam.SetRotation(Rot);
-	cam.UpdateMatricies(90.f,screenWidth/(float)screenHeight );
+	cam.UpdateMatricies(FOV,screenWidth/(float)screenHeight );
 }
 
 void Player::Move(float dt)

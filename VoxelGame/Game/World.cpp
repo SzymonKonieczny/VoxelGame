@@ -101,7 +101,7 @@ void World::HandleActionQueue(int amount)
 				glm::vec3 ChunkPos = Util::WorldPosToChunkPos(Pos);
 				std::cout << std::fixed << std::setprecision(2)
 					<< "PlayerPos : " << Pos.x << '|' << Pos.y << '|' << Pos.z << '\n' <<
-					   "PlayerRot :" << Rot.x << '|' << Rot.y << '|' << Rot.z << '\n' <<
+					   "PlayerRot :" << glm::degrees(Rot.x) << '|' << glm::degrees(Rot.y) << '|' << glm::degrees(Rot.z) << '\n' <<
 						"ChunkPos :" << ChunkPos.x << '|' << ChunkPos.y << '|' << ChunkPos.z <<'\n';
 			}
 			break;

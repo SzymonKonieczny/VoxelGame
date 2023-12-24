@@ -110,6 +110,7 @@ void Renderer::EndScene()
 	for (auto& m : Meshes)
 	{
 		if (m->getCount() == 0) continue;
+
 		if (!m->getReadyForDraw()) continue;
 
 		m->Bind();
@@ -138,7 +139,6 @@ void Renderer::EndScene()
 
 	for (auto& m : Meshes)
 	{
-		if (m->getCount() == 0) continue;
 
 		if (!m->getReadyForDraw()) continue;
 
@@ -151,11 +151,13 @@ void Renderer::EndScene()
 		m->PreDraw();
 		break;
 	}
+	
+	int nrMeshesDrawn = 0;
 	for (auto& m : Meshes)
 	{
 		if (m->getCount() == 0) continue;
 		if (!m->getReadyForDraw()) continue;
-
+		nrMeshesDrawn += 1;
 		m->Bind();
 				
 		m->uploadSingleUniform("modelMatrix");
@@ -188,7 +190,7 @@ void Renderer::EndScene()
 	RendererCommand::DrawNotIndexed(*ScreenQuad);
 	glEnable(GL_DEPTH_TEST);
 	Meshes.clear();
-
+	//std::cout << "Number of drawn meshes " << nrMeshesDrawn << '\n';
 
 }
 

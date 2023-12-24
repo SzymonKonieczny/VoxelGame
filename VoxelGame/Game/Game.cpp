@@ -1,7 +1,7 @@
 
 #include "Game.h"
 #include "Input.h"
-
+#include <glm/gtx/rotate_vector.hpp>
 //int Game::CHUNK_SIZE = 16;
 std::shared_ptr<Texture> Game::BlockTextureAtlas;
 
@@ -69,15 +69,49 @@ void Game::RenderWorld(World& world)
 	}
 }
 
-
+float area(float x1, float y1, float x2, float y2, float x3, float y3)
+{
+	return abs((x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2.0f);
+}
 
 bool Game::isChunkColumnInFrustum(std::shared_ptr<ChunkColumn> col)
 {
 	glm::vec2 playerPos(world.player.getPositon().x/ChunkSize, world.player.getPositon().z/ ChunkSize);//first check if in render distance, later actual frustum
 	glm::vec2 colPos(col->m_Position.x, col->m_Position.y);
-	if(RenderDistance > glm::distance(colPos, playerPos))return true; //fcked up logic but it works xd
-	else return false;
+	if (!(RenderDistance > glm::distance(colPos, playerPos)))return false; //fcked up logic but it works xd
+	
+	
+	glm::vec3 Cam, Left, Right;
+	float FarPlane = 1000; //world.player.getCamera().GetFarPlane();
+	//(world.player.getPositon().x, world.player.getPositon().z);
+	float Opposite;//Opposite side to the angle on the triangle
+	Opposite = glm::tan(world.player.FOV / 2) * FarPlane; //glm::sin(world.player.FOV / 2) / (FarPlane / glm::cos(world.player.FOV / 2));
+	Opposite = 900; //temp
+	Cam = glm::vec3(0);
+	Left = Cam + glm::vec3(-Opposite,0, FarPlane );
+	Right = Cam + glm::vec3(Opposite,0, FarPlane );
+	glm::mat4 Transformation(1);
+	Transformation = glm::translate(Transformation, world.player.getPositon());
+	float angleY = atan2(-world.player.getCamera().GetViewMatrix()[0][2], world.player.getCamera().GetViewMatrix()[2][2]);
 
+	Transformation = glm::rotate(Transformation, angleY - glm::radians(180.f), glm::vec3(0, -1, 0));
+	Cam = glm::vec3(Transformation* glm::vec4(Cam, 1.0f) );
+	Left = glm::vec3(Transformation* glm::vec4(Left, 1.0f) );
+	Right = glm::vec3(Transformation* glm::vec4(Right, 1.0f) );
+
+	glm::vec3 MeshPos(col->m_Position.x * ChunkSize, 0, col->m_Position.y * ChunkSize);
+
+	float FrustumArea = area(Cam.x, Cam.z, Left.x, Left.z, Right.x, Right.z);
+
+	float Area = 0;
+	Area += area(MeshPos.x, MeshPos.z, Left.x, Left.z, Right.x, Right.z);
+	Area += area(Cam.x, Cam.z, MeshPos.x, MeshPos.z, Right.x, Right.z);
+	Area += area(Cam.x, Cam.z, Left.x, Left.z, MeshPos.x, MeshPos.z);
+
+	if (abs(FrustumArea - Area) < 1.f) return true;
+
+	auto dist = glm::distance(Left, Right);
+	return false;
 }
 
 void Game::FillBlockTable()

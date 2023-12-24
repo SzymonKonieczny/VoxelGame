@@ -16,8 +16,8 @@ public:
 	 glm::vec3& getPositon() { return Pos; };
 	Action GetAction();
 	float lastActionTime = 0;
+	float FOV = 90.0f;
 private:
-	
 	void handleCollisions();
 	void handleRotation();
 	Camera cam;
