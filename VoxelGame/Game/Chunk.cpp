@@ -207,10 +207,27 @@ bool Chunk::isSolidBlock(glm::vec3 pos)
 
 int Chunk::getLightLevel(glm::vec3 pos)
 {
+	int level;
 
-	if (!isValidPosition(pos)) return 0;
-	int ret = lightLevels[Util::Vec3ToIndex(pos)]; //for debubbing
-	return ret;
+	if (!isValidPosition(pos))
+	{
+		if (pos.x > 15)
+			level = m_chunkManager->GetLightLevelAtPosition(Util::LocPosAndChunkPosToWorldPos({ 0,pos.y,pos.z }, m_ChunkPos + glm::ivec3(1, 0, 0)));
+		if (pos.x < 0)
+			level = m_chunkManager->GetLightLevelAtPosition(Util::LocPosAndChunkPosToWorldPos({ 15,pos.y,pos.z }, m_ChunkPos + glm::ivec3(-1, 0, 0)));
+		if (pos.z > 15)
+			level = m_chunkManager->GetLightLevelAtPosition(Util::LocPosAndChunkPosToWorldPos({ pos.x,pos.y,0 }, m_ChunkPos + glm::ivec3(0, 0, 1)));
+		if (pos.z < 0)
+			level = m_chunkManager->GetLightLevelAtPosition(Util::LocPosAndChunkPosToWorldPos({ pos.x,pos.y,15 }, m_ChunkPos + glm::ivec3(0, 0, -1)));
+		if (pos.y > 15)
+			level = m_chunkManager->GetLightLevelAtPosition(Util::LocPosAndChunkPosToWorldPos({ pos.x,0,pos.z }, m_ChunkPos + glm::ivec3(0, 1, 0)));
+		if (pos.y < 0)
+			level = m_chunkManager->GetLightLevelAtPosition(Util::LocPosAndChunkPosToWorldPos({ pos.x,15,pos.z }, m_ChunkPos + glm::ivec3(0, -1, 0)));
+
+		return level;
+	}
+	 level = lightLevels[Util::Vec3ToIndex(pos)]; //for debubbing
+	return level;
 }
 
 

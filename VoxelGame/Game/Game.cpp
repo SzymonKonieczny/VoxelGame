@@ -92,7 +92,7 @@ bool Game::isChunkColumnInFrustum(std::shared_ptr<ChunkColumn> col)
 	//(world.player.getPositon().x, world.player.getPositon().z);
 	float Opposite;//Opposite side to the angle on the triangle
 	Opposite = glm::tan(world.player.FOV / 2) * FarPlane; //glm::sin(world.player.FOV / 2) / (FarPlane / glm::cos(world.player.FOV / 2));
-	Opposite = 900; //temp
+	Opposite = 2000; //temp
 	Cam = glm::vec3(0,0,-50);
 	Left = Cam + glm::vec3(-Opposite,0, FarPlane );
 	Right = Cam + glm::vec3(Opposite,0, FarPlane );

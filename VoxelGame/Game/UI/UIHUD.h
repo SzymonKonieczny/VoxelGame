@@ -26,8 +26,15 @@ public:
 		pushVertToMesh(Mesh, v);
 		v = UIElementVertex(glm::vec2(-0.5f, -0.5f));
 		pushVertToMesh(Mesh, v);
+
+	//	v = UIElementVertex(glm::vec2(-0.5f, -0.5f));
+	//	pushVertToMesh(Mesh, v); //dadas
+
 		v = UIElementVertex(glm::vec2(0.5f, -0.5f));
 		pushVertToMesh(Mesh, v);
+
+	//v = UIElementVertex(glm::vec2(0.5f, 0.5f));
+	//pushVertToMesh(Mesh, v);// ndausas
 
 		Mesh.Indicies.push_back(0);
 		Mesh.Indicies.push_back(1);

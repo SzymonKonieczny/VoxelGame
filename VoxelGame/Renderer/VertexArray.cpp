@@ -134,7 +134,7 @@ void VertexArray::SetIndexBuffer(IndexBuffer* indexBuffer)
 	m_Inderbuffer.reset(indexBuffer);
 	Bind();
 	m_Inderbuffer->Bind();
-	UpdateVertexBufferLayoutAttributes();
+	//UpdateVertexBufferLayoutAttributes();
 }
 void VertexArray::UpdateVertexData(float* vertices, unsigned int size)
 {
@@ -142,10 +142,10 @@ void VertexArray::UpdateVertexData(float* vertices, unsigned int size)
 	m_Vertexbuffer->UpdateVerticies(vertices, size);
 }
 
-void VertexArray::UpdateIndexData(unsigned int* indicies, unsigned int size)
+void VertexArray::UpdateIndexData(unsigned int* indicies, unsigned int count)
 {
 	Bind();
-	m_Inderbuffer->UpdateIndicies(indicies, size);
+	m_Inderbuffer->UpdateIndicies(indicies, count);
 }
 
 

@@ -7,6 +7,7 @@ Mesh::Mesh(MeshType type)
 	m_VertexArray->SetVertexBuffer(new VertexBuffer());
 	if (type == MeshType::Indexed)
 	{
+		m_VertexArray->Bind();
 		m_VertexArray->SetIndexBuffer(new IndexBuffer());
 	}
 
@@ -58,7 +59,7 @@ void Mesh::UpdateObjectsOnGPU()
 	VerticiesSize = Verticies.size();
 	if (m_Type == MeshType::Indexed)
 	{
-
+		m_VertexArray->UpdateIndexData(Indicies.data(), Indicies.size());
 	}
 	//glFlush();
 	//Verticies.clear(); causes wierd glitches, kinda like byte/bitwise offsets in data sent to the GPU when swapIntervals is ON

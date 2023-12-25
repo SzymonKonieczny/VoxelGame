@@ -43,7 +43,7 @@ public:
 	
 	void SetBlockAtPosition(glm::vec3 Position, BlockName name);
 	BlockName GetBlockAtPosition(glm::vec3 Position);
-
+	int GetLightLevelAtPosition(glm::vec3 Position);
 
 	void GenerateChunksFromQueue(int amount);
 	void MeshChunksFromQueue(int amount);

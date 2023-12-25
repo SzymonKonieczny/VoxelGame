@@ -16,7 +16,7 @@ public:
 	void SetVertexBuffer(VertexBuffer* vertexBuffer);
 
 	void UpdateVertexData(float* vertices, unsigned int size);
-	void UpdateIndexData(unsigned int* indicies, unsigned int size);
+	void UpdateIndexData(unsigned int* indicies, unsigned int count);
 
 	 void Bind() const ;
 	 void Unbind() const ;

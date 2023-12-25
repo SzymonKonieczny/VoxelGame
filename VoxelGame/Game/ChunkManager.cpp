@@ -68,6 +68,27 @@ BlockName ChunkManager::GetBlockAtPosition(glm::vec3 Position)
 	}
 	return ret;
 }
+int ChunkManager::GetLightLevelAtPosition(glm::vec3 Position)
+{
+	int level = 0;
+	glm::vec3 ChunkPos = Util::WorldPosToChunkPos(Position);
+	if (ChunkPos.y < 0 || ChunkPos.y >= ChunksInColumn) {
+		//std::cout << "Trying to set block in a ChunkPos.y <0 OR ChunkPos.y >= ChunksInColumn@ ChunkManager::GetBlockAtPosition \n";
+		return level;
+	}
+
+	glm::ivec2 ColumnPos = { ChunkPos.x,ChunkPos.z };
+	if (ChunkMap.contains(ColumnPos))
+	{
+		glm::vec3 LocalPos = Util::WorldPosToLocalPos(Position);
+		auto& column = ChunkMap.at(ColumnPos);
+		auto& chunk = column->getChunk(ChunkPos.y);
+
+		level = chunk->getLightLevel(LocalPos);
+
+	}
+	return level;
+}
 void ChunkManager::GenerateChunksFromQueue(int amount )
 {
 	std::list<glm::ivec2> PosList;
