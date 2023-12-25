@@ -23,6 +23,7 @@ public:
 
 	 void SetData(const void* data, unsigned int size) ;
 
+	 std::shared_ptr<IndexBuffer>& GetIndexBuffer() { return m_Inderbuffer; }
 	const BufferLayout& GetLayout() const  { return m_Vertexbuffer->GetLayout(); }
 	void SetLayout(const BufferLayout& layout)  { m_Vertexbuffer->SetLayout(layout); UpdateVertexBufferLayoutAttributes();}
 

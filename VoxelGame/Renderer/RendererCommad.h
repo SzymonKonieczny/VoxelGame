@@ -33,6 +33,8 @@ public:
 
 	static void DrawIndexed(Mesh& mesh)//Mesh
 	{
+		glDrawElements(GL_TRIANGLES,mesh.GetVertexArray().GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT,0);
+
 	}
 
 	static void DrawNotIndexed(Mesh& mesh)//Mesh

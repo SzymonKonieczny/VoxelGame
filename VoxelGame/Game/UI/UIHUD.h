@@ -1,58 +1,54 @@
 #pragma once
 #include "UIElement.h"
+#include "UIItemIcon.h"
+#include <glm/glm.hpp>
+
 class HUDUI : public UIElement
 {
 public:
-	glm::vec2 coords; //start Coords
-	glm::vec2 size; //Span on X, span on Y
-	std::vector<UIElement> Children;
-	//HUDUI(glm::vec2 Coords, glm::vec2 Size) : coords(Coords), size(Size) 
-	HUDUI() : Mesh(MeshType::Indexed)
+	
+	HUDUI(glm::vec2 Coords, glm::vec2 Size, glm::mat4 TransformMatrix) : UIElement (Coords, Size, TransformMatrix)
 	{
-		Mesh.SetShader(UIElement::UIShader);
 
-		BufferLayout UIElementLayout = {
-		{ShaderDataType::Float2,"aPos"},
-		};
+		mesh.SetShader(UIElement::UIShader);
 
-		Mesh.GetVertexArray().SetLayout(UIElementLayout);
-		//Mesh.AddUniform("aPos", UniformType::Float2);
+		mesh.AddUniform("modelMatrix", UniformType::Mat4);
+		mesh.updateUniform("modelMatrix", TransformMatrix);
+		mesh.GetVertexArray().SetLayout(UIElementLayout);
 
 
 		UIElementVertex v;
-		v = UIElementVertex(glm::vec2(-0.5f, 0.5f));
-		pushVertToMesh(Mesh, v);
-		v = UIElementVertex(glm::vec2(0.5f, 0.5f));
-		pushVertToMesh(Mesh, v);
-		v = UIElementVertex(glm::vec2(-0.5f, -0.5f));
-		pushVertToMesh(Mesh, v);
+		v = UIElementVertex(coords , glm::vec2(0.f, 0.f));
+		pushVertToMesh(mesh, v);
+		v = UIElementVertex(coords + glm::vec2(0.f, Size.y), glm::vec2(0.f, 0.f));
+		pushVertToMesh(mesh, v);
+		v = UIElementVertex(coords + Size, glm::vec2(0.f, 0.f));
+		pushVertToMesh(mesh, v);
 
-	//	v = UIElementVertex(glm::vec2(-0.5f, -0.5f));
-	//	pushVertToMesh(Mesh, v); //dadas
+		v = UIElementVertex(coords + glm::vec2(Size.x, 0.f), glm::vec2(0.f, 0.f));
+		pushVertToMesh(mesh, v);
 
-		v = UIElementVertex(glm::vec2(0.5f, -0.5f));
-		pushVertToMesh(Mesh, v);
+		mesh.Indicies.push_back(0);
+		mesh.Indicies.push_back(1);
+		mesh.Indicies.push_back(2);
 
-	//v = UIElementVertex(glm::vec2(0.5f, 0.5f));
-	//pushVertToMesh(Mesh, v);// ndausas
+		mesh.Indicies.push_back(0);
+		mesh.Indicies.push_back(2);
+		mesh.Indicies.push_back(3);
 
-		Mesh.Indicies.push_back(0);
-		Mesh.Indicies.push_back(1);
-		Mesh.Indicies.push_back(2);
-
-		Mesh.Indicies.push_back(2);
-		Mesh.Indicies.push_back(3);
-		Mesh.Indicies.push_back(1);
-
-		Mesh.UpdateObjectsOnGPU();
+		mesh.UpdateObjectsOnGPU();
+		PopulateHUD();
 	}
 	
 
 	// Inherited via UIElement
-	virtual Mesh& GetMesh() override;
 
-	virtual Mesh& GetMeshesWithChildren() override;
 private:
-	Mesh Mesh;
+	void PopulateHUD() {
+		glm::mat4 childModelMat = transformMatrix;
+		childModelMat = glm::translate(childModelMat, glm::vec3(coords.x, coords.y, 1));
+		childModelMat = glm::scale(childModelMat, glm::vec3(size.x, size.y, 1));
+		Children.emplace_back( ( new UIItemIcon(glm::vec2(-0.5f, -0.5f), glm::vec2(0.5f, 0.5f), childModelMat)));
+	}
 
 };

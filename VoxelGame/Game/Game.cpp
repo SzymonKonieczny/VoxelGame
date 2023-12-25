@@ -24,7 +24,7 @@ void Game::Start()
 	
 	
 	FillBlockTable();
-	HUDUI HUD;
+	HUDUI HUD(glm::vec2(0.1f,0.1f), glm::vec2(0.8f,0.2f), glm::mat4(1));
 	//world.chunkManager.GenWorld();
 	double previousTime = glfwGetTime();
 	double deltaTime;
@@ -45,8 +45,8 @@ void Game::Start()
 		Update(deltaTime);
 
 		RenderWorld(world);
-
-		Renderer::SubmitUI(HUD.GetMesh());
+		for( auto& c : HUD.GetMeshesWithChildren())
+				Renderer::SubmitUI(*c);
 
 		Renderer::EndScene();
 		Renderer::window.SwapBuffers();
