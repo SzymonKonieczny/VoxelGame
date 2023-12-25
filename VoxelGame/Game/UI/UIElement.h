@@ -7,8 +7,8 @@ class UIElement {
 public:
 	static std::shared_ptr<Shader> UIShader;
 
-	virtual Mesh* GetMesh() = 0;
-	virtual Mesh* GetMeshesWithChildren() = 0;
+	virtual Mesh& GetMesh() = 0;
+	virtual Mesh& GetMeshesWithChildren() = 0;
 	struct UIElementVertex {
 		glm::vec2 Pos;
 

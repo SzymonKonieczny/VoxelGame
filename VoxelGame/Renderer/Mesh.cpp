@@ -1,6 +1,5 @@
 #include "Mesh.h"
 #include <iostream>
- int Mesh::NrOfMeshes = 0;
 Mesh::Mesh(MeshType type)
 {
 	m_VertexArray.reset(new VertexArray());
@@ -11,9 +10,6 @@ Mesh::Mesh(MeshType type)
 		m_VertexArray->SetIndexBuffer(new IndexBuffer());
 	}
 
-	//DEBUG STUFF
-	//NrOfMeshes += 1;
-	//std::cout << "Mesh constructed "<< NrOfMeshes <<"\n";
 }
 
 unsigned int Mesh::getCount()
@@ -60,6 +56,10 @@ void Mesh::UpdateObjectsOnGPU()
 {
 	m_VertexArray->UpdateVertexData(Verticies.data(), Verticies.size() * sizeof(float));
 	VerticiesSize = Verticies.size();
+	if (m_Type == MeshType::Indexed)
+	{
+
+	}
 	//glFlush();
 	//Verticies.clear(); causes wierd glitches, kinda like byte/bitwise offsets in data sent to the GPU when swapIntervals is ON
 }
@@ -85,41 +85,9 @@ void Mesh::UploadAllUniforms()
 {
 	for (auto& uniform : UniformData)
 	{
-		//#ifdef DEBUG
-		//		//if (!uniform.second.dataInitialized) std::cout << "DebugInfo: Uniform " << uniform.second.name << " was nerver assigned";
-		//#endif // DEBUG
+
 		uploadSingleUniform(uniform.first);
-		//auto& data = UniformData[uniform.second.name].data;
-		//switch (uniform.second.type)
-		//{
-		//case UniformType::Int:
-		//	m_Shader->UploadUniformInt(uniform.second.name, data.Int1);
-		//
-		//	break;
-		//case UniformType::Float:
-		//	m_Shader->UploadUniformFloat(uniform.second.name, data.Float1);
-		//	break;
-		//case UniformType::Float2:
-		//	m_Shader->UploadUniformFloat2(uniform.second.name, data.Float2);
-		//
-		//	break;
-		//case UniformType::Float3:
-		//	m_Shader->UploadUniformFloat3(uniform.second.name, data.Float3);
-		//
-		//	break;
-		//case UniformType::Float4:
-		//	m_Shader->UploadUniformFloat4(uniform.second.name, data.Float4);
-		//
-		//	break;
-		//case UniformType::Mat4:
-		//	m_Shader->UploadUniformMat4(uniform.second.name, data.Mat4);
-		//
-		//	break;
-		//default:
-		//	std::cout << "Using a Uniform type for which uploading wasnt yet implemented. Uniform name :" << uniform.second.name << "\n";
-		//
-		//	break;
-		//}
+
 	}
 }
 

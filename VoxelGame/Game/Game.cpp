@@ -2,7 +2,7 @@
 #include "Game.h"
 #include "Input.h"
 #include <glm/gtx/rotate_vector.hpp>
-#include "UI/UIElement.h"
+#include "UI/UIHUD.h"
 //int Game::CHUNK_SIZE = 16;
 std::shared_ptr<Texture> Game::BlockTextureAtlas;
 
@@ -22,9 +22,9 @@ void Game::Init()
 void Game::Start()
 {
 	
-
+	
 	FillBlockTable();
-
+	HUDUI HUD;
 	//world.chunkManager.GenWorld();
 	double previousTime = glfwGetTime();
 	double deltaTime;
@@ -46,6 +46,7 @@ void Game::Start()
 
 		RenderWorld(world);
 
+		Renderer::SubmitUI(HUD.GetMesh());
 
 		Renderer::EndScene();
 		Renderer::window.SwapBuffers();

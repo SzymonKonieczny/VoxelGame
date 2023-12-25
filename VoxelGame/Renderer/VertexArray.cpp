@@ -142,6 +142,12 @@ void VertexArray::UpdateVertexData(float* vertices, unsigned int size)
 	m_Vertexbuffer->UpdateVerticies(vertices, size);
 }
 
+void VertexArray::UpdateIndexData(unsigned int* indicies, unsigned int size)
+{
+	Bind();
+	m_Inderbuffer->UpdateIndicies(indicies, size);
+}
+
 
 
 void VertexArray::SetIndexBuffer(std::shared_ptr < IndexBuffer>& indexBuffer)

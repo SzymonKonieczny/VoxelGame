@@ -1,11 +1,11 @@
 #include "UIHUD.h"
 
-Mesh* HUDUI::GetMesh()
+Mesh& HUDUI::GetMesh()
 {
-	return &Mesh;
+	return Mesh;
 }
 
-Mesh* HUDUI::GetMeshesWithChildren()
+Mesh& HUDUI::GetMeshesWithChildren()
 {
-	return nullptr;
+	return Mesh;
 }

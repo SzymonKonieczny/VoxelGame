@@ -49,5 +49,4 @@ private:
 	
 	//bool autoUpdateOnGPU = true; //automatic updating the GPU buffer after 
 	MeshType m_Type;
-	static  int NrOfMeshes;
 };

@@ -179,27 +179,36 @@ void Renderer::RenderChunks()
 			break;
 		}
 	}
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glViewport(0, 0, screenWidth, screenHeight); // ScreenQuad draw
-
-	glDisable(GL_DEPTH_TEST);
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT );
-
-	ScreenQuad->Bind();
-	frame->BindColorTexture();
-
-	ScreenQuad->PreDraw();
-	RendererCommand::DrawNotIndexed(*ScreenQuad);
+	
 	ChunkMeshes.clear();
 	//std::cout << "Number of drawn meshes " << nrMeshesDrawn << '\n';
 
 }
 void Renderer::EndScene()
 {
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+
 	RenderChunks();
 	RenderGeneralMeshes();
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glViewport(0, 0, screenWidth, screenHeight); // ScreenQuad draw
+
+	glDisable(GL_DEPTH_TEST);
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	ScreenQuad->Bind();
+	frame->BindColorTexture();
+	ScreenQuad->PreDraw();
+
+	RendererCommand::DrawNotIndexed(*ScreenQuad);
+
+
 	RenderUI();
+	glEnable(GL_DEPTH_TEST);
 }
 void Renderer::SubmitChunk(Mesh& m)
 {
@@ -219,5 +228,31 @@ void Renderer::RenderGeneralMeshes()
 }
 void Renderer::RenderUI()
 {
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
+	glViewport(0, 0, screenWidth, screenHeight); // Normal render pass
+	//We do not clear when drawin ui xd		glClearColor(0.39f, 0.67f, 0.8f, 1.0f);
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+
+	for (auto& m : UIMeshes)
+	{
+		if (m->getCount() == 0) continue;
+		if (!m->getReadyForDraw()) continue;
+		m->Bind();
+		m->PreDraw();
+
+		switch (m->getType())
+		{
+		case MeshType::Indexed:
+			RendererCommand::DrawIndexed(*m);
+			break;
+		case MeshType::Unindexed:
+
+			RendererCommand::DrawNotIndexed(*m);
+			break;
+		}
+	}
+
+	UIMeshes.clear();
 }
