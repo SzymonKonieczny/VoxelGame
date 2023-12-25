@@ -24,4 +24,3 @@ public:
 		}
 	}
 };
-std::shared_ptr<Shader> UIElement::UIShader;

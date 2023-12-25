@@ -108,6 +108,12 @@
     <ClCompile Include="Game\Biomes\ForestBiome.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="Game\UI\UIHUD.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\UI\UIElement.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Renderer.h">
@@ -287,6 +293,12 @@
     <ClInclude Include="Game\Biomes\FallForestBiome.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
+    <ClInclude Include="Game\UI\UIElement.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\UI\UIHUD.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Game\Shaders\test.vert" />
@@ -297,6 +309,8 @@
     <None Include="Game\Shaders\ScreenQuadShader.frag" />
     <None Include="Game\Shaders\ShadowPass.vert" />
     <None Include="Game\Shaders\ShadowPass.frag" />
+    <None Include="Game\Shaders\UIShader.frag" />
+    <None Include="Game\Shaders\UIShader.vert" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Game\FastNoise2\bin\FastNoise.dll" />

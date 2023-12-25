@@ -180,6 +180,8 @@
     <ClCompile Include="Game\PlayerInventory.cpp" />
     <ClCompile Include="Game\Ray.cpp" />
     <ClCompile Include="Game\TerrainGeneratorTest.cpp" />
+    <ClCompile Include="Game\UI\UIElement.cpp" />
+    <ClCompile Include="Game\UI\UIHUD.cpp" />
     <ClCompile Include="Game\Util.cpp" />
     <ClCompile Include="Game\World.cpp" />
     <ClCompile Include="glad.c" />
@@ -242,6 +244,8 @@
     <ClInclude Include="Game\PointCollider.h" />
     <ClInclude Include="Game\Ray.h" />
     <ClInclude Include="Game\TerrainGeneratorTest.h" />
+    <ClInclude Include="Game\UI\UIElement.h" />
+    <ClInclude Include="Game\UI\UIHUD.h" />
     <ClInclude Include="Game\Util.h" />
     <ClInclude Include="Game\World.h" />
     <ClInclude Include="libraries\include\stb\stb_image.h" />
@@ -275,6 +279,8 @@
     <None Include="Game\Shaders\ShadowPass.vert" />
     <None Include="Game\Shaders\test.frag" />
     <None Include="Game\Shaders\test.vert" />
+    <None Include="Game\Shaders\UIShader.frag" />
+    <None Include="Game\Shaders\UIShader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

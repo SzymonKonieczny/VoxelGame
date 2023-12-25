@@ -19,10 +19,16 @@ public:
 	static void OnWindowResize(GLFWwindow* window, int width, int height);
 
 	static void BeginScene(Camera& camera);
+	static void RenderChunks();
+	static void RenderGeneralMeshes();
+	static void RenderUI();
+
 	static void EndScene();
 
+	static void SubmitChunk(Mesh& m);//MeshIndexed
+	static void SubmitGeneral(Mesh& m);//MeshIndexed
+	static void SubmitUI(Mesh& m);//MeshIndexed
 
-	static void Submit(Mesh& m);//MeshIndexed
 
 	
 	static Window window;
@@ -32,6 +38,9 @@ public:
 	static glm::vec3 CameraRot;
 
 private:
-	static std::list<Mesh*> Meshes;
+	static std::list<Mesh*> ChunkMeshes;
+	static std::list<Mesh*> GeneralMeshes;
+	static std::list<Mesh*> UIMeshes;
+
 
 };

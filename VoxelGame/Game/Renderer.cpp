@@ -7,7 +7,9 @@ glm::vec3 Renderer::CameraPos;
 glm::vec3 Renderer::CameraRot;
 Window Renderer::window; //constructor static call
 glm::mat4 Renderer::ViewProjectionMatrix;
-std::list<Mesh*> Renderer::Meshes;
+std::list<Mesh*> Renderer::ChunkMeshes;
+ std::list<Mesh*> Renderer::GeneralMeshes;
+ std::list<Mesh*> Renderer::UIMeshes;
 std::unique_ptr<Framebuffer> frame;//(FramebufferOptions(screenWidth,screenHeight )); //Width, Height
 std::unique_ptr < Mesh> ScreenQuad;
 std::unique_ptr < Shader> ShadowPassShader;
@@ -76,7 +78,7 @@ void Renderer::BeginScene(Camera& camera) // argument : vec<ligtsources>
 	CameraRot = camera.GetRotation();
 }
 
-void Renderer::EndScene()
+void Renderer::RenderChunks()
 {
 
 	glm::mat4 lightProjection = glm::ortho((float)-100, (float)100, (float)-100, (float)100, 0.1f, 1000.0f);
@@ -101,13 +103,14 @@ void Renderer::EndScene()
 #if 1 // Shadowmap render	
 	ShadowMap->Bind();
 
+	glEnable(GL_DEPTH_TEST);
 
 	glViewport(0, 0, ShadowMapRes, ShadowMapRes);// Shadow render pass
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	ShadowPassShader->Bind();
 	ShadowPassShader->UploadUniformMat4("lightSpaceMatrix", lightSpaceMatrix);
 
-	for (auto& m : Meshes)
+	for (auto& m : ChunkMeshes)
 	{
 		if (m->getCount() == 0) continue;
 
@@ -137,7 +140,7 @@ void Renderer::EndScene()
 		glActiveTexture(GL_TEXTURE7);	//ShadowMap uploading, binding slot 7
 		ShadowMap->BindDepthTexture(); // uploading to slot 7
 
-	for (auto& m : Meshes)
+	for (auto& m : ChunkMeshes)
 	{
 
 		if (!m->getReadyForDraw()) continue;
@@ -153,7 +156,7 @@ void Renderer::EndScene()
 	}
 	
 	int nrMeshesDrawn = 0;
-	for (auto& m : Meshes)
+	for (auto& m : ChunkMeshes)
 	{
 		if (m->getCount() == 0) continue;
 		if (!m->getReadyForDraw()) continue;
@@ -188,13 +191,33 @@ void Renderer::EndScene()
 
 	ScreenQuad->PreDraw();
 	RendererCommand::DrawNotIndexed(*ScreenQuad);
-	glEnable(GL_DEPTH_TEST);
-	Meshes.clear();
+	ChunkMeshes.clear();
 	//std::cout << "Number of drawn meshes " << nrMeshesDrawn << '\n';
 
 }
-
-void Renderer::Submit(Mesh& m)
+void Renderer::EndScene()
 {
-	Meshes.push_back(&m); //Break it up to ChunkMeshes, and other meshes to keep  i made optimalizations later on
+	RenderChunks();
+	RenderGeneralMeshes();
+	RenderUI();
+}
+void Renderer::SubmitChunk(Mesh& m)
+{
+	ChunkMeshes.push_back(&m); //Break it up to ChunkMeshes, and other meshes to keep  i made optimalizations later on
+}
+void Renderer::SubmitGeneral(Mesh& m)
+{
+	GeneralMeshes.push_back(&m); //Break it up to ChunkMeshes, and other meshes to keep  i made optimalizations later on
+}
+void Renderer::SubmitUI(Mesh& m)
+{
+	UIMeshes.push_back(&m); //Break it up to ChunkMeshes, and other meshes to keep  i made optimalizations later on
+}
+void Renderer::RenderGeneralMeshes()
+{
+
+}
+void Renderer::RenderUI()
+{
+
 }

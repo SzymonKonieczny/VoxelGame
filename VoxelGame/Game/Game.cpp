@@ -67,7 +67,7 @@ void Game::RenderWorld(World& world)
 					chunk->getMesh().UpdateObjectsOnGPU();
 					chunk->setIsGPU_BufferOutdated(false);
 				}
-				Renderer::Submit(chunk->getMesh());
+				Renderer::SubmitChunk(chunk->getMesh());
 			}
 		}
 
