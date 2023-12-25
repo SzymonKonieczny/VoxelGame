@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "Input.h"
 #include <glm/gtx/rotate_vector.hpp>
+#include "UI/UIElement.h"
 //int Game::CHUNK_SIZE = 16;
 std::shared_ptr<Texture> Game::BlockTextureAtlas;
 
@@ -12,6 +13,9 @@ void Game::Init()
 
 	BlockTextureAtlas.reset(new Texture("Game/Textures/Atlas.png"));
 	Chunk::ChunkSolidShader.reset(new Shader("Game/Shaders/ChunkShader.vert", "Game/Shaders/ChunkShader.frag"));
+
+	UIElement::UIShader.reset(new Shader("Game/Shaders/UIShader.vert", "Game/Shaders/UIShader.frag"));
+
 
 }
 
@@ -41,6 +45,7 @@ void Game::Start()
 		Update(deltaTime);
 
 		RenderWorld(world);
+
 
 		Renderer::EndScene();
 		Renderer::window.SwapBuffers();

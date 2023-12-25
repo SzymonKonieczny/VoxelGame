@@ -21,6 +21,7 @@ public:
 	static void BeginScene(Camera& camera);
 	static void EndScene();
 
+
 	static void Submit(Mesh& m);//MeshIndexed
 
 	
