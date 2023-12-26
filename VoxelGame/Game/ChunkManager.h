@@ -34,7 +34,7 @@ public:
 		Generator.reset(new EarthyTerrainGenerator(std::shared_ptr<ChunkManager>(this)));
 	
 	#else
-		Generator.reset(new EarthyTerrainGenerator(std::shared_ptr<ChunkManager>(this)));
+		Generator.reset(new TerrainGeneratorTest(std::shared_ptr<ChunkManager>(this)));
 	#endif	
 		
 
@@ -59,6 +59,8 @@ public:
 	void AddColumnToMeshQueue(glm::ivec2 Pos);
 
 	void PropagateLightToChunks(glm::vec3 Pos, int strength);
+	void PropagateDarknessToChunks(glm::vec3 Pos, int range);
+
 
 	glm::ivec3 GetFromMeshQueue();
 

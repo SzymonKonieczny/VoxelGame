@@ -67,7 +67,7 @@ void Renderer::OnWindowResize(GLFWwindow* window, int width, int height)
 	screenWidth = width;
 	frame.reset(new Framebuffer(FramebufferOptions(screenWidth, screenHeight)));
 	ShadowMap.reset(new Framebuffer(FramebufferOptions(screenWidth, screenHeight, false)));
-
+	WindowResized = true; // only for UI scaling
 
 }
 

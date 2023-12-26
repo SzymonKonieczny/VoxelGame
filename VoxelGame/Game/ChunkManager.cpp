@@ -310,6 +310,43 @@ void ChunkManager::PropagateLightToChunks(glm::vec3 Pos, int strength)
 
 
 }
+void ChunkManager::PropagateDarknessToChunks(glm::vec3 Pos, int range)
+{
+	glm::vec3 ChunkPos = Util::WorldPosToChunkPos(Pos);
+	
+
+	if (range <= 1)
+	{
+		
+		if (ChunkMap.contains(ChunkPos))
+			AddToMeshQueue(Util::WorldPosToChunkPos(ChunkPos));
+		return;
+	}
+	glm::ivec2 ColumnPos = { ChunkPos.x,ChunkPos.z };
+
+	if (ChunkMap.contains(ColumnPos))
+	{
+		glm::vec3 LocPos = Util::WorldPosToLocalPos(Pos);
+		auto& chunk = ChunkMap.at(ColumnPos)->m_Chunks[ChunkPos.y];
+
+		if (BlockTable[chunk->getBlock(LocPos)].isSold) return;
+		//if (chunk->getLightLevel(LocPos) <= range) return;
+
+
+		PropagateDarknessToChunks({ Pos.x + 1,Pos.y,Pos.z }, range - 1);
+		PropagateDarknessToChunks({ Pos.x - 1,Pos.y,Pos.z }, range - 1);
+		PropagateDarknessToChunks({ Pos.x,Pos.y + 1,Pos.z }, range - 1);
+		PropagateDarknessToChunks({ Pos.x,Pos.y - 1,Pos.z }, range - 1);
+		PropagateDarknessToChunks({ Pos.x,Pos.y,Pos.z + 1 }, range - 1);
+		PropagateDarknessToChunks({ Pos.x,Pos.y,Pos.z - 1 }, range - 1);
+
+
+		chunk->setLightLevel(LocPos, 0);
+
+
+	}
+
+}
 glm::ivec3 ChunkManager::GetFromMeshQueue()
 {
 	MeshingQueueMutex.lock();

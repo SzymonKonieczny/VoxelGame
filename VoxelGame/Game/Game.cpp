@@ -24,7 +24,7 @@ void Game::Start()
 	
 	
 	FillBlockTable();
-	HUDUI HUD(glm::vec2(0.1f,0.1f), glm::vec2(0.8f,0.2f), glm::mat4(1));
+	HUDUI HUD(glm::vec2(0.2f,0.02f), glm::vec2(0.6f,0.05f), glm::mat4(1));
 	//world.chunkManager.GenWorld();
 	double previousTime = glfwGetTime();
 	double deltaTime;
@@ -45,6 +45,11 @@ void Game::Start()
 		Update(deltaTime);
 
 		RenderWorld(world);
+		if (WindowResized)
+		{
+			HUD.UpdateTransformation(glm::scale(glm::mat4(1), glm::vec3(1, screenWidth / (float)screenHeight, 1)));
+			WindowResized = false;
+		}
 		for( auto& c : HUD.GetMeshesWithChildren())
 				Renderer::SubmitUI(*c);
 
@@ -129,7 +134,7 @@ void Game::FillBlockTable()
 	BlockTable.push_back(BlockInfo({ 0.4f,0.f }, BlockModelType::Cube, false, true, true)); //Stone
 	BlockTable.push_back(BlockInfo({ 0.6f,0.f }, BlockModelType::Cube, false, true, true)); //Dirt
 	BlockTable.push_back(BlockInfo({ 0.8f,0.f }, BlockModelType::Cube, false, false, true)); //Wood
-	BlockTable.push_back(BlockInfo({ 0.8f,0.4f }, BlockModelType::X, false, false, true, 15)); //Rose
+	BlockTable.push_back(BlockInfo({ 0.8f,0.4f }, BlockModelType::X, false, false, true, 10)); //Rose
 	BlockTable.push_back(BlockInfo({ 0.2f,0.2f }, BlockModelType::Cube, false, true, true)); //Sand
 	BlockTable.push_back(BlockInfo({ 0.0f,0.2f }, BlockModelType::Cube, false, false, true)); //Leaves
 	BlockTable.push_back(BlockInfo({ 0.6f,0.6f }, { 0.4f,0.6f }, { 0.6f,0.f }, BlockModelType::Cube, false, true)); //RedGraass

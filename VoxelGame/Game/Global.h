@@ -3,6 +3,7 @@
 #define GLOBAL_H
 
 #define LightPropagationInChunkManager true
+extern bool WindowResized;
 
 extern  int ChunkSize;		// = 16;
 extern  int screenWidth;	//	= 800; //1280;

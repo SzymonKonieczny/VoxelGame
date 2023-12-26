@@ -25,6 +25,21 @@ public:
 
 		};
 	}
+
+	void UpdateTransformation(glm::mat4 TransformMatrix)
+	{
+		transformMatrix = TransformMatrix;
+		mesh.updateUniform("modelMatrix", transformMatrix);
+
+		glm::mat4 childModelMat = transformMatrix;
+		childModelMat = glm::translate(childModelMat, glm::vec3(coords.x, coords.y, 1));
+		childModelMat = glm::scale(childModelMat, glm::vec3(size.x, size.y, 1));
+		 
+		for (auto& UI : Children)
+		{
+			UI->UpdateTransformation(childModelMat);
+		}
+	}
 	std::vector<Mesh*> GetMeshesWithChildren() {
 		std::vector<Mesh*> queue;
 		queue.push_back(&mesh);

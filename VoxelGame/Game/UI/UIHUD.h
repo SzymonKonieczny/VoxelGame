@@ -48,7 +48,12 @@ private:
 		glm::mat4 childModelMat = transformMatrix;
 		childModelMat = glm::translate(childModelMat, glm::vec3(coords.x, coords.y, 1));
 		childModelMat = glm::scale(childModelMat, glm::vec3(size.x, size.y, 1));
-		Children.emplace_back( ( new UIItemIcon(glm::vec2(-0.5f, -0.5f), glm::vec2(0.5f, 0.5f), childModelMat)));
+		float iter = 0.1f;
+		for (int i = 0; i < 8; i++)
+		{
+			Children.emplace_back( ( new UIItemIcon(glm::vec2(0.12f * iter, 0.05f), glm::vec2(0.1125f, 0.9f), childModelMat)));
+			iter += 1;
+		}
 	}
 
 };

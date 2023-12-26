@@ -7,6 +7,7 @@ Chunk::Chunk(glm::ivec3 pos, std::shared_ptr<ChunkManager> chunkManager) : m_Chu
 	blocks.resize(ChunkSize* ChunkSize* ChunkSize);
 	lightLevels.resize(ChunkSize * ChunkSize * ChunkSize);
 	sunLightLevels.resize(ChunkSize * ChunkSize * ChunkSize);
+	std::fill(lightLevels.begin(), lightLevels.end(), 0);
 
 
 	//for (auto& block : blocks) block = 2;
@@ -120,7 +121,7 @@ void Chunk::GenerateMesh()
 void Chunk::GenerateLightmap()
 {
 	blockMutex.lock();
- 	std::fill(lightLevels.begin(), lightLevels.end(), 0);
+ 	//std::fill(lightLevels.begin(), lightLevels.end(), 0);
 	for (auto source : lightSources)
 	{
 
@@ -142,8 +143,16 @@ void Chunk::setLightLevel(glm::vec3 LocPos, int strength)
 void Chunk::setBlock(BlockName Block, int index)
 {
 
-	
-	lightSources.erase( Util::IndexToVec3(index));
+	if (lightSources.contains(Util::IndexToVec3(index)))
+	{
+		glm::vec3 Pos = Util::IndexToVec3(index);
+		auto& source = lightSources.at(Pos);
+		//m_chunkManager->PropagateDarknessToChunks(Util::LocPosAndChunkPosToWorldPos(Pos, m_ChunkPos), source);
+		std::fill(lightLevels.begin(), lightLevels.end(), 0);
+
+		lightSources.erase( Util::IndexToVec3(index));
+		
+	}
 	
 	if (BlockTable[(int)Block].LightEmission > 0)
 		lightSources.insert( std::make_pair(Util::IndexToVec3(index), BlockTable[(int)Block].LightEmission ));
