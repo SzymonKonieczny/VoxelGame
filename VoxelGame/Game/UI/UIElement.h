@@ -24,6 +24,9 @@ public:
 		{ShaderDataType::Float2,"aTexCoords"}
 
 		};
+			mesh.AddUniform("tex0", UniformType::Int);
+			m_ChunkSolidMesh.updateUniform("tex0", 0);
+
 	}
 
 	void UpdateTransformation(glm::mat4 TransformMatrix)

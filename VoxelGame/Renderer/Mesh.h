@@ -15,7 +15,6 @@ class Mesh
 {
 public:
 	Mesh(MeshType type = MeshType::Unindexed);
-	//~Mesh() {NrOfMeshes-=1; }
 	MeshType getType() { return m_Type; }
 	VertexArray& GetVertexArray() { return *m_VertexArray.get(); }
 	std::shared_ptr<Shader>& getShader() { return m_Shader; }

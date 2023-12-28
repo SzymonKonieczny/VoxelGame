@@ -37,7 +37,7 @@ void main()
 
 
 
-	float BrightnessInShadow = 0.;
+	float BrightnessInShadow = 0.4;
 	vec3 light ;
 
 	if (CalculateShadow( FragPosLightSpace) > 0.f) 
@@ -45,7 +45,17 @@ void main()
 	else 
 	light = Col;
 
-	FragColor = vec4( vec4(light, 1.0f)*pixel);
+	//FragColor = vec4( vec4(light, 1.0f)*pixel);
+	FragColor = vec4( vec4(Col, 1.0f)*pixel);
+
+
+
+
+
+
+
+
+
 
 	//FragColor = vec4( vec4(Col, 1.0f)*pixel*  (1-CalculateShadow( FragPosLightSpace)));
 	

@@ -4,7 +4,7 @@
 
 #define LightPropagationInChunkManager true
 extern bool WindowResized;
-
+extern int WorldSeed;
 extern  int ChunkSize;		// = 16;
 extern  int screenWidth;	//	= 800; //1280;
 extern  int screenHeight;	// = 800;// 720;

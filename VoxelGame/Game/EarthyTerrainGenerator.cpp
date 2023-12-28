@@ -22,7 +22,7 @@ void EarthyTerrainGenerator::generateTerrain(std::shared_ptr<ChunkColumn> chunkC
 	glm::ivec2 ColumnPos = chunkColumn->m_Position;
 	FastNoise::SmartNode<> fnGenerator = FastNoise::NewFromEncodedNodeTree(BiomeDecisionTreeNode.c_str());
 	fnGenerator->GenUniformGrid2D(BiomeDecisionNoise.data(), ColumnPos.x * ChunkSize, ColumnPos.y * ChunkSize,
-		ChunkSize, ChunkSize, 0.2f, 1337);
+		ChunkSize, ChunkSize, 0.2f, WorldSeed);
 
 	int BiomeID = (int)DecideBiomeFromNoiseOutput(BiomeDecisionNoise[0]); // shouldnt be here, should be in the else below 
 //	(so only if its NOT a multibiome chunk)
@@ -64,7 +64,7 @@ void EarthyTerrainGenerator::generateCaves(std::shared_ptr<ChunkColumn>& chunkCo
 		glm::ivec3 ChunkPos = chunk->m_ChunkPos;
 
 		fnGenerator->GenUniformGrid3D(noiseOutput.data(), ChunkPos.x * ChunkSize, ChunkPos.z * ChunkSize, ChunkPos.y * ChunkSize,
-			ChunkSize, ChunkSize, ChunkSize, 0.2f, 1337);
+			ChunkSize, ChunkSize, ChunkSize, 0.2f, WorldSeed);
 
 		int index = 0;
 
@@ -229,7 +229,7 @@ float EarthyTerrainGenerator::getMapHeightAtPosition(glm::vec2 worldPos)
 	float temp;
 	float BiomeVal[MinFastNoiseDim * MinFastNoiseDim];
 	fnGenerator->GenUniformGrid2D(BiomeVal, worldPos.x, worldPos.y,
-		MinFastNoiseDim, MinFastNoiseDim, 0.2f, 1337);
+		MinFastNoiseDim, MinFastNoiseDim, 0.2f, WorldSeed);
 	int BiomeID = (int)DecideBiomeFromNoiseOutput(BiomeVal[0]);
 	Biomes[BiomeID]->getHeightAtWorldCoords(worldPos, &temp);
 	return temp;

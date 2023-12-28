@@ -1,6 +1,5 @@
 #version 330 core
 layout (location = 0) in vec2 aPos;
-layout (location = 1) in vec2 aTexCoords;
 uniform mat4 modelMatrix;
 
 out vec2 TexCoords;

@@ -64,7 +64,7 @@ void FallForestBiome::getHeightAtWorldCoords(glm::vec2 WorldPos, float* Output)
 
 	float temp[MinFastNoiseDim * MinFastNoiseDim];
 	fnGenerator->GenUniformGrid2D(temp, WorldPos.x, WorldPos.y,
-		MinFastNoiseDim, MinFastNoiseDim, 0.2f, 1337);
+		MinFastNoiseDim, MinFastNoiseDim, 0.2f, WorldSeed);
 	int index = 0;// MinFastNoiseDim * MinFastNoiseDim - 1;
 	temp[index] *= Variation;
 	temp[index] += BaseGround;

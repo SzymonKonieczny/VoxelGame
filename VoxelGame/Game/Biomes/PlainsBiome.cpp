@@ -64,7 +64,7 @@ void PlainsBiome::generateJustHeightmap(std::shared_ptr<ChunkColumn> chunkColumn
 	glm::ivec2 ColumnPos = chunkColumn->m_Position;
 
 	fnGenerator->GenUniformGrid2D(Output.data(), ColumnPos.x * ChunkSize, ColumnPos.y * ChunkSize,
-		ChunkSize, ChunkSize, 0.2f, 1337);
+		ChunkSize, ChunkSize, 0.2f, WorldSeed);
 
 	for (auto& val : Output)
 	{
@@ -112,7 +112,7 @@ void PlainsBiome::getHeightAtWorldCoords(glm::vec2 WorldPos, float* Output)
 	float temp[MinFastNoiseDim * MinFastNoiseDim];
 
 	fnGenerator->GenUniformGrid2D(temp, WorldPos.x, WorldPos.y,
-		MinFastNoiseDim, MinFastNoiseDim, 0.2f, 1337);
+		MinFastNoiseDim, MinFastNoiseDim, 0.2f, WorldSeed);
 	int index = 0;//MinFastNoiseDim * MinFastNoiseDim - 1;
 
 	temp[index] *= Variation;

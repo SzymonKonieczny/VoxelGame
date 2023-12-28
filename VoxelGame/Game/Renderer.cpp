@@ -100,7 +100,7 @@ void Renderer::RenderChunks()
 		std::cout << "Teleporting the lightsource to player ...\n";
 	}
 
-#if 1 // Shadowmap render	
+#if 0 // Shadowmap render	
 	ShadowMap->Bind();
 
 	glEnable(GL_DEPTH_TEST);
@@ -190,6 +190,11 @@ void Renderer::EndScene()
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
+
+	//glEnable(GL_CULL_FACE);
+	//glCullFace(GL_FRONT);
+	//glFrontFace(GL_CCW);
+
 	RenderChunks();
 	RenderGeneralMeshes();
 
@@ -206,6 +211,7 @@ void Renderer::EndScene()
 
 	RendererCommand::DrawNotIndexed(*ScreenQuad);
 
+	//glDisable(GL_CULL_FACE);
 
 	RenderUI();
 	glEnable(GL_DEPTH_TEST);

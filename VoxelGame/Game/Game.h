@@ -18,6 +18,8 @@ public:
 	
 	//static int CHUNK_SIZE;
 	static std::shared_ptr<Texture> BlockTextureAtlas;
+	static std::shared_ptr<Texture> ItemTextureAtlas;
+
 private:
 	bool isChunkColumnInFrustum(std::shared_ptr<ChunkColumn> col);
 	void FillBlockTable();

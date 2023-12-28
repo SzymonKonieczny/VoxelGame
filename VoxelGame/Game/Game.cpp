@@ -5,6 +5,7 @@
 #include "UI/UIHUD.h"
 //int Game::CHUNK_SIZE = 16;
 std::shared_ptr<Texture> Game::BlockTextureAtlas;
+std::shared_ptr<Texture> Game::ItemTextureAtlas;
 
 void Game::Init()
 {
@@ -14,6 +15,7 @@ void Game::Init()
 	BlockTextureAtlas.reset(new Texture("Game/Textures/Atlas.png"));
 	Chunk::ChunkSolidShader.reset(new Shader("Game/Shaders/ChunkShader.vert", "Game/Shaders/ChunkShader.frag"));
 
+	ItemTextureAtlas.reset(new Texture("Game/Textures/ItemAtlas.png"));
 	UIElement::UIShader.reset(new Shader("Game/Shaders/UIShader.vert", "Game/Shaders/UIShader.frag"));
 
 
@@ -29,7 +31,7 @@ void Game::Start()
 	double previousTime = glfwGetTime();
 	double deltaTime;
 	double currentTime = 0;
-	glfwSwapInterval(0);
+	glfwSwapInterval(1);
 	while (!glfwWindowShouldClose(Renderer::window.GetHandle()))
 	{
 		currentTime = glfwGetTime();
@@ -119,7 +121,7 @@ bool Game::isChunkColumnInFrustum(std::shared_ptr<ChunkColumn> col)
 	Area += area(Cam.x, Cam.z, MeshPos.x, MeshPos.z, Right.x, Right.z);
 	Area += area(Cam.x, Cam.z, Left.x, Left.z, MeshPos.x, MeshPos.z);
 
-	if (abs(FrustumArea - Area) < 1.f) return true;
+	if (abs(FrustumArea - Area) < 10.f) return true;
 
 	auto dist = glm::distance(Left, Right);
 	return false;
