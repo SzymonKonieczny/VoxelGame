@@ -115,7 +115,7 @@ void Player::HandleMouseButtons()
 
 		if(ItemTable[HUD->ItemStacks[currentlySelectedHUDSlot].ID].CorrespondingBlock!= (int)BlockName::Air)
 			actionQueue.push(ActionBuilder::PlaceAction(cam.GetPosition(), cam.GetRotation(), 25,
-			(BlockName)HUD->ItemStacks[currentlySelectedHUDSlot].ID));
+			(BlockName)ItemTable[HUD->ItemStacks[currentlySelectedHUDSlot].ID].CorrespondingBlock));
 	}
 }
 
