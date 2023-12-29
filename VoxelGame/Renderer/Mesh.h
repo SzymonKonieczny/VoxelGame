@@ -26,7 +26,7 @@ public:
 	void SetTexture(unsigned int slot, std::shared_ptr<Texture> texture) { m_Textures[slot] = texture; };
 	void UpdateObjectsOnGPU();
 	void SetShader( Shader* shader) { m_Shader.reset(shader); };
-	void SetShader(std::shared_ptr<Shader>& shader) { m_Shader = shader; };
+	void SetShader(std::shared_ptr<Shader> shader) { m_Shader = shader; };
 	 void PreDraw();
 	 bool getReadyForDraw() { return readyForDraw; }
 	 void setReadyForDraw(bool flag) { readyForDraw = flag; }

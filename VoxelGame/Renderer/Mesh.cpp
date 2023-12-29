@@ -48,6 +48,8 @@ void Mesh::SetTexture(unsigned int slot, Texture* texture)
 {
 	if (m_Textures.contains(slot)) m_Textures[slot].reset(texture);
 	else m_Textures.insert({ slot, std::shared_ptr<Texture>(texture) });
+
+	hasTexture = true;
 }
 
 void Mesh::UpdateObjectsOnGPU()

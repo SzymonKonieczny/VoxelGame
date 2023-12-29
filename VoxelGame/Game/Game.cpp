@@ -33,7 +33,7 @@ void Game::Start()
 	double previousTime = glfwGetTime();
 	double deltaTime;
 	double currentTime = 0;
-	glfwSwapInterval(1);
+	glfwSwapInterval(0);
 	while (!glfwWindowShouldClose(Renderer::window.GetHandle()))
 	{
 		currentTime = glfwGetTime();
@@ -65,7 +65,8 @@ void Game::RenderWorld(World& world)
 		if (isChunkColumnInFrustum(chunkCol.second))
 		{
 			for (auto& chunk : chunkCol.second->m_Chunks) {
-				if (chunk->isGPU_BufferOutdated() && chunk->isMeshed() )
+				if (chunk->isGPU_BufferOutdated() /* && chunk->isMeshed() Not needed,
+												  we set outdated at the end of the meshing process anyways*/)
 				{
 					chunk->getMesh().UpdateObjectsOnGPU();
 					chunk->setIsGPU_BufferOutdated(false);
