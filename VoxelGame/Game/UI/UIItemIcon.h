@@ -47,7 +47,7 @@ public:
 		Input::getMousePosNormalized(&mouseX, &mouseY);
 
 
-		glm::vec4 screenSpaceCoords =glm::vec4(coords,0.f,0.f);
+		glm::vec4 screenSpaceCoords =glm::vec4(coords,0.f,1.f);
 		glm::vec2 screenSpaceSize = size;
 	
 
