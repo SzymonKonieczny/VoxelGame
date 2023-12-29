@@ -12,7 +12,7 @@ public:
 	{
 
 		ItemStacks.resize(7);
-		std::fill(ItemStacks.begin(), ItemStacks.end(), ItemStack{1,0});
+		std::fill(ItemStacks.begin(), ItemStacks.end(), ItemStack(1,0));
 
 		mesh.SetShader(UIElement::UIShader);
 
@@ -49,8 +49,13 @@ public:
 
 		PopulateHUD();
 	}
-	
-
+	void setHighlight(int ItemstackNr)
+	{
+		glm::mat4 childModelMat = transformMatrix;
+		childModelMat = glm::translate(childModelMat, glm::vec3(coords.x, coords.y, 1));
+		childModelMat = glm::scale(childModelMat, glm::vec3(size.x, size.y, 1));
+		Children[Children.size()-1 ]->UpdateTransformation(glm::translate(childModelMat, glm::vec3(1/7.f * ItemstackNr,0,0)));
+	}
 	void setItemStack(int ItemstackNr, ItemStack itemStack)
 	{
 		ItemStacks[ItemstackNr] = itemStack;
@@ -68,6 +73,8 @@ private:
 			Children.emplace_back( ( new UIItemIcon(glm::vec2(0.12f * iter, 0.05f), glm::vec2(0.1125f, 0.9f), childModelMat)));
 			iter += 1;
 		}
+		Children.emplace_back((new UIItemIcon(glm::vec2(0.f, 0.0f), glm::vec2(0.1125f, 0.9f), childModelMat)));
+		Children[Children.size()-1]->mesh.updateUniform("TexCoords", glm::vec2(0.5f, 0.9f));
 	}
 
 };

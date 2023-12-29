@@ -34,6 +34,7 @@ private:
 	float BlocksCooldown = 0.1;
 	float drag = 0.2f;
 	bool noClip = true;
+	int currentlySelectedHUDSlot;
 	glm::vec3 velocity;
 	std::queue<Action> actionQueue;
 

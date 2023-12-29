@@ -4,6 +4,7 @@ out vec4 FragColor;
 in vec2 TexCoordsOffset;
 uniform vec2 TexCoords;
 
+
 uniform sampler2D itemAtlas;
 
 void main()

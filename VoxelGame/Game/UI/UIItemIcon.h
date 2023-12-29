@@ -10,6 +10,7 @@ public:
 		mesh.SetShader(UIElement::UIShader);
 
 		mesh.AddUniform("modelMatrix", UniformType::Mat4);
+
 		mesh.updateUniform("modelMatrix", TransformMatrix);
 		mesh.GetVertexArray().SetLayout(UIElementLayout);
 		float TxtAtlassoffset = 0.1f;
@@ -33,7 +34,7 @@ public:
 		mesh.Indicies.push_back(2);
 		mesh.Indicies.push_back(3);
 
-		mesh.updateUniform("TexCoords", glm::vec2(0.0f, 0.9f));
+		mesh.updateUniform("TexCoords", glm::vec2(0.0f, 0.f));
 
 
 		mesh.UpdateObjectsOnGPU();

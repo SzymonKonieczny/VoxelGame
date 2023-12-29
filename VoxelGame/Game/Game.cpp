@@ -26,6 +26,7 @@ void Game::Start()
 	
 	
 	FillBlockTable();
+	FillItemTable();
 	world.player.GenerateUIs();
 
 
@@ -146,7 +147,11 @@ void Game::FillBlockTable()
 void Game::FillItemTable()
 {
 	ItemTable.push_back(ItemInfo(glm::vec2(0, 0)));//AIR
-	ItemTable.push_back(ItemInfo(glm::vec2(0.1f, 0),(int)BlockName::Dirt));//TEST
+	ItemTable.push_back(ItemInfo(glm::vec2(0.1f, 0), (int)BlockName::Dirt));//TEST
+	ItemTable.push_back(ItemInfo(glm::vec2(0.2f, 0), (int)BlockName::Grass));//Grass
+	ItemTable.push_back(ItemInfo(glm::vec2(0.3f, 0), (int)BlockName::Ore));//Ore
+	ItemTable.push_back(ItemInfo(glm::vec2(0.4f, 0), (int)BlockName::Dirt));//Dirt
+	ItemTable.push_back(ItemInfo(glm::vec2(0.5f, 0),(int)BlockName::Wood));//Wood
 
 
 }

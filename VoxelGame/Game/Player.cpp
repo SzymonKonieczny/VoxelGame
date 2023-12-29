@@ -7,6 +7,7 @@
 #include<glm/gtx/rotate_vector.hpp>
 #include<glm/gtx/vector_angle.hpp>
 #include <iostream>
+#include "ItemInfo.h"
 #include "Renderer.h"
 Player::Player() : Pos( 650,150, 650), Rot(2,0,1), velocity(0,0,0)
 {
@@ -37,11 +38,19 @@ void Player::Move(float dt)
 		lastActionTime = glfwGetTime();
 		actionQueue.push(ActionBuilder::PrintInfoAction());
 
-		HUD->setItemStack(2,
-			ItemStack(1,1));
 
 	}
+	if (Input::isPressed(GLFW_KEY_TAB) && lastActionTime + 0.1f < glfwGetTime())
+	{
+		lastActionTime = glfwGetTime();
+		currentlySelectedHUDSlot += 1;
+		if (currentlySelectedHUDSlot >= 7) currentlySelectedHUDSlot = 0;
 
+		HUD->setHighlight(currentlySelectedHUDSlot);
+		std::cout << "Currently selected slot : " << currentlySelectedHUDSlot << std::endl;
+
+
+	}
 
 	if (Input::isPressed(GLFW_KEY_W))
 	{
@@ -104,14 +113,20 @@ void Player::HandleMouseButtons()
 	{
 		lastActionTime = glfwGetTime();
 
-		actionQueue.push(ActionBuilder::PlaceAction(cam.GetPosition(), cam.GetRotation(), 25, BlockName::BlueRose));
+		if(ItemTable[HUD->ItemStacks[currentlySelectedHUDSlot].ID].CorrespondingBlock!= (int)BlockName::Air)
+			actionQueue.push(ActionBuilder::PlaceAction(cam.GetPosition(), cam.GetRotation(), 25,
+			(BlockName)HUD->ItemStacks[currentlySelectedHUDSlot].ID));
 	}
 }
 
 void Player::GenerateUIs()
 {
 	HUD =  new HUDUI(glm::vec2(0.2f, 0.02f), glm::vec2(0.6f, 0.05f), glm::mat4(1));
-
+	HUD->setItemStack(0, ItemStack(0));
+	HUD->setItemStack(1, ItemStack(1));
+	HUD->setItemStack(2, ItemStack(2));
+	HUD->setItemStack(3, ItemStack(3));
+	HUD->setItemStack(4, ItemStack(4));
 }
 
 Action Player::GetAction()
