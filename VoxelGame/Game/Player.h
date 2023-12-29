@@ -41,5 +41,9 @@ private:
 
 	HUDUI* HUD = nullptr; // set just before the game starts its main loop
 
+	UIItemIcon* TestIcon = nullptr;
+
+	UIItemIcon* TestIconInner = nullptr;
+
 
 };

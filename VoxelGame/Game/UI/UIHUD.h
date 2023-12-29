@@ -11,7 +11,7 @@ public:
 	{
 	
 		
-		Children[0]->Update();
+		//Children[0]->Update();
 		//for (auto& c : Children)
 		//{
 		//	c->Update();
