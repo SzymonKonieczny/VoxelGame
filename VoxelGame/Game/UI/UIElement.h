@@ -12,6 +12,8 @@ public:
 	static std::shared_ptr<Shader> UIShader;
 	std::vector<std::shared_ptr<UIElement>> Children;
 
+	glm::vec2 screenSpaceCoords; 
+
 	glm::vec2 coords; //start Coords
 	glm::vec2 size; //Span on X, span on Y
 	glm::mat4 transformMatrix;
@@ -23,6 +25,10 @@ public:
 	{
 		transformMatrix = TransformMatrix;
 		mesh.updateUniform("modelMatrix", transformMatrix);
+
+		glm::vec4 screenSpaceCoords_ = glm::vec4(coords, 0.f, 1.f);
+		screenSpaceCoords = transformMatrix * screenSpaceCoords_;
+
 
 		glm::mat4 childModelMat = transformMatrix;
 		childModelMat = glm::translate(childModelMat, glm::vec3(coords.x, coords.y, 1));

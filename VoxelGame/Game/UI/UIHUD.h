@@ -9,13 +9,10 @@ class HUDUI : public UIElement, public IInventory
 public:
 	virtual void Update() override
 	{
-	
-		
-		//Children[0]->Update();
-		//for (auto& c : Children)
-		//{
-		//	c->Update();
-		//}
+		for (auto& c : Children)
+		{
+			c->Update();
+		}
 	}
 	HUDUI(glm::vec2 Coords, glm::vec2 Size, glm::mat4 TransformMatrix) : UIElement (Coords, Size, TransformMatrix)
 	{

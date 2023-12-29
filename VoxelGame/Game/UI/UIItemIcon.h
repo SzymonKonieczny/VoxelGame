@@ -45,16 +45,7 @@ public:
 	{
 		double mouseX, mouseY;
 		Input::getMousePosNormalized(&mouseX, &mouseY);
-
-
-		glm::vec4 screenSpaceCoords =glm::vec4(coords,0.f,1.f);
 		glm::vec2 screenSpaceSize = size;
-	
-
-		screenSpaceCoords= transformMatrix*	screenSpaceCoords;
-
-
-
 
 		glm::vec2 scalingVector;
 		scalingVector.x = transformMatrix[0][0]; 
@@ -64,10 +55,10 @@ public:
 			mouseY > screenSpaceCoords.y &&
 			mouseX < screenSpaceCoords.x + screenSpaceSize.x &&
 			mouseX > screenSpaceCoords.x)
-			std::cout << "In\n";
-		else std::cout << "Out\n";
+		{
+			//Inside
+		}
 
-		std::cout << mouseY << '\n';
 
 	}
 	// Inherited via UIElement

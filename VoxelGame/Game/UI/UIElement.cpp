@@ -5,6 +5,10 @@ std::shared_ptr<Shader> UIElement::UIShader;
 UIElement::UIElement(glm::vec2 Coords, glm::vec2 Size, glm::mat4 TransformMatrix) 
 	: coords(Coords), size(Size), transformMatrix(TransformMatrix), mesh(MeshType::Indexed)
 {
+
+	glm::vec4 screenSpaceCoords_ = glm::vec4(coords, 0.f, 1.f);
+	screenSpaceCoords = transformMatrix * screenSpaceCoords_;
+
 	UIElementLayout = {
 	{ShaderDataType::Float2,"aPos"},
 	{ShaderDataType::Float2,"aTexCoordsOffset"},

@@ -21,7 +21,6 @@ Player::Player() : Pos( 650,150, 650), Rot(2,0,1), velocity(0,0,0)
 void Player::Update(float dt)
 {
 
-	TestIcon->Children[0]->Update();
 	HUD->Update();
 	handleRotation();
 	HandleMouseButtons();
@@ -129,14 +128,7 @@ void Player::GenerateUIs()
 	HUD->setItemStack(3, ItemStack(3));
 	HUD->setItemStack(4, ItemStack(4));
 
-	TestIcon = new UIItemIcon(glm::vec2(0.2f, 0.2f), glm::vec2(0.2f, 0.2f), glm::mat4(1));
-	TestIcon->mesh.updateUniform("TexCoords", glm::vec2(0.1f, 0.f));
-
-
-	TestIcon->Children.emplace_back(new  UIItemIcon(glm::vec2(0.5f, 0.5f), glm::vec2(0.5f, 0.5f), TestIcon->transformMatrix));
-	TestIcon->Children[0]->mesh.updateUniform("TexCoords", glm::vec2(0.1f, 0.1f));
-
-	TestIcon->UpdateTransformation(glm::mat4(1));
+	
 
 }
 
@@ -157,8 +149,7 @@ void Player::DrawUI()
 	}
 	for (auto& c : HUD->GetMeshesWithChildren())
 		Renderer::SubmitUI(*c);
-	Renderer::SubmitUI(TestIcon->mesh);
-	Renderer::SubmitUI(TestIcon->Children[0]->mesh);
+
 
 }
 
