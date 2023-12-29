@@ -16,18 +16,8 @@ public:
 	glm::vec2 size; //Span on X, span on Y
 	glm::mat4 transformMatrix;
 	BufferLayout UIElementLayout;
-	UIElement(glm::vec2 Coords, glm::vec2 Size, glm::mat4 TransformMatrix)
-	: coords(Coords), size(Size), transformMatrix(TransformMatrix), mesh(MeshType::Indexed)
-	{
-		UIElementLayout = {
-		{ShaderDataType::Float2,"aPos"},
-		{ShaderDataType::Float2,"aTexCoords"}
+	UIElement(glm::vec2 Coords, glm::vec2 Size, glm::mat4 TransformMatrix);
 
-		};
-			mesh.AddUniform("tex0", UniformType::Int);
-			m_ChunkSolidMesh.updateUniform("tex0", 0);
-
-	}
 
 	void UpdateTransformation(glm::mat4 TransformMatrix)
 	{

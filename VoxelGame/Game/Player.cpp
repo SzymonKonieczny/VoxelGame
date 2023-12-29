@@ -7,8 +7,11 @@
 #include<glm/gtx/rotate_vector.hpp>
 #include<glm/gtx/vector_angle.hpp>
 #include <iostream>
+#include "Renderer.h"
 Player::Player() : Pos( 650,150, 650), Rot(2,0,1), velocity(0,0,0)
 {
+
+
 	cam.SetFarPlane(1000.f);
 	cam.SetNearPlane(0.1f);
 
@@ -34,7 +37,11 @@ void Player::Move(float dt)
 		lastActionTime = glfwGetTime();
 		actionQueue.push(ActionBuilder::PrintInfoAction());
 
+		HUD->setItemStack(2,
+			ItemStack(1,1));
+
 	}
+
 
 	if (Input::isPressed(GLFW_KEY_W))
 	{
@@ -101,12 +108,30 @@ void Player::HandleMouseButtons()
 	}
 }
 
+void Player::GenerateUIs()
+{
+	HUD =  new HUDUI(glm::vec2(0.2f, 0.02f), glm::vec2(0.6f, 0.05f), glm::mat4(1));
+
+}
+
 Action Player::GetAction()
 {
 	if (actionQueue.empty()) return Action(ActionType::None);
 	Action ret = actionQueue.front();
 	actionQueue.pop();
 	return ret;
+}
+
+void Player::DrawUI()
+{
+	if (WindowResized)
+	{
+		HUD->UpdateTransformation(glm::scale(glm::mat4(1), glm::vec3(1, screenWidth / (float)screenHeight, 1)));
+		WindowResized = false;
+	}
+	for (auto& c : HUD->GetMeshesWithChildren())
+		Renderer::SubmitUI(*c);
+
 }
 
 void Player::handleCollisions()

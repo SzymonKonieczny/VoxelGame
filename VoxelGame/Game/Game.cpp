@@ -26,8 +26,9 @@ void Game::Start()
 	
 	
 	FillBlockTable();
-	HUDUI HUD(glm::vec2(0.2f,0.02f), glm::vec2(0.6f,0.05f), glm::mat4(1));
-	//world.chunkManager.GenWorld();
+	world.player.GenerateUIs();
+
+
 	double previousTime = glfwGetTime();
 	double deltaTime;
 	double currentTime = 0;
@@ -47,14 +48,7 @@ void Game::Start()
 		Update(deltaTime);
 
 		RenderWorld(world);
-		if (WindowResized)
-		{
-			HUD.UpdateTransformation(glm::scale(glm::mat4(1), glm::vec3(1, screenWidth / (float)screenHeight, 1)));
-			WindowResized = false;
-		}
-		for( auto& c : HUD.GetMeshesWithChildren())
-				Renderer::SubmitUI(*c);
-
+		world.player.DrawUI();
 		Renderer::EndScene();
 		Renderer::window.SwapBuffers();
 
@@ -147,6 +141,14 @@ void Game::FillBlockTable()
 
 
 	
+}
+
+void Game::FillItemTable()
+{
+	ItemTable.push_back(ItemInfo(glm::vec2(0, 0)));//AIR
+	ItemTable.push_back(ItemInfo(glm::vec2(0.1f, 0),(int)BlockName::Dirt));//TEST
+
+
 }
 
 void Game::Update(double dt)

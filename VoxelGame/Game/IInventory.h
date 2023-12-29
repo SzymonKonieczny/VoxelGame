@@ -1,20 +1,19 @@
 #pragma once
-#include "../Renderer/Mesh.h"
-class Item {
-
-};
-class BlockItem : public Item {
-
-};
+#include <vector>
 struct ItemStack {
 	short amount;
-	bool stackable;
 	int ID;
+	bool stackable = true;
 
 };
 
  class  IInventory {
+ public:
+	 std::vector<ItemStack> ItemStacks;
 
-	 virtual std::vector<ItemStack> GetItemStacks() = 0;
+	  std::vector<ItemStack>& GetItemStacks()
+	 {
+		 return ItemStacks;
+	 }
 
 };

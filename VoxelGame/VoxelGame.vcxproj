@@ -176,6 +176,7 @@
     <ClCompile Include="Game\Global.cpp" />
     <ClCompile Include="Game\Input.cpp" />
     <ClCompile Include="Game\Biomes\PlainsBiome.cpp" />
+    <ClCompile Include="Game\ItemInfo.cpp" />
     <ClCompile Include="Game\Player.cpp" />
     <ClCompile Include="Game\PlayerInventory.cpp" />
     <ClCompile Include="Game\Ray.cpp" />
@@ -238,6 +239,7 @@
     <ClInclude Include="Game\Biomes\IBiome.h" />
     <ClInclude Include="Game\IInventory.h" />
     <ClInclude Include="Game\Input.h" />
+    <ClInclude Include="Game\ItemInfo.h" />
     <ClInclude Include="Game\ITerrainGenerator.h" />
     <ClInclude Include="Game\Biomes\PlainsBiome.h" />
     <ClInclude Include="Game\Player.h" />

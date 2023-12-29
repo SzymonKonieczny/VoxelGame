@@ -5,16 +5,20 @@
 #include "BlockInfo.h"
 #include "PointCollider.h"
 #include <queue>
+#include "UI/UIHUD.h"
 class Player {
 
 public:
 	Player();
+
 	void Update(float dt);
 	void Move(float dt);
 	void HandleMouseButtons();
+	void GenerateUIs();
 	Camera& getCamera() { return cam; }
 	 glm::vec3& getPositon() { return Pos; };
 	Action GetAction();
+	void DrawUI();
 	float lastActionTime = 0;
 	float FOV = 90.0f;
 private:
@@ -32,6 +36,9 @@ private:
 	bool noClip = true;
 	glm::vec3 velocity;
 	std::queue<Action> actionQueue;
+
+
+	HUDUI* HUD = nullptr; // set just before the game starts its main loop
 
 
 };

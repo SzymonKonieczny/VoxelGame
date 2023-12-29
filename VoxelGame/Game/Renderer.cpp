@@ -236,7 +236,7 @@ void Renderer::RenderUI()
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-	glViewport(0, 0, screenWidth, screenHeight); // Normal render pass
+	glViewport(0, 0, screenWidth, screenHeight);
 	//We do not clear when drawin ui xd		glClearColor(0.39f, 0.67f, 0.8f, 1.0f);
 	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

@@ -23,6 +23,7 @@ public:
 private:
 	bool isChunkColumnInFrustum(std::shared_ptr<ChunkColumn> col);
 	void FillBlockTable();
+	void FillItemTable();
 	World world;
 
 	void Update(double dt);
