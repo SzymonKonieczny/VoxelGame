@@ -38,5 +38,11 @@ public:
 		glfwSetCursorPos(windowptr, (screenWidth / 2), (screenHeight / 2));
 
 	}
+	static void getMousePosNormalized(double* mouseX, double* mouseY) {
+		glfwGetCursorPos(windowptr, mouseX, mouseY);
+		*mouseY = (((float)*mouseY / screenHeight) - 1) * -1;
+		*mouseX = (float)*mouseX / screenWidth;
+
+	}
 
 }; 

@@ -21,7 +21,7 @@ Player::Player() : Pos( 650,150, 650), Rot(2,0,1), velocity(0,0,0)
 void Player::Update(float dt)
 {
 
-	
+	HUD->Update();
 	handleRotation();
 	HandleMouseButtons();
 	Move(dt);

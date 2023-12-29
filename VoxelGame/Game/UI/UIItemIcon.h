@@ -1,5 +1,6 @@
 #pragma once
 #include "UIElement.h"
+#include "../Input.h"
 class UIItemIcon : public UIElement{
 
 public:
@@ -38,6 +39,22 @@ public:
 
 
 		mesh.UpdateObjectsOnGPU();
+
+	}
+	virtual void Update() override
+	{
+		double mouseX, mouseY;
+		Input::getMousePosNormalized(&mouseX, &mouseY);
+		glm::vec3 mousePos((float)mouseX, (float)mouseY, 0.f);
+		glm::mat4 childModelMat = transformMatrix;
+		childModelMat = glm::translate(childModelMat, glm::vec3(coords.x, coords.y, 1));
+		childModelMat = glm::scale(childModelMat, glm::vec3(size.x, size.y, 1));
+
+		mousePos =   glm::vec4(mousePos,1.f) * childModelMat;
+		std::cout << mousePos.x << ' ' << mousePos.y << '\n';
+		std::cout << mouseX << ' ' << mouseY << '\n';
+		system("cls");
+
 
 	}
 	// Inherited via UIElement

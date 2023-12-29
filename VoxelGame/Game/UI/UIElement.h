@@ -17,7 +17,7 @@ public:
 	glm::mat4 transformMatrix;
 	BufferLayout UIElementLayout;
 	UIElement(glm::vec2 Coords, glm::vec2 Size, glm::mat4 TransformMatrix);
-
+	virtual void Update() = 0;
 
 	void UpdateTransformation(glm::mat4 TransformMatrix)
 	{
