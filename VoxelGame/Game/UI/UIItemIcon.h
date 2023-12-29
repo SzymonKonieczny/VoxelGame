@@ -45,15 +45,19 @@ public:
 	{
 		double mouseX, mouseY;
 		Input::getMousePosNormalized(&mouseX, &mouseY);
-		glm::vec3 mousePos((float)mouseX, (float)mouseY, 0.f);
-		glm::mat4 childModelMat = transformMatrix;
-		childModelMat = glm::translate(childModelMat, glm::vec3(coords.x, coords.y, 1));
-		childModelMat = glm::scale(childModelMat, glm::vec3(size.x, size.y, 1));
+		//mouseX = mouseX * 2 - 1;
+		//mouseY = mouseY * 2 - 1;
 
-		mousePos =   glm::vec4(mousePos,1.f) * childModelMat;
-		std::cout << mousePos.x << ' ' << mousePos.y << '\n';
-		std::cout << mouseX << ' ' << mouseY << '\n';
-		system("cls");
+		glm::vec4 screenSpaceCoords(coords, 0.f, 0.f);
+		glm::vec4 screenSpaceSize(size, 0.f, 0.f);
+
+		screenSpaceCoords=	screenSpaceCoords * transformMatrix;
+		screenSpaceSize =	screenSpaceSize * transformMatrix;
+		if (mouseY < screenSpaceCoords.y + screenSpaceSize.y &&
+			mouseY > screenSpaceCoords.y)
+			std::cout << "In\n";
+		else std::cout << "Out\n";
+
 
 
 	}
