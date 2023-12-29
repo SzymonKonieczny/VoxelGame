@@ -25,14 +25,6 @@ Chunk::Chunk(glm::ivec3 pos, std::shared_ptr<ChunkManager> chunkManager) : m_Chu
 	m_ChunkSolidMesh.AddUniform("tex0", UniformType::Int);
 	m_ChunkSolidMesh.AddUniform("shadowDepthTexture", UniformType::Int);
 	m_ChunkSolidMesh.AddUniform("lightSpaceMatrix", UniformType::Mat4);
-	//m_ChunkSolidMesh.AddUniform("flatSunlightLevel", UniformType::Float);
-
-	//m_ChunkSolidMesh.AddUniform("ViewPos", UniformType::Float3);
-	//m_ChunkSolidMesh.AddUniform("lightPos", UniformType::Float3);
-
-	
-
-
 
 	m_ChunkSolidMesh.updateUniform("shadowDepthTexture", 7); //7 7th texture is reserved for the shadowmap
 
@@ -42,7 +34,7 @@ Chunk::Chunk(glm::ivec3 pos, std::shared_ptr<ChunkManager> chunkManager) : m_Chu
 
 
 	m_ChunkSolidMesh.SetTexture(0,Game::BlockTextureAtlas);
-	m_ChunkSolidMesh.hasTexture = true;
+//	m_ChunkSolidMesh.hasTexture = true;
 
 }
 

@@ -52,6 +52,14 @@ void Mesh::SetTexture(unsigned int slot, Texture* texture)
 	hasTexture = true;
 }
 
+void Mesh::SetTexture(unsigned int slot, std::shared_ptr<Texture> texture)
+{
+	if (m_Textures.contains(slot)) m_Textures[slot] = texture;
+	else m_Textures.insert({ slot, texture });
+
+	hasTexture = true;
+}
+
 void Mesh::UpdateObjectsOnGPU()
 {
 	m_VertexArray->UpdateVertexData(Verticies.data(), Verticies.size() * sizeof(float));

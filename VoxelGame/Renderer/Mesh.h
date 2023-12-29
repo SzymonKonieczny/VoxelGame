@@ -23,7 +23,7 @@ public:
 	unsigned int getCount();
 	void Bind();
 	void SetTexture(unsigned int slot, Texture* texture);
-	void SetTexture(unsigned int slot, std::shared_ptr<Texture> texture) { m_Textures[slot] = texture; };
+	void SetTexture(unsigned int slot, std::shared_ptr<Texture> texture); //{ m_Textures[slot] = texture; };
 	void UpdateObjectsOnGPU();
 	void SetShader( Shader* shader) { m_Shader.reset(shader); };
 	void SetShader(std::shared_ptr<Shader> shader) { m_Shader = shader; };
