@@ -127,6 +127,8 @@ void Player::GenerateUIs()
 	HUD->setItemStack(2, ItemStack(2));
 	HUD->setItemStack(3, ItemStack(3));
 	HUD->setItemStack(4, ItemStack(4));
+	HUD->setItemStack(5, ItemStack(6));
+
 
 	
 

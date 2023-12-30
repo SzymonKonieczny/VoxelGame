@@ -15,7 +15,7 @@ enum class EarthBiomes {
 class EarthyTerrainGenerator : public ITerrainGenerator {
 	// Inherited via ITerrainGenerator
 public:
-	std::string BiomeDecisionTreeNode = "EABmZoZAEwDhepQ+DAABAAAAzczMPQkAAOF6lD8AuB6FPw==";
+	std::string BiomeDecisionTreeNode = "EABmZoZAEwCPwvU8DAABAAAAzczMPQkAAOF6lD8AuB6FPw==";// VERY FAJEN JAK COS -> "EABmZoZAEwDhepQ+DAABAAAAzczMPQkAAOF6lD8AuB6FPw==";
 	std::string CaveCarvingTreeNode = "FwAAAEDAAABAQAAAgL8AAIA/EwCPwvU9GgABEQACAAAAAADgQBAAAACIQR8AFgABAAAACwADAAAAAgAAAAMAAAAEAAAAAAAAAD8BFAD//wAAAAAAAD8AAAAAPwAAAAA/AAAAAD8BFwAAAIC/AACAPz0KF0BSuB5AEwAAAKBABgAAj8J1PACamZk+AAAAAAABFwAAAIC/AACAPwAAAL8AAAA///8CAA==";
 
 

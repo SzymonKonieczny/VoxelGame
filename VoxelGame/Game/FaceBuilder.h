@@ -37,6 +37,7 @@ public:
 	
 		glm::vec3 Light = glm::vec3(0.05f, 0.05f, 0.05f);
 		Light += (float)lightLevel / 16.f; // divided by a little BIT more than 16
+		//Light = glm::vec3(0.65f, 0.65f, 0.65f);
 		switch (Dir)
 		{
 		case BlockFace::NORTH: //+z

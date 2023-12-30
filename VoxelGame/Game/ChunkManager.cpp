@@ -26,6 +26,8 @@ void ChunkManager::SetBlockAtPosition(glm::vec3 Position, BlockName name)
 		AddToMeshQueue(ChunkPos + glm::vec3(-1, 0, 0));
 		AddToMeshQueue(ChunkPos + glm::vec3(0, 0, 1));
 		AddToMeshQueue(ChunkPos + glm::vec3(0, 0, -1));
+		AddToMeshQueue(ChunkPos + glm::vec3(0, 1, 0));
+		AddToMeshQueue(ChunkPos + glm::vec3(0, -1, 0));
 
 	}
 	else
