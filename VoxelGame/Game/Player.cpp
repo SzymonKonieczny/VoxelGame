@@ -9,7 +9,7 @@
 #include <iostream>
 #include "ItemInfo.h"
 #include "Renderer.h"
-Player::Player() : Pos( 650,150, 650), Rot(2,0,1), velocity(0,0,0)
+Player::Player() : Pos( 2000,150, 2000), Rot(45,0,0), velocity(0,0,0)
 {
 
 
