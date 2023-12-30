@@ -12,7 +12,7 @@ void Game::Init()
 	Renderer::Init();
 	Input::windowptr = Renderer::window.GetHandle();
 
-	BlockTextureAtlas.reset(new Texture("Game/Textures/Atlas.png"));
+	BlockTextureAtlas.reset(new Texture("Game/Textures/Atlas1.png"));
 	Chunk::ChunkSolidShader.reset(new Shader("Game/Shaders/ChunkShader.vert", "Game/Shaders/ChunkShader.frag"));
 
 	ItemTextureAtlas.reset(new Texture("Game/Textures/ItemAtlas.png"));
@@ -125,19 +125,21 @@ bool Game::isChunkColumnInFrustum(std::shared_ptr<ChunkColumn> col)
 
 void Game::FillBlockTable()
 {
-
+	 
 	BlockTable.push_back(BlockInfo({ 0.8f,0.f },BlockModelType::Cube, true, false,false)); //AIR
 	BlockTable.push_back(BlockInfo({ 0.f,0.f }, { 0.2f,0.6f }, { 0.6f,0.f }, BlockModelType::Cube, false, true)); //Grass
 	BlockTable.push_back(BlockInfo({ 0.2f,0.f }, BlockModelType::Cube, false, true,true)); //Ore
 	BlockTable.push_back(BlockInfo({ 0.4f,0.f }, BlockModelType::Cube, false, true, true)); //Stone
 	BlockTable.push_back(BlockInfo({ 0.6f,0.f }, BlockModelType::Cube, false, true, true)); //Dirt
 	BlockTable.push_back(BlockInfo({ 0.8f,0.f }, BlockModelType::Cube, false, false, true)); //Wood
-	BlockTable.push_back(BlockInfo({ 0.8f,0.4f }, BlockModelType::X, false, false, true, 10)); //Rose
+	BlockTable.push_back(BlockInfo({ 0.8f,0.4f }, BlockModelType::X, false, false, true, 3)); //Rose
 	BlockTable.push_back(BlockInfo({ 0.2f,0.2f }, BlockModelType::Cube, false, true, true)); //Sand
 	BlockTable.push_back(BlockInfo({ 0.0f,0.2f }, BlockModelType::Cube, false, false, true)); //Leaves
 	BlockTable.push_back(BlockInfo({ 0.6f,0.6f }, { 0.4f,0.6f }, { 0.6f,0.f }, BlockModelType::Cube, false, true)); //RedGraass
 	BlockTable.push_back(BlockInfo({ 0.8f,0.6f }, BlockModelType::Cube, false, false, true)); //RedLeaves
-	BlockTable.push_back(BlockInfo({ 0.8f,0.f }, BlockModelType::Cube, false, false, true,5)); //GlowWood
+	BlockTable.push_back(BlockInfo({ 0.8f,0.f }, BlockModelType::Cube, false, false, true,2)); //GlowWood
+	BlockTable.push_back(BlockInfo({ 0.4f,0.4f }, BlockModelType::X, false, false, true, 12)); //Aliceline
+
 
 
 
@@ -148,7 +150,7 @@ void Game::FillBlockTable()
 void Game::FillItemTable()
 {
 	ItemTable.push_back(ItemInfo(glm::vec2(0, 0)));//AIR
-	ItemTable.push_back(ItemInfo(glm::vec2(0.1f, 0), (int)BlockName::BlueRose));//TEST
+	ItemTable.push_back(ItemInfo(glm::vec2(0.1f, 0), (int)BlockName::Aliceline));//TEST
 	ItemTable.push_back(ItemInfo(glm::vec2(0.2f, 0), (int)BlockName::Grass));//Grass
 	ItemTable.push_back(ItemInfo(glm::vec2(0.3f, 0), (int)BlockName::Ore));//Ore
 	ItemTable.push_back(ItemInfo(glm::vec2(0.4f, 0), (int)BlockName::Dirt));//Dirt

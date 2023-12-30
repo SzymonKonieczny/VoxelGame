@@ -45,7 +45,7 @@ void ForestBiome::addDecorationRow(std::shared_ptr<ChunkColumn> chunkColumn, std
 		if (chunkColumn->getBlockInColumn({ LocCoords.x,y,LocCoords.y }) == BlockName::Grass)
 		{
 			if (Util::random(1, 15) == 1)
-				chunkColumn->setBlockInColumn({ LocCoords.x,y + 1,LocCoords.y }, BlockName::BlueRose);
+				chunkColumn->setBlockInColumn({ LocCoords.x,y + 1,LocCoords.y }, BlockName::Aliceline);
 			break;
 		}
 	}

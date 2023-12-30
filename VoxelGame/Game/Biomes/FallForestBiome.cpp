@@ -13,6 +13,7 @@ void FallForestBiome::addIcing(std::shared_ptr<ChunkColumn> chunkColumn, std::sh
 
 void FallForestBiome::addDecoration(std::shared_ptr<ChunkColumn> chunk, std::shared_ptr<ChunkManager> chunkManager)
 {
+
 }
 
 void FallForestBiome::generateFeatures(std::shared_ptr<ChunkColumn> chunk, std::shared_ptr<ChunkManager> chunkManager)
