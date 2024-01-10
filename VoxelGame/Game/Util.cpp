@@ -4,9 +4,14 @@ std::mt19937 Util::gen;
 
 int Util::random(int min, int max)
 {
-	std::uniform_int_distribution<> dist(min, max);
+	
 
-	return dist(gen);
+	std::uniform_int_distribution<int> distribution(min, max);
+
+	return distribution(gen);
+
+	
+
 }
 
 glm::vec3 Util::IndexToVec3(int i)
@@ -105,6 +110,10 @@ CommandType Util::ParseCommand(std::string command, std::vector<float>& args)
 
 	if (commandType == "tp") ret = CommandType::Teleport;
 	if (commandType == "genswap") ret = CommandType::GeneratorSwap;
+	if (commandType == "seed") ret = CommandType::PrintSeed;
+	if (commandType == "pos") ret = CommandType::PrintPosition;
+
+
 
 
 	while (ss >> temp)

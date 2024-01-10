@@ -33,7 +33,6 @@ public:
 		glm::mat4 childModelMat = transformMatrix;
 		childModelMat = glm::translate(childModelMat, glm::vec3(coords.x, coords.y, 1));
 		childModelMat = glm::scale(childModelMat, glm::vec3(size.x, size.y, 1));
-		 
 		for (auto& UI : Children)
 		{
 			UI->UpdateTransformation(childModelMat);

@@ -7,7 +7,9 @@
 #include <queue>
 #include "UI/UIHUD.h"
 #include "UI/UIPlayerInventory.h"
-class Player {
+#include "IEntity.h"
+class ChunkManager;
+class Player : public IEntity{
 
 public:
 	Player();
@@ -22,23 +24,23 @@ public:
 	void DrawUI();
 	float lastActionTime = 0;
 	float FOV = 90.0f;
+	bool noClip = true;
+	void handleCollisions(std::shared_ptr<ChunkManager>& chunkManager);
+	float drag = 0.2f;
 private:
+	bool CheckCollisionSide(glm::vec3 dir, std::shared_ptr<ChunkManager>& chunkManager);
 	bool isInventoryOpen = false;
 	bool LockMouse = true;
-	void handleCollisions();
 	void handleRotation();
 	Camera cam;
-	glm::vec3 Pos;
 	glm::vec3 Rot;
 	bool isOnGround=false;
 	float speed = 0.1f;
+
 	float sensitivity = 100.0f;
 	float jumpForce = 0.2f;
 	float BlocksCooldown = 0.1;
-	float drag = 0.2f;
-	bool noClip = true;
 	int currentlySelectedHUDSlot;
-	glm::vec3 velocity;
 	std::queue<Action> actionQueue;
 
 

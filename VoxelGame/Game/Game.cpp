@@ -3,6 +3,7 @@
 #include "Input.h"
 #include <glm/gtx/rotate_vector.hpp>
 #include "UI/UIHUD.h"
+#include <limits>
 //int Game::CHUNK_SIZE = 16;
 std::shared_ptr<Texture> Game::BlockTextureAtlas;
 std::shared_ptr<Texture> Game::ItemTextureAtlas;
@@ -34,6 +35,11 @@ void Game::Start()
 	double deltaTime;
 	double currentTime = 0;
 	glfwSwapInterval(0);
+	std::random_device rd;
+	Util::gen = std::mt19937(rd());
+
+
+	WorldSeed = Util::random(std::numeric_limits<int>::min(), std::numeric_limits<int>::max());
 	while (!glfwWindowShouldClose(Renderer::window.GetHandle()))
 	{
 		currentTime = glfwGetTime();
@@ -140,6 +146,8 @@ void Game::FillBlockTable()
 	BlockTable.push_back(BlockInfo({ 0.8f,0.f }, BlockModelType::Cube, false, false, true,2)); //GlowWood
 	BlockTable.push_back(BlockInfo({ 0.4f,0.4f }, BlockModelType::X, false, false, true, 12)); //Aliceline
 	BlockTable.push_back(BlockInfo({ 0.0f,0.6f }, BlockModelType::Cube, false, true, true)); //Cobblestone
+	BlockTable.push_back(BlockInfo({ 0.0f,0.8f }, BlockModelType::Cube, false, true, true)); //Planks
+
 
 
 
@@ -161,6 +169,8 @@ void Game::FillItemTable()
 	ItemTable.push_back(ItemInfo(glm::vec2(0.7f, 0), (int)BlockName::Stone));//Stone
 	ItemTable.push_back(ItemInfo(glm::vec2(0.8f, 0), (int)BlockName::Sand));//Sand
 	ItemTable.push_back(ItemInfo(glm::vec2(0.9f, 0), (int)BlockName::RedGrass));//RedGrass
+	ItemTable.push_back(ItemInfo(glm::vec2(0.0f, 0.1f), (int)BlockName::Planks));//Planks
+
 
 
 

@@ -100,7 +100,7 @@ void Renderer::RenderChunks()
 		std::cout << "Teleporting the lightsource to player ...\n";
 	}
 
-#if 0 // Shadowmap render	
+#if 1 // Shadowmap render	
 	ShadowMap->Bind();
 
 	glEnable(GL_DEPTH_TEST);

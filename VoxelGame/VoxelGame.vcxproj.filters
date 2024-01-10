@@ -120,6 +120,9 @@
     <ClCompile Include="Game\ItemInfo.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="Game\IEntity.h">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Renderer.h">

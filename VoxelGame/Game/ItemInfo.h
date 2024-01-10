@@ -3,7 +3,8 @@
 #include <glm/glm.hpp>
 
 enum class ItemName {
-	Air,TestSword
+	Air,Grass,Ore,Dirt,Wood,Cobblestone,
+	StonemSand,RedGrass,Planks
 };
 struct ItemInfo {
 	glm::vec2 UV;

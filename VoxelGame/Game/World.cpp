@@ -15,6 +15,14 @@ void World::TickWorld(double deltaTime)
 {
 	HandleActionQueue(1);
 	player.Update(deltaTime); //GIVE WORLD IN THE ARGUMENT !
+	
+	
+	
+	if (!player.noClip) player.handleCollisions(chunkManager);
+	player.Pos += player.velocity;
+	player.velocity.x *= player.drag * deltaTime;
+	player.velocity.z *= player.drag * deltaTime;
+	if (player.noClip) player.velocity.y *= player.drag * deltaTime;
 
 	chunkManager->UpdateLoadedChunkMap({ player.getPositon().x / ChunkSize, player.getPositon().z / ChunkSize });
 
@@ -71,7 +79,7 @@ void World::HandleActionQueue(int amount)
 						player.getPositon().x = args[0];
 						player.getPositon().y =  args[1];
 						player.getPositon().z = args[2];
-							break;
+					break;
 
 					case CommandType::GeneratorSwap:
 
@@ -88,23 +96,29 @@ void World::HandleActionQueue(int amount)
 
 
 						break;
+					case CommandType::PrintSeed:
+
+						std::cout << WorldSeed << "\n";
+							
+						break;
+					case CommandType::PrintPosition:
+
+						glm::vec3 Pos = player.getPositon();
+						glm::vec3 Rot = player.getCamera().GetRotation();
+						glm::vec3 ChunkPos = Util::WorldPosToChunkPos(Pos);
+						std::cout << std::fixed << std::setprecision(2)
+							<< "PlayerPos : " << Pos.x << '|' << Pos.y << '|' << Pos.z << '\n' <<
+							"PlayerRot :" << (Rot.x) << '|' << (Rot.y) << '|' << (Rot.z) << '\n' <<
+							"ChunkPos :" << ChunkPos.x << '|' << ChunkPos.y << '|' << ChunkPos.z << '\n';
+
+						break;
 					default:
 						std::cout << "Invalid command \n";
 						break;
 					}
 			}
 			break;
-			case ActionType::PrintInfo:
-			{
-				glm::vec3 Pos = player.getPositon();
-				glm::vec3 Rot = player.getCamera().GetRotation();
-				glm::vec3 ChunkPos = Util::WorldPosToChunkPos(Pos);
-				std::cout << std::fixed << std::setprecision(2)
-					<< "PlayerPos : " << Pos.x << '|' << Pos.y << '|' << Pos.z << '\n' <<
-					   "PlayerRot :" << glm::degrees(Rot.x) << '|' << glm::degrees(Rot.y) << '|' << glm::degrees(Rot.z) << '\n' <<
-						"ChunkPos :" << ChunkPos.x << '|' << ChunkPos.y << '|' << ChunkPos.z <<'\n';
-			}
-			break;
+
 		}
 	}
 }

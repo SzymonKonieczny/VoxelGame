@@ -9,8 +9,14 @@
 #include <iostream>
 #include "ItemInfo.h"
 #include "Renderer.h"
-Player::Player() : Pos( 2000,150, 2000), Rot(45,0,0), velocity(0,0,0)
+#include "ChunkManager.h"
+Player::Player() :  Rot(45,0,0)
 {
+	Pos = glm::vec3(2000, 150, 2000);
+	velocity = glm::vec3(0, 0, 0);
+	minAABB = glm::vec3(-0.4f, -1.7f, -0.4f);
+	maxAABB = glm::vec3(0.4f, 0.2f, 0.4f);
+
 
 
 	cam.SetFarPlane(1000.f);
@@ -41,12 +47,11 @@ void Player::Move(float dt)
 {
 
 
-	if (Input::isPressed(GLFW_KEY_P) && lastActionTime + 0.1f < glfwGetTime())
+	if (Input::isPressed(GLFW_KEY_C) && lastActionTime + 0.3f < glfwGetTime())
 	{
 		lastActionTime = glfwGetTime();
-		actionQueue.push(ActionBuilder::PrintInfoAction());
 
-
+		noClip = !noClip;
 	}
 
 	if (Input::isPressed(GLFW_KEY_E) && lastActionTime + 0.3f < glfwGetTime())
@@ -86,7 +91,12 @@ void Player::Move(float dt)
 	}
 	if (Input::isPressed(GLFW_KEY_SPACE))
 	{
-		velocity += speed * dt * glm::vec3(0, 1, 0);
+		if (!noClip && isOnGround)
+		{
+			velocity = jumpForce * glm::vec3(0.0f, 1.0f, 0.0f);
+		}
+		else if (noClip) velocity += speed * dt * glm::vec3(0.0f, 1.0f, 0.0f);
+
 	}
 	if (Input::isPressed(GLFW_KEY_LEFT_SHIFT))
 	{
@@ -94,11 +104,14 @@ void Player::Move(float dt)
 	}
 	if (Input::isPressed(GLFW_KEY_LEFT_CONTROL))
 	{
-		speed = 100.f;
+		if (noClip)speed = 100.f;
 	}
 	else if (Input::isReleased(GLFW_KEY_LEFT_CONTROL))
 	{
-		speed = 10.f;
+		if (noClip)
+			speed = 10.f;
+		else
+			speed = 4.f;
 	}
 	if (Input::isPressed(GLFW_KEY_SLASH) && lastActionTime + 0.1f < glfwGetTime())
 	{
@@ -108,12 +121,9 @@ void Player::Move(float dt)
 
 	}
 	if (!noClip) velocity.y -= 0.8f * dt;
-	if (!noClip)handleCollisions();
 
-	Pos += velocity;
-	velocity.x *= drag * dt;
-	velocity.z *= drag * dt;
-	if (noClip) velocity.y *= drag * dt;
+
+	
 
 }
 
@@ -178,25 +188,66 @@ void Player::DrawUI()
 
 }
 
-void Player::handleCollisions()
+void Player::handleCollisions(std::shared_ptr<ChunkManager>& chunkManager)
 {
 	//PointCollider::isBlockAtCollidable()
 		//cant get a reference to chunkManager due to the structure
 		//Maybe somehow thru the action system?
 
-//	if (CheckCollisionSide(glm::vec3(Velocity.x, 0, 0)))
-//	{
-//		velocity.x = 0;
-//
-//	}
-//	if (CheckCollisionSide(glm::vec3(0, Velocity.y, 0)))
-//	{
-//		velocity.y = 0;
-//	}
-//	if (CheckCollisionSide(glm::vec3(0, 0, Velocity.z)))
-//	{
-//		velocity.z = 0;
-//	}
+	if (CheckCollisionSide(glm::vec3(velocity.x, 0, 0), chunkManager))
+	{
+		velocity.x = 0;
+
+	}
+	if (CheckCollisionSide(glm::vec3(0, velocity.y, 0), chunkManager))
+	{
+		velocity.y = 0;
+	}
+	if (CheckCollisionSide(glm::vec3(0, 0, velocity.z), chunkManager))
+	{
+		velocity.z = 0;
+	}
+
+	isOnGround = CheckCollisionSide(glm::vec3(0, -0.2, 0), chunkManager);
+
+}
+
+bool Player::CheckCollisionSide(glm::vec3 dir, std::shared_ptr<ChunkManager>& chunkManager)
+{
+	bool ret = false;
+	glm::vec3 pointPos = Pos + minAABB;
+	ret = ret|| PointCollider::isBlockAtCollidable(pointPos + dir, *chunkManager); // min min min
+
+
+	 pointPos = Pos + glm::vec3(minAABB.x, minAABB.y, maxAABB.z);
+	ret = ret || PointCollider::isBlockAtCollidable(pointPos + dir, *chunkManager); // min min max
+
+
+	 pointPos = Pos + glm::vec3(minAABB.x, maxAABB.y, minAABB.z);
+	ret = ret || PointCollider::isBlockAtCollidable(pointPos + dir, *chunkManager);// min max min
+
+
+	 pointPos = Pos + glm::vec3(minAABB.x, maxAABB.y, maxAABB.z);
+	ret = ret || PointCollider::isBlockAtCollidable(pointPos + dir, *chunkManager);// min max max
+
+	//------------------------------------
+
+	 pointPos = Pos + maxAABB;
+	ret = ret || PointCollider::isBlockAtCollidable(pointPos + dir, *chunkManager); // min min min
+
+
+	 pointPos = Pos + glm::vec3(maxAABB.x, minAABB.y, maxAABB.z);
+	ret = ret || PointCollider::isBlockAtCollidable(pointPos + dir, *chunkManager); // min min max
+
+
+	 pointPos = Pos + glm::vec3(maxAABB.x, maxAABB.y, minAABB.z);
+	ret = ret || PointCollider::isBlockAtCollidable(pointPos + dir, *chunkManager);// min max min
+
+
+	 pointPos = Pos + glm::vec3(maxAABB.x, maxAABB.y, maxAABB.z);
+	ret = ret || PointCollider::isBlockAtCollidable(pointPos + dir, *chunkManager);// min max max
+
+	return ret;
 }
 
 void Player::handleRotation()
