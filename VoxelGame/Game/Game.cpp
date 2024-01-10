@@ -160,7 +160,6 @@ void Game::FillItemTable()
 	ItemTable.push_back(ItemInfo(glm::vec2(0.1f, 0), (int)BlockName::Cobblestone));//Cobble
 
 
-
 }
 
 void Game::Update(double dt)

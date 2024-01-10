@@ -6,11 +6,12 @@
 #include "PointCollider.h"
 #include <queue>
 #include "UI/UIHUD.h"
+#include "UI/UIPlayerInventory.h"
 class Player {
 
 public:
 	Player();
-
+	void setItemInHUD(int ItemID);
 	void Update(float dt);
 	void Move(float dt);
 	void HandleMouseButtons();
@@ -22,6 +23,8 @@ public:
 	float lastActionTime = 0;
 	float FOV = 90.0f;
 private:
+	bool isInventoryOpen = false;
+	bool LockMouse = true;
 	void handleCollisions();
 	void handleRotation();
 	Camera cam;
@@ -40,7 +43,7 @@ private:
 
 
 	HUDUI* HUD = nullptr; // set just before the game starts its main loop
-
+	UIPlayerInventory* Inventory = nullptr;
 
 
 };

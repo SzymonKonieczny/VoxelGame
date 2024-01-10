@@ -231,6 +231,7 @@ void ChunkManager::UpdateLoadedChunkMap(glm::vec2 CenterPoint)
 				WaitingBlockMap.erase(it->first);
 			}
 			it = ChunkMap.erase(it);
+	
 		}
 		else it++;
 	}

@@ -311,6 +311,9 @@
     <ClInclude Include="Game\ItemInfo.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
+    <ClInclude Include="Game\UI\UIPlayerInventory.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Game\Shaders\test.vert" />

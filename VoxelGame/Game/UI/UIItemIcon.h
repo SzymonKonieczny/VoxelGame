@@ -1,6 +1,7 @@
 #pragma once
 #include "UIElement.h"
 #include "../Input.h"
+#include <functional>
 class UIItemIcon : public UIElement{
 
 public:
@@ -57,9 +58,15 @@ public:
 			mouseX > screenSpaceCoords.x)
 		{
 			//Inside
+			if (Input::mouseIsPressed(GLFW_MOUSE_BUTTON_LEFT))
+			{
+				LeftClickCallback();
+			}
 		}
 
 
 	}
+	std::function<void()> LeftClickCallback;
+
 	// Inherited via UIElement
 };

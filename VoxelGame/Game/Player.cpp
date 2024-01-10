@@ -18,10 +18,16 @@ Player::Player() : Pos( 2000,150, 2000), Rot(45,0,0), velocity(0,0,0)
 
 }
 
+void Player::setItemInHUD(int ItemID)
+{
+	HUD->setItemStack(currentlySelectedHUDSlot, ItemStack(1, ItemID));
+}
+
 void Player::Update(float dt)
 {
 
 	HUD->Update();
+	if(isInventoryOpen) Inventory->Update();
 	handleRotation();
 	HandleMouseButtons();
 	Move(dt);
@@ -33,11 +39,21 @@ void Player::Update(float dt)
 
 void Player::Move(float dt)
 {
+
+
 	if (Input::isPressed(GLFW_KEY_P) && lastActionTime + 0.1f < glfwGetTime())
 	{
 		lastActionTime = glfwGetTime();
 		actionQueue.push(ActionBuilder::PrintInfoAction());
 
+
+	}
+
+	if (Input::isPressed(GLFW_KEY_E) && lastActionTime + 0.5f < glfwGetTime())
+	{
+		lastActionTime = glfwGetTime();
+		isInventoryOpen = !isInventoryOpen;
+		LockMouse = !isInventoryOpen;
 
 	}
 	if (Input::isPressed(GLFW_KEY_TAB) && lastActionTime + 0.1f < glfwGetTime())
@@ -122,19 +138,21 @@ void Player::HandleMouseButtons()
 void Player::GenerateUIs()
 {
 	HUD =  new HUDUI(glm::vec2(0.2f, 0.02f), glm::vec2(0.6f, 0.05f), glm::mat4(1));
-	HUD->setItemStack(0, ItemStack(0));
-	HUD->setItemStack(1, ItemStack(1));
-	HUD->setItemStack(2, ItemStack(2));
-	HUD->setItemStack(3, ItemStack(3));
-	HUD->setItemStack(4, ItemStack(4));
+	HUD->setItemStack(0, ItemStack(1));
+	HUD->setItemStack(1, ItemStack(2));
+	HUD->setItemStack(2, ItemStack(3));
+	HUD->setItemStack(3, ItemStack(4));
+	HUD->setItemStack(4, ItemStack(5));
 	HUD->setItemStack(5, ItemStack(6));
 
 
-	
+	Inventory = new UIPlayerInventory(glm::vec2(0.3f, 0.3f), glm::vec2(0.4f, 0.4f), glm::mat4(1));
+	//Inventory->SetHUDItem = [this](int ItemID) { setItemInHUD(ItemID); };//std::function<void(int)>(setItemInHUD);
+	Inventory->SetHUDItem = std::bind(&Player::setItemInHUD, this, std::placeholders::_1);
 
 }
 
-Action Player::GetAction()
+Action Player::GetAction()	
 {
 	if (actionQueue.empty()) return Action(ActionType::None);
 	Action ret = actionQueue.front();
@@ -147,11 +165,16 @@ void Player::DrawUI()
 	if (WindowResized)
 	{
 		HUD->UpdateTransformation(glm::scale(glm::mat4(1), glm::vec3(1, screenWidth / (float)screenHeight, 1)));
+		//Inventory->UpdateTransformation(glm::scale(glm::mat4(1), glm::vec3(1, screenWidth / (float)screenHeight, 1)));
+
 		WindowResized = false;
 	}
 	for (auto& c : HUD->GetMeshesWithChildren())
 		Renderer::SubmitUI(*c);
-
+	
+	if(isInventoryOpen)
+		for (auto& c : Inventory->GetMeshesWithChildren())
+			Renderer::SubmitUI(*c);
 
 }
 
@@ -178,6 +201,7 @@ void Player::handleCollisions()
 
 void Player::handleRotation()
 {
+	if (!LockMouse) return;
 	double mouseX, mouseY;
 	Input::getMouseMove(&mouseX, &mouseY);
 	float rotX = sensitivity * (float)(mouseY - (screenHeight / 2)) / screenHeight;

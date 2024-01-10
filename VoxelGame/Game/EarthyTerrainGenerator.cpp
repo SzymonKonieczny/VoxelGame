@@ -24,8 +24,7 @@ void EarthyTerrainGenerator::generateTerrain(std::shared_ptr<ChunkColumn> chunkC
 	fnGenerator->GenUniformGrid2D(BiomeDecisionNoise.data(), ColumnPos.x * ChunkSize, ColumnPos.y * ChunkSize,
 		ChunkSize, ChunkSize, 0.2f, WorldSeed);
 
-	int BiomeID = (int)DecideBiomeFromNoiseOutput(BiomeDecisionNoise[0]); // shouldnt be here, should be in the else below 
-//	(so only if its NOT a multibiome chunk)
+	int BiomeID = (int)DecideBiomeFromNoiseOutput(BiomeDecisionNoise[0]);
 
 
 	bool isMultiBiomeChunk = true;// KEEP AS PERMA TRUE FOR METHOD B //CheckForMultiBiomeChunk(*chunkColumn); 

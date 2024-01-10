@@ -6,7 +6,6 @@ Chunk::Chunk(glm::ivec3 pos, std::shared_ptr<ChunkManager> chunkManager) : m_Chu
 {
 	blocks.resize(ChunkSize* ChunkSize* ChunkSize);
 	lightLevels.resize(ChunkSize * ChunkSize * ChunkSize);
-	sunLightLevels.resize(ChunkSize * ChunkSize * ChunkSize);
 	std::fill(lightLevels.begin(), lightLevels.end(), 0);
 
 
@@ -40,6 +39,7 @@ Chunk::Chunk(glm::ivec3 pos, std::shared_ptr<ChunkManager> chunkManager) : m_Chu
 
 void Chunk::GenerateMesh()
 {
+	blockMutex.lock();
 	MeshMutex.lock();
 	setIsMeshed(false);
 	m_ChunkSolidMesh.Verticies.clear();
@@ -81,6 +81,7 @@ void Chunk::GenerateMesh()
 	setIsMeshed(true);
 	setIsDirty(false);
 	MeshMutex.unlock();
+	blockMutex.unlock();
 
 
 }

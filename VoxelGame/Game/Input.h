@@ -4,6 +4,7 @@
 class Input {
 public:
 	static GLFWwindow* windowptr;
+
 	static bool isPressed( int GLFW_Key) {
 		if (glfwGetKey(windowptr, GLFW_Key) == GLFW_PRESS)
 		{

@@ -42,9 +42,9 @@ void ForestBiome::addDecorationRow(std::shared_ptr<ChunkColumn> chunkColumn, std
 {
 	for (int y = (chunkColumn->m_Chunks.size() * ChunkSize) - 1; y >= 0; y--)
 	{
+	if (Util::random(1, 15) == 1)
 		if (chunkColumn->getBlockInColumn({ LocCoords.x,y,LocCoords.y }) == BlockName::Grass)
 		{
-			if (Util::random(1, 15) == 1)
 				chunkColumn->setBlockInColumn({ LocCoords.x,y + 1,LocCoords.y }, BlockName::Aliceline);
 			break;
 		}

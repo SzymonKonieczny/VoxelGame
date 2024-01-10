@@ -250,6 +250,7 @@
     <ClInclude Include="Game\UI\UIElement.h" />
     <ClInclude Include="Game\UI\UIHUD.h" />
     <ClInclude Include="Game\UI\UIItemIcon.h" />
+    <ClInclude Include="Game\UI\UIPlayerInventory.h" />
     <ClInclude Include="Game\Util.h" />
     <ClInclude Include="Game\World.h" />
     <ClInclude Include="libraries\include\stb\stb_image.h" />

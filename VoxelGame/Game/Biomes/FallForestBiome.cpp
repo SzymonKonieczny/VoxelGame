@@ -44,9 +44,10 @@ void FallForestBiome::addDecorationRow(std::shared_ptr<ChunkColumn> chunkColumn,
 {
 	for (int y = (chunkColumn->m_Chunks.size() * ChunkSize) - 1; y >= 0; y--)
 	{
+	if (Util::random(1, 50) == 1)
+
 		if (chunkColumn->getBlockInColumn({ LocCoords.x,y,LocCoords.y }) == BlockName::RedGrass)
 		{
-			if (Util::random(1, 50) == 1)
 				chunkColumn->setBlockInColumn({ LocCoords.x,y + 1,LocCoords.y }, BlockName::BlueRose);
 			break;
 		}
@@ -130,10 +131,10 @@ void FallForestBiome::generateBush(glm::vec2 LocCoords, std::shared_ptr<ChunkCol
 	if (!metGrass) return;
 	WorldPos += glm::vec3(0, 1, 0);
 	chunkManager->SetBlockAtPosition(WorldPos , BlockName::GlowWood);
-	chunkManager->SetBlockAtPosition(WorldPos + glm::vec3(0, 1, 0),  BlockName::Leaves);
-	chunkManager->SetBlockAtPosition(WorldPos + glm::vec3(1, 0, 0),  BlockName::Leaves);
-	chunkManager->SetBlockAtPosition(WorldPos + glm::vec3(0, 0, 1),  BlockName::Leaves);
-	chunkManager->SetBlockAtPosition(WorldPos + glm::vec3(-1, 0, 0), BlockName::Leaves);
-	chunkManager->SetBlockAtPosition(WorldPos + glm::vec3(0, 0, -1), BlockName::Leaves);
+	chunkManager->SetBlockAtPosition(WorldPos + glm::vec3(0, 1, 0),  BlockName::RedLeaves);
+	chunkManager->SetBlockAtPosition(WorldPos + glm::vec3(1, 0, 0),  BlockName::RedLeaves);
+	chunkManager->SetBlockAtPosition(WorldPos + glm::vec3(0, 0, 1),  BlockName::RedLeaves);
+	chunkManager->SetBlockAtPosition(WorldPos + glm::vec3(-1, 0, 0), BlockName::RedLeaves);
+	chunkManager->SetBlockAtPosition(WorldPos + glm::vec3(0, 0, -1), BlockName::RedLeaves);
 
 }

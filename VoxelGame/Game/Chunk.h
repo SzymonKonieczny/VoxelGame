@@ -52,7 +52,7 @@ private:
 	std::unordered_map<glm::vec3, int> lightSources;
 	std::vector<unsigned int> blocks;
 	std::vector<int> lightLevels;
-	std::vector<char> sunLightLevels;
+
 	bool isValidPosition(glm::vec3 pos);
 	bool isSolidBlock(glm::vec3 pos);
 	bool m_hasTransparentBlocks = false;
