@@ -56,7 +56,7 @@ void Player::Move(float dt)
 		LockMouse = !isInventoryOpen;
 
 	}
-	if (Input::isPressed(GLFW_KEY_TAB) && lastActionTime + 0.1f < glfwGetTime())
+	if (Input::isPressed(GLFW_KEY_TAB) && lastActionTime + 0.3f < glfwGetTime())
 	{
 		lastActionTime = glfwGetTime();
 		currentlySelectedHUDSlot += 1;
@@ -165,7 +165,7 @@ void Player::DrawUI()
 	if (WindowResized)
 	{
 		HUD->UpdateTransformation(glm::scale(glm::mat4(1), glm::vec3(1, screenWidth / (float)screenHeight, 1)));
-		//Inventory->UpdateTransformation(glm::scale(glm::mat4(1), glm::vec3(1, screenWidth / (float)screenHeight, 1)));
+		//Inventory->UpdateTransformation(glm::scale(glm::mat4(1), glm::vec3( 1, screenWidth / (float)screenHeight, 1)));
 
 		WindowResized = false;
 	}

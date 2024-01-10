@@ -28,10 +28,10 @@ public:
 		mesh.updateUniform("modelMatrix", TransformMatrix);
 		mesh.GetVertexArray().SetLayout(UIElementLayout);
 
-		mesh.updateUniform("TexCoords", glm::vec2(0.4f, 0.9f));
+		mesh.updateUniform("TexCoords", glm::vec2(0.5f, 0.4f));
 
 
-		float TxtAtlassoffset = 0.1f;
+		float TxtAtlassoffset = 0.5f;
 
 		UIElementVertex v;
 		v = UIElementVertex(coords, glm::vec2(0.f, 0.f)); // 0,0

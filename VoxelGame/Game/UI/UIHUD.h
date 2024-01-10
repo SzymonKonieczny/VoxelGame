@@ -73,13 +73,13 @@ private:
 		glm::mat4 childModelMat = transformMatrix;
 		childModelMat = glm::translate(childModelMat, glm::vec3(coords.x, coords.y, 1));
 		childModelMat = glm::scale(childModelMat, glm::vec3(size.x, size.y, 1));
-		float iter = 0.1f;
+		float iter = 0;
 		for (int i = 0; i < 8; i++)
 		{
-			Children.emplace_back( ( new UIItemIcon(glm::vec2(0.12f * iter, 0.05f), glm::vec2(0.1125f, 0.9f), childModelMat)));
+			Children.emplace_back( ( new UIItemIcon(glm::vec2(0.1428f * iter, 0.00f), glm::vec2(0.1428f, 1.f), childModelMat)));
 			iter += 1;
 		}
-		Children.emplace_back((new UIItemIcon(glm::vec2(0.f, 0.0f), glm::vec2(0.1125f, 0.9f), childModelMat)));
+		Children.emplace_back((new UIItemIcon(glm::vec2(0.f, 0.0f), glm::vec2(0.1428f, 1.f), childModelMat)));
 		Children[Children.size()-1]->mesh.updateUniform("TexCoords", glm::vec2(0.5f, 0.9f));
 	}
 
