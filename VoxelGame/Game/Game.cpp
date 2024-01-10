@@ -157,7 +157,12 @@ void Game::FillItemTable()
 	ItemTable.push_back(ItemInfo(glm::vec2(0.3f, 0), (int)BlockName::Ore));//Ore
 	ItemTable.push_back(ItemInfo(glm::vec2(0.4f, 0), (int)BlockName::Dirt));//Dirt
 	ItemTable.push_back(ItemInfo(glm::vec2(0.5f, 0),(int)BlockName::Wood));//Wood
-	ItemTable.push_back(ItemInfo(glm::vec2(0.1f, 0), (int)BlockName::Cobblestone));//Cobble
+	ItemTable.push_back(ItemInfo(glm::vec2(0.6f, 0), (int)BlockName::Cobblestone));//Cobble
+	ItemTable.push_back(ItemInfo(glm::vec2(0.7f, 0), (int)BlockName::Stone));//Stone
+	ItemTable.push_back(ItemInfo(glm::vec2(0.8f, 0), (int)BlockName::Sand));//Sand
+	ItemTable.push_back(ItemInfo(glm::vec2(0.9f, 0), (int)BlockName::RedGrass));//RedGrass
+
+
 
 
 }

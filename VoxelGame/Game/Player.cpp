@@ -49,7 +49,7 @@ void Player::Move(float dt)
 
 	}
 
-	if (Input::isPressed(GLFW_KEY_E) && lastActionTime + 0.5f < glfwGetTime())
+	if (Input::isPressed(GLFW_KEY_E) && lastActionTime + 0.3f < glfwGetTime())
 	{
 		lastActionTime = glfwGetTime();
 		isInventoryOpen = !isInventoryOpen;
@@ -119,13 +119,13 @@ void Player::Move(float dt)
 
 void Player::HandleMouseButtons()
 {
-	if (Input::mouseIsPressed(GLFW_MOUSE_BUTTON_LEFT) && lastActionTime + 0.1f< glfwGetTime() )
+	if (Input::mouseIsPressed(GLFW_MOUSE_BUTTON_LEFT) && lastActionTime + 0.1f< glfwGetTime() &&LockMouse )
 	{
 		lastActionTime = glfwGetTime();
 
 		actionQueue.push(ActionBuilder::BreakAction(cam.GetPosition(), cam.GetRotation(), 25));
 	}
-	else if (Input::mouseIsPressed(GLFW_MOUSE_BUTTON_RIGHT)&& lastActionTime + 0.1f < glfwGetTime())
+	else if (Input::mouseIsPressed(GLFW_MOUSE_BUTTON_RIGHT)&& lastActionTime + 0.1f < glfwGetTime() && LockMouse)
 	{
 		lastActionTime = glfwGetTime();
 
