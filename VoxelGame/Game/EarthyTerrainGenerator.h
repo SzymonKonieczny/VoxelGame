@@ -16,8 +16,8 @@ class EarthyTerrainGenerator : public ITerrainGenerator {
 	// Inherited via ITerrainGenerator
 public:
 	
-	std::string BiomeDecisionTreeNode = "EABmZoZAEwDhepQ+DAABAAAAzczMPQkAAOF6lD8AuB6FPw==";		// Smaller biomes
-	//std::string BiomeDecisionTreeNode = "EABmZoZAEwCPwvU8DAABAAAAzczMPQkAAOF6lD8AuB6FPw==";	// Larget Biomes
+	//std::string BiomeDecisionTreeNode = "EABmZoZAEwDhepQ+DAABAAAAzczMPQkAAOF6lD8AuB6FPw==";		// Smaller biomes
+	std::string BiomeDecisionTreeNode = "EABmZoZAEwCPwvU8DAABAAAAzczMPQkAAOF6lD8AuB6FPw==";	// Larget Biomes
 	std::string CaveCarvingTreeNode = "FwAAAEDAAABAQAAAgL8AAIA/EwCPwvU9GgABEQACAAAAAADgQBAAAACIQR8AFgABAAAACwADAAAAAgAAAAMAAAAEAAAAAAAAAD8BFAD//wAAAAAAAD8AAAAAPwAAAAA/AAAAAD8BFwAAAIC/AACAPz0KF0BSuB5AEwAAAKBABgAAj8J1PACamZk+AAAAAAABFwAAAIC/AACAPwAAAL8AAAA///8CAA==";
 
 

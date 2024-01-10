@@ -41,7 +41,7 @@ void Game::Start()
 		previousTime = currentTime;
 		{
 			std::string FPS = std::to_string((1.0 / deltaTime));
-			std::string newTitle = "Voxelini Kowalini  " + FPS + " FPS";
+			std::string newTitle = "Voxel Game  " + FPS + " FPS";
 			glfwSetWindowTitle(Renderer::window.GetHandle(), newTitle.c_str());
 		}
 
