@@ -17,7 +17,7 @@ public:
 			auto& chunk = column->getChunk(ChunkPos.y);
 			int index = Util::Vec3ToIndex(LocalPos);
 			if (index < 0) return false;
-			return BlockTable[chunk->getBlock(index)].isCollidable;
+			return BlockTable[chunk->getBlock(index)].isRayCollidable;
 		}
 		return false; //chunk doesnt exist, so neither does the block, hence its not solid or collidable
 	}

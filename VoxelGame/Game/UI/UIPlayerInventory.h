@@ -74,7 +74,6 @@ private:
 				iter += 1;
 				if (iter >= ItemTable.size()) break;
 
-
 				Children.emplace_back((new UIItemIcon(glm::vec2(0.2f * k, 0.2f*i), glm::vec2(0.2f, 0.2f), childModelMat)));
 				auto ptr = std::dynamic_pointer_cast<UIItemIcon>(Children[Children.size() - 1]);
 				ptr->LeftClickCallback = [iter,this]() { SetHUDItem(iter); };
