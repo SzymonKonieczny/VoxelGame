@@ -216,36 +216,36 @@ bool Player::CheckCollisionSide(glm::vec3 dir, std::shared_ptr<ChunkManager>& ch
 {
 	bool ret = false;
 	glm::vec3 pointPos = Pos + minAABB;
-	ret = ret|| PointCollider::isBlockAtCollidable(pointPos + dir, *chunkManager); // min min min
+	ret = ret|| PointCollider::isBlockAtCollidable(pointPos + dir, *chunkManager,false); // min min min
 
 
 	 pointPos = Pos + glm::vec3(minAABB.x, minAABB.y, maxAABB.z);
-	ret = ret || PointCollider::isBlockAtCollidable(pointPos + dir, *chunkManager); // min min max
+	ret = ret || PointCollider::isBlockAtCollidable(pointPos + dir, *chunkManager, false); // min min max
 
 
 	 pointPos = Pos + glm::vec3(minAABB.x, maxAABB.y, minAABB.z);
-	ret = ret || PointCollider::isBlockAtCollidable(pointPos + dir, *chunkManager);// min max min
+	ret = ret || PointCollider::isBlockAtCollidable(pointPos + dir, *chunkManager, false);// min max min
 
 
 	 pointPos = Pos + glm::vec3(minAABB.x, maxAABB.y, maxAABB.z);
-	ret = ret || PointCollider::isBlockAtCollidable(pointPos + dir, *chunkManager);// min max max
+	ret = ret || PointCollider::isBlockAtCollidable(pointPos + dir, *chunkManager, false);// min max max
 
 	//------------------------------------
 
 	 pointPos = Pos + maxAABB;
-	ret = ret || PointCollider::isBlockAtCollidable(pointPos + dir, *chunkManager); // min min min
+	ret = ret || PointCollider::isBlockAtCollidable(pointPos + dir, *chunkManager, false); // min min min
 
 
 	 pointPos = Pos + glm::vec3(maxAABB.x, minAABB.y, maxAABB.z);
-	ret = ret || PointCollider::isBlockAtCollidable(pointPos + dir, *chunkManager); // min min max
+	ret = ret || PointCollider::isBlockAtCollidable(pointPos + dir, *chunkManager, false); // min min max
 
 
 	 pointPos = Pos + glm::vec3(maxAABB.x, maxAABB.y, minAABB.z);
-	ret = ret || PointCollider::isBlockAtCollidable(pointPos + dir, *chunkManager);// min max min
+	ret = ret || PointCollider::isBlockAtCollidable(pointPos + dir, *chunkManager, false);// min max min
 
 
 	 pointPos = Pos + glm::vec3(maxAABB.x, maxAABB.y, maxAABB.z);
-	ret = ret || PointCollider::isBlockAtCollidable(pointPos + dir, *chunkManager);// min max max
+	ret = ret || PointCollider::isBlockAtCollidable(pointPos + dir, *chunkManager, false);// min max max
 
 	return ret;
 }

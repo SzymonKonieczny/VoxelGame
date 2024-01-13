@@ -8,7 +8,10 @@ enum class CommandType {
 	Teleport,
 	GeneratorSwap,
 	PrintSeed,
-	PrintPosition
+	PrintPosition,
+	DrawShadowMap,
+	RenderDistance,
+	LightRendering
 
 
 };

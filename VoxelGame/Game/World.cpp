@@ -112,6 +112,21 @@ void World::HandleActionQueue(int amount)
 							"ChunkPos :" << ChunkPos.x << '|' << ChunkPos.y << '|' << ChunkPos.z << '\n';
 
 						break;
+					case CommandType::DrawShadowMap:
+
+						renderShadowMap = !renderShadowMap;
+
+						break;
+					case CommandType::RenderDistance:
+
+						RenderDistance = args[0];
+
+						break;
+					case CommandType::LightRendering:
+
+						LightRendering = !LightRendering;
+
+						break;
 					default:
 						std::cout << "Invalid command \n";
 						break;

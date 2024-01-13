@@ -14,9 +14,9 @@ std::unique_ptr<Framebuffer> frame;//(FramebufferOptions(screenWidth,screenHeigh
 std::unique_ptr < Mesh> ScreenQuad;
 std::unique_ptr < Shader> ShadowPassShader;
 std::unique_ptr<Framebuffer> ShadowMap;//(FramebufferOptions(screenWidth,screenHeight )); //Width, Height
-int ShadowMapRes = 1024;
-glm::vec3 lightPos = glm::vec3(0.5f, 20.0f, 0.8f);
-glm::vec3 lightDir = glm::vec3(0.8f, -0.4f, 0.75f);
+int ShadowMapRes = 1000;
+glm::vec3 lightPos = glm::vec3(2000, 200, 2000);
+glm::vec3 lightDir = glm::vec3(0.f, -1.4f,0.f);
 
 void Renderer::Init()
 {
@@ -81,18 +81,9 @@ void Renderer::BeginScene(Camera& camera) // argument : vec<ligtsources>
 void Renderer::RenderChunks()
 {
 
-	glm::mat4 lightProjection = glm::ortho((float)-100, (float)100, (float)-100, (float)100, 0.1f, 1000.0f);
+	glm::mat4 lightProjection = glm::ortho((float)-500, (float)500, (float)-500, (float)500, 0.1f, 500.0f);
 
-		/*glm::mat4 lightView = glm::lookAt(glm::vec3(-60.f, 21.0f, -5.f),
-		glm::vec3(1.f, -1.0f, 1.f),
-		glm::vec3(0.0f, 1.0f, 0.0f));*/
 
-	//glm::mat4 lightProjection = glm::perspective(glm::radians(90.f), screenWidth / (float)screenHeight,0.1f,100.f);
-
-		glm::mat4 lightView = glm::lookAt(lightPos, //position
-			lightPos + glm::normalize(lightDir), //position + direction
-	glm::vec3(0.0f, 1.0f, 0.0f)); //41.f, 63.0f, -17.f
-	glm::mat4 lightSpaceMatrix = lightProjection * lightView;
 	if (Input::isPressed(GLFW_KEY_0))
 	{
 		lightPos = CameraPos;
@@ -100,39 +91,46 @@ void Renderer::RenderChunks()
 		std::cout << "Teleporting the lightsource to player ...\n";
 	}
 
-#if 1 // Shadowmap render	
-	ShadowMap->Bind();
+		glm::mat4 lightView = glm::lookAt(lightPos, //position
+				lightPos + glm::normalize(lightDir), //position + direction
+					glm::vec3(0.0f, 1.0f, 0.0f)); //41.f, 63.0f, -17.f
+	glm::mat4 lightSpaceMatrix = lightProjection * lightView;
 
-	glEnable(GL_DEPTH_TEST);
 
-	glViewport(0, 0, ShadowMapRes, ShadowMapRes);// Shadow render pass
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	ShadowPassShader->Bind();
-	ShadowPassShader->UploadUniformMat4("lightSpaceMatrix", lightSpaceMatrix);
 
-	for (auto& m : ChunkMeshes)
+	if (!LightRendering)// Shadowmap render	
 	{
-		if (m->getCount() == 0) continue;
+		ShadowMap->Bind();
 
-		if (!m->getReadyForDraw()) continue;
+		glEnable(GL_DEPTH_TEST);
 
-		m->Bind();
+		glViewport(0, 0, ShadowMapRes, ShadowMapRes);// Shadow render pass
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		ShadowPassShader->Bind();
-		ShadowPassShader->UploadUniformMat4("modelMatrix", m->GetUniformData().at("modelMatrix").data.Mat4);
-	
-		//m->PreDraw();
-		switch (m->getType())
+		ShadowPassShader->UploadUniformMat4("lightSpaceMatrix", lightSpaceMatrix);
+
+		for (auto& m : ChunkMeshes)
 		{
-		case MeshType::Indexed:
-			RendererCommand::DrawIndexed(*m);
-			break;
-		case MeshType::Unindexed:
-	
-			RendererCommand::DrawNotIndexed(*m);
-			break;
+			if (m->getCount() == 0) continue;
+
+			if (!m->getReadyForDraw()) continue;
+
+			m->Bind();
+			ShadowPassShader->Bind();
+			ShadowPassShader->UploadUniformMat4("modelMatrix", m->GetUniformData().at("modelMatrix").data.Mat4);
+			switch (m->getType())
+			{
+			case MeshType::Indexed:
+				RendererCommand::DrawIndexed(*m);
+				break;
+			case MeshType::Unindexed:
+
+				RendererCommand::DrawNotIndexed(*m);
+				break;
+			}
 		}
 	}
-#endif
+	
 	frame->Bind();
 	glViewport(0, 0, screenWidth, screenHeight); // Normal render pass
 	glClearColor(0.39f, 0.67f, 0.8f, 1.0f);
@@ -207,6 +205,14 @@ void Renderer::EndScene()
 
 	ScreenQuad->Bind();
 	frame->BindColorTexture();
+
+	if (renderShadowMap)
+	{
+		glActiveTexture(GL_TEXTURE0);	//ShadowMap uploading, binding slot 7
+		ShadowMap->BindDepthTexture();
+	}
+
+
 	ScreenQuad->PreDraw();
 
 	RendererCommand::DrawNotIndexed(*ScreenQuad);

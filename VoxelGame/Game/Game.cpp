@@ -95,6 +95,7 @@ bool Game::isChunkColumnInFrustum(std::shared_ptr<ChunkColumn> col)
 	glm::vec2 colPos(col->m_Position.x, col->m_Position.y);
 	if (!(RenderDistance > glm::distance(colPos, playerPos)))return false; //fcked up logic but it works xd
 	
+	if (!LightRendering) return true;
 	
 	glm::vec3 Cam, Left, Right;
 	float FarPlane = 1000; //world.player.getCamera().GetFarPlane();

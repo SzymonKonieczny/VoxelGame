@@ -20,7 +20,7 @@ void main()
    Col = aCol;
    TexCoord = aTexCoord;
 
-   FragPosLightSpace = lightSpaceMatrix * modelMatrix* vec4(aPos,1.0);
+   FragPosLightSpace = lightSpaceMatrix * vec4( vec3(modelMatrix* vec4(aPos,1.0)),1.0);
 
    gl_Position = viewProjMatrix * modelMatrix * vec4(aPos,1.0) ;
 

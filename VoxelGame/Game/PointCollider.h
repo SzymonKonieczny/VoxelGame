@@ -4,7 +4,7 @@
 #include "BlockInfo.h"
 class PointCollider{
 public:
-	static bool isBlockAtCollidable(glm::vec3 Pos, ChunkManager& World)
+	static bool isBlockAtCollidable(glm::vec3 Pos, ChunkManager& World, bool checkAsRay = true)
 	{
 
 		glm::vec3 ChunkPos = Util::WorldPosToChunkPos(Pos);
@@ -17,7 +17,9 @@ public:
 			auto& chunk = column->getChunk(ChunkPos.y);
 			int index = Util::Vec3ToIndex(LocalPos);
 			if (index < 0) return false;
-			return BlockTable[chunk->getBlock(index)].isRayCollidable;
+
+			if(checkAsRay) return  BlockTable[chunk->getBlock(index)].isRayCollidable;
+			else  return BlockTable[chunk->getBlock(index)].isCollidable;
 		}
 		return false; //chunk doesnt exist, so neither does the block, hence its not solid or collidable
 	}

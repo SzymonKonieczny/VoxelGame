@@ -112,6 +112,10 @@ CommandType Util::ParseCommand(std::string command, std::vector<float>& args)
 	if (commandType == "genswap") ret = CommandType::GeneratorSwap;
 	if (commandType == "seed") ret = CommandType::PrintSeed;
 	if (commandType == "pos") ret = CommandType::PrintPosition;
+	if (commandType == "shadow")ret = CommandType::DrawShadowMap;
+	if (commandType == "render")ret = CommandType::RenderDistance;
+	if (commandType == "light")ret = CommandType::LightRendering;
+
 
 
 
