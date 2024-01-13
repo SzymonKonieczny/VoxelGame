@@ -138,13 +138,13 @@ void Game::FillBlockTable()
 	BlockTable.push_back(BlockInfo({ 0.4f,0.f }, BlockModelType::Cube, false, true, true)); //Stone
 	BlockTable.push_back(BlockInfo({ 0.6f,0.f }, BlockModelType::Cube, false, true, true)); //Dirt
 	BlockTable.push_back(BlockInfo({ 0.8f,0.f }, BlockModelType::Cube, false, true, true)); //Wood
-	BlockTable.push_back(BlockInfo({ 0.8f,0.4f }, BlockModelType::X, false, false, true, 13)); //Rose
+	BlockTable.push_back(BlockInfo({ 0.8f,0.4f }, BlockModelType::X, false, false, false, 13)); //Rose
 	BlockTable.push_back(BlockInfo({ 0.2f,0.2f }, BlockModelType::Cube, false, true, true)); //Sand
 	BlockTable.push_back(BlockInfo({ 0.0f,0.2f }, BlockModelType::Cube, false, false, true)); //Leaves
 	BlockTable.push_back(BlockInfo({ 0.6f,0.6f }, { 0.4f,0.6f }, { 0.6f,0.f }, BlockModelType::Cube, false, true)); //RedGraass
 	BlockTable.push_back(BlockInfo({ 0.8f,0.6f }, BlockModelType::Cube, false, false, true)); //RedLeaves
 	BlockTable.push_back(BlockInfo({ 0.8f,0.f }, BlockModelType::Cube, false, false, true,2)); //GlowWood
-	BlockTable.push_back(BlockInfo({ 0.4f,0.4f }, BlockModelType::X, false, false, true, 12)); //Aliceline
+	BlockTable.push_back(BlockInfo({ 0.4f,0.4f }, BlockModelType::X, false, false, false, 12)); //Aliceline
 	BlockTable.push_back(BlockInfo({ 0.0f,0.6f }, BlockModelType::Cube, false, true, true)); //Cobblestone
 	BlockTable.push_back(BlockInfo({ 0.0f,0.8f }, BlockModelType::Cube, false, true, true)); //Planks
 
