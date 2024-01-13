@@ -9,13 +9,13 @@ Chunk::Chunk(glm::ivec3 pos, std::shared_ptr<ChunkManager> chunkManager) : m_Chu
 	std::fill(lightLevels.begin(), lightLevels.end(), 0);
 
 
-	//for (auto& block : blocks) block = 2;
 
 
 	BufferLayout ChunkSolidLayout = {
 		{ShaderDataType::Float3,"aPos"},
 		{ShaderDataType::Float2,"aTexCoord"},
-		{ShaderDataType::Float3,"aCol"}
+		{ShaderDataType::Float,"faceBaseLight"},
+		{ShaderDataType::Float,"blockLightLevel"}
 	};
 	m_ChunkSolidMesh.GetVertexArray().SetLayout(ChunkSolidLayout);
 	m_ChunkSolidMesh.SetShader(Chunk::ChunkSolidShader);
@@ -85,44 +85,16 @@ void Chunk::GenerateMesh()
 
 
 }
-/*void Chunk::PropagateLight(glm::vec3 Pos, int strength)
-{
 
-	return;
-
-	if (!isValidPosition(Pos)) return; //MOVE THE WHOLE THING TO CHUNK MANAGER, OTHERWISE ITS HELL TO DO BETWEEN CHUNK PROPAGATION
-
-	if (strength <= 0) return;
-	if (BlockTable[getBlock(Pos)].isSold) return;
-	if (lightLevels[Util::Vec3ToIndex(Pos)] >= strength) return;
-
-	
-
-
-	PropagateLight({ Pos.x+1,Pos.y,Pos.z }, strength - 1);
-	PropagateLight({ Pos.x-1,Pos.y,Pos.z }, strength - 1);
-	PropagateLight({ Pos.x,Pos.y+1,Pos.z }, strength - 1);
-	PropagateLight({ Pos.x,Pos.y-1,Pos.z }, strength - 1);
-	PropagateLight({ Pos.x,Pos.y,Pos.z+1 }, strength - 1);
-	PropagateLight({ Pos.x,Pos.y,Pos.z-1 }, strength - 1);
-
-
-//	LightPropagationMarkSet.emplace(Pos);
-	int currentStrength = lightLevels[Util::Vec3ToIndex(Pos)];
-	lightLevels[Util::Vec3ToIndex(Pos)] = (currentStrength>strength) ? currentStrength:  strength;
-}*/
 void Chunk::GenerateLightmap()
 {
 	blockMutex.lock();
- 	//std::fill(lightLevels.begin(), lightLevels.end(), 0);
+	std::fill(lightLevels.begin(), lightLevels.end(), 0);
 	for (auto source : lightSources)
 	{
 
-#if LightPropagationInChunkManager
 		m_chunkManager->PropagateLightToChunks(Util::LocPosAndChunkPosToWorldPos(source.first, m_ChunkPos), source.second);
-#else
-		//PropagateLight(source.first, source.second); function exists but is commented out, can be removed when cleaning up
-#endif
+
 	}
 	blockMutex.unlock();
 
@@ -130,7 +102,8 @@ void Chunk::GenerateLightmap()
 
 void Chunk::setLightLevel(glm::vec3 LocPos, int strength)
 {
-	lightLevels[Util::Vec3ToIndex(LocPos)] = strength;
+	if(isValidPosition(LocPos))
+		lightLevels[Util::Vec3ToIndex(LocPos)] = strength;
 }
 
 void Chunk::setBlock(BlockName Block, int index)

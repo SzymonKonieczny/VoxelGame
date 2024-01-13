@@ -81,7 +81,7 @@ void Renderer::BeginScene(Camera& camera) // argument : vec<ligtsources>
 void Renderer::RenderChunks()
 {
 
-	glm::mat4 lightProjection = glm::ortho((float)-500, (float)500, (float)-500, (float)500, 0.1f, 500.0f);
+	glm::mat4 lightProjection = glm::ortho((float)-500, (float)500, (float)-500, (float)500, 0.1f, 200.0f);
 
 
 	if (Input::isPressed(GLFW_KEY_0))

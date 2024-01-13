@@ -29,6 +29,12 @@ void ChunkManager::SetBlockAtPosition(glm::vec3 Position, BlockName name)
 		AddToMeshQueue(ChunkPos + glm::vec3(0, 1, 0));
 		AddToMeshQueue(ChunkPos + glm::vec3(0, -1, 0));
 
+
+		//AddToMeshQueue(ChunkPos + glm::vec3(1, 0, 1));
+		//AddToMeshQueue(ChunkPos + glm::vec3(-1, 0, -1));
+		//AddToMeshQueue(ChunkPos + glm::vec3(1, 0, -1));
+		//AddToMeshQueue(ChunkPos + glm::vec3(-1, 0, 1));
+
 	}
 	else
 	{
@@ -75,7 +81,7 @@ int ChunkManager::GetLightLevelAtPosition(glm::vec3 Position)
 	int level = 0;
 	glm::vec3 ChunkPos = Util::WorldPosToChunkPos(Position);
 	if (ChunkPos.y < 0 || ChunkPos.y >= ChunksInColumn) {
-		//std::cout << "Trying to set block in a ChunkPos.y <0 OR ChunkPos.y >= ChunksInColumn@ ChunkManager::GetBlockAtPosition \n";
+		//std::cout << "Trying to set block in a ChunkPos.y <0 OR ChunkPos.y >= ChunksInColumn@ ChunkManager::GetLightLevelAtPosition \n";
 		return level;
 	}
 
@@ -277,19 +283,21 @@ void ChunkManager::AddColumnToMeshQueue(glm::ivec2 Pos)
 
 	}
 }
+//	------------------------ https://www.geeksforgeeks.org/breadth-first-traversal-bfs-on-a-2d-array/ ----------------
 void ChunkManager::PropagateLightToChunks(glm::vec3 Pos, int strength)
 {
-//	------------------------ https://www.geeksforgeeks.org/breadth-first-traversal-bfs-on-a-2d-array/ ----------------
 	glm::vec3 ChunkPos = Util::WorldPosToChunkPos(Pos);
 
 	if (strength <= 0)
 	{
-		if(ChunkMap.contains(ChunkPos))
-			AddToMeshQueue(Util::WorldPosToChunkPos(ChunkPos));
+		if (ChunkMap.contains(ChunkPos))
+			AddToMeshQueue(ChunkPos);//(Util::WorldPosToChunkPos(ChunkPos));
 		return;
 	}
-		glm::ivec2 ColumnPos = { ChunkPos.x,ChunkPos.z };
+		if (ChunkPos.y < 0 || ChunkPos.y >= ChunksInColumn) return; //under or above the world
 
+
+		glm::ivec2 ColumnPos = { ChunkPos.x,ChunkPos.z };
 		if (ChunkMap.contains(ColumnPos))
 		{
 			glm::vec3 LocPos = Util::WorldPosToLocalPos(Pos);
@@ -325,6 +333,8 @@ void ChunkManager::PropagateDarknessToChunks(glm::vec3 Pos, int range)
 			AddToMeshQueue(Util::WorldPosToChunkPos(ChunkPos));
 		return;
 	}
+	if (ChunkPos.y < 0 || ChunkPos.y >= ChunksInColumn) return; //under or above the world
+
 	glm::ivec2 ColumnPos = { ChunkPos.x,ChunkPos.z };
 
 	if (ChunkMap.contains(ColumnPos))

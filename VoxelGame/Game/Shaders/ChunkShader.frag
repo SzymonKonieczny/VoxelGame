@@ -1,6 +1,8 @@
 #version 330 core
 out vec4 FragColor;
-in vec3 Col;
+in float FaceBaseLight;
+
+in float BlockLightLevel;
 in vec2 TexCoord;
 
 in vec4  FragPosLightSpace;
@@ -24,7 +26,7 @@ float CalculateShadow(vec4 fragPosLightSpace)
 	float closestDepth = texture(shadowDepthTexture, projCoords.xy).r;   
 	float currentDepth = projCoords.z ;	 
 	float bias = 0.005;
-	float shadow = currentDepth -bias> closestDepth  ? 0.5 : 0.0;  
+	float shadow = currentDepth -bias< closestDepth  ? 0.5 : 0.0;  
 	return shadow;
 }
 void main()
@@ -35,25 +37,20 @@ void main()
 	 if(pixel.w == 0) discard;
 	 //FragColor = vec4( vec4(Col, 1.0f)*pixel);
 
-
-
-	float BrightnessInShadow = 0.4;
-	vec3 light ;
+	float Sunlight = 0.6; // to be changed into a uniform
+	vec3 AddedLight; //from blockLightLevel (torches/flowers) and the sun
 
 	if (CalculateShadow( FragPosLightSpace) > 0.f) 
-	 light = vec3(max(BrightnessInShadow, Col.x)); 
+		AddedLight =    vec3(max(BlockLightLevel, Sunlight)); 
 	else 
-	light = Col;
+		AddedLight = vec3(BlockLightLevel);
 
+	
 
-
+	vec3 light ;
+	light = vec3(FaceBaseLight) + AddedLight;
 	FragColor = vec4( vec4(light, 1.0f)*pixel);
-	//FragColor = vec4( vec4(Col, 1.0f)*pixel);
-
-
-
-
-
+	//FragColor = vec4( vec4(BlockLightLevel + FaceBaseLight, 1.0f)*pixel);
 
 
 
