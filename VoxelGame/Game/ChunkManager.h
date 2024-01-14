@@ -3,7 +3,7 @@
 #include "HeavenTerrainGenerator.h"
 #include "EarthyTerrainGenerator.h"
 #include "TerrainGeneratorTest.h"
-
+#include "FileLoader.h"
 #include <map>
 #include <unordered_set>
 
@@ -38,6 +38,9 @@ public:
 	#endif	
 		
 
+		FileLoader::LoadWorldFile(CompressedLoadedSaveMap, "TestWorldSave.txt");
+
+
 		selfSmartPointer.reset(this);
 	}
 	
@@ -66,6 +69,10 @@ public:
 
 	std::unordered_map<glm::ivec2,std::shared_ptr<ChunkColumn>> ChunkMap;
 	std::unordered_map<glm::ivec2, WaitingBlockColumn> WaitingBlockMap;
+
+	std::unordered_map<glm::ivec2, std::vector<unsigned int>> CompressedLoadedSaveMap; //Map that contains compressed chunk data from the savefile mapped to the proper chunk colum position
+
+	std::unordered_map<glm::ivec2, std::vector<std::vector<unsigned int>>> UncompressedDataToSave; //Pure uncompressed blocks data to be saved;
 
 	std::queue<glm::ivec2> ChunksGenerationQueue;
 	std::queue<glm::ivec3> ChunksMeshingQueue;

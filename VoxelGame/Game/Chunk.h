@@ -8,9 +8,11 @@
 #include <unordered_set>
 #include <glm/gtx/hash.hpp>
 class ChunkManager;
+class FileLoader;
 class Chunk {
 	std::shared_ptr<ChunkManager> m_chunkManager;
 public:
+
 	std::mutex blockMutex;
 	std::mutex MeshMutex;
 
@@ -19,7 +21,6 @@ public:
 		Mesh& getMesh() { return m_ChunkSolidMesh; };
 	void GenerateMesh();
 	void GenerateLightmap();
-
 
 
 
@@ -67,5 +68,9 @@ private:
 
 
 	Mesh m_ChunkSolidMesh;
+
+	friend class FileLoader;
+	std::vector<unsigned int>& getBlocksVector() { return blocks; };
+
 
 };

@@ -26,5 +26,5 @@ public:
 	static glm::vec3 LocPosAndChunkPosToWorldPos(glm::vec3 LocPos, glm::vec3 ChunkPos);
 	static glm::vec3 WorldPosToLocalPos(glm::vec3 WorldPos);
 	static CommandType ParseCommand(std::string command, std::vector<float>& args);
-
+	
 };

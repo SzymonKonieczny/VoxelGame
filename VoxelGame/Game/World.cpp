@@ -83,6 +83,8 @@ void World::HandleActionQueue(int amount)
 
 					case CommandType::GeneratorSwap:
 
+						FileLoader::SaveWorldFile(chunkManager->ChunkMap, "OutputSave.txt");
+
 						std::cout << "Causes crashes, command disabled \n";
 						continue;
 

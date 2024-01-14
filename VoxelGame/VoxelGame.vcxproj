@@ -206,6 +206,7 @@
     <ClInclude Include="Game\Biomes\FallForestBiome.h" />
     <ClInclude Include="Game\Biomes\ForestBiome.h" />
     <ClInclude Include="Game\EarthyTerrainGenerator.h" />
+    <ClInclude Include="Game\FileLoader.h" />
     <ClInclude Include="Game\HeavenTerrainGenerator.h" />
     <ClInclude Include="Game\BlockInfo.h" />
     <ClInclude Include="Game\Chunk.h" />
