@@ -145,6 +145,20 @@ void ChunkManager::MeshChunksFromQueue(int amount)
 #endif	
 }
 
+void ChunkManager::AsyncDecompressColumn(glm::ivec2 Pos)
+{
+	for (auto& chunk : ChunkMap.at(Pos)->m_Chunks)
+			chunk->blockMutex.lock();
+
+
+	FileLoader::decompressBlocks(CompressedLoadedSaveMap[Pos], ChunkMap[Pos]);
+	AddColumnToMeshQueue(Pos);
+
+
+	for (auto& chunk : ChunkMap.at(Pos)->m_Chunks)
+			chunk->blockMutex.unlock();
+}
+
 void ChunkManager::AsyncGenerateChunks(std::list<glm::ivec2> List, bool& isChunkGenerationThreadDoneFlag)
 {
 	//isChunkGenerationThreadDoneFlag = false; Jest robione przed wywolaniem GenerateChunksFromQueue
@@ -215,9 +229,30 @@ void ChunkManager::UpdateLoadedChunkMap(glm::vec2 CenterPoint)
 			{
 
 			}
-			else {								
-				ChunkMap.emplace( glm::ivec2(x, z), new ChunkColumn(glm::ivec2(x, z), selfSmartPointer));
-				ChunksGenerationQueue.push(glm::ivec2(x, z));
+			else 
+			{
+				if (UncompressedDataToSave.contains(glm::ivec2(x, z)))
+				{
+
+				}
+				else
+				{
+					if (CompressedLoadedSaveMap.contains(glm::ivec2(x, z)))
+					{
+						//uncompress and put in ChunkMap
+						ChunkMap.emplace(glm::ivec2(x, z), new ChunkColumn(glm::ivec2(x, z), selfSmartPointer));
+						FileLoader::decompressBlocks(CompressedLoadedSaveMap[glm::ivec2(x, z)], ChunkMap[glm::ivec2(x, z)]);
+						std::thread ChunkMeshThread(&ChunkManager::AsyncDecompressColumn, this, glm::ivec2(x, z));
+						ChunkMeshThread.join();//make it work in batches, like generation or meshing
+	//##################################################################################################################################
+					}
+					else { //if its not in either map, generate a new one
+					ChunkMap.emplace( glm::ivec2(x, z), new ChunkColumn(glm::ivec2(x, z), selfSmartPointer));
+					ChunksGenerationQueue.push(glm::ivec2(x, z));
+					}
+
+				}
+
 			}
 		}
 	}
@@ -234,8 +269,10 @@ void ChunkManager::UpdateLoadedChunkMap(glm::vec2 CenterPoint)
 			ColPos.y >maxZ || ColPos.y < minZ) {
 			if (WaitingBlockMap.contains(it->first))
 			{
+
 				WaitingBlockMap.erase(it->first);
 			}
+			//put to UncompressedDataToSave map
 			it = ChunkMap.erase(it);
 	
 		}

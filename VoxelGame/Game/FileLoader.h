@@ -6,7 +6,8 @@
 class FileLoader {
 public:
 
-	static void LoadWorldFile(std::unordered_map<glm::ivec2, std::vector<unsigned int>>& CompressedLoadedSaveMap, std::string FileName) {
+	static void LoadWorldFile(std::unordered_map<glm::ivec2, std::vector<unsigned int>>& CompressedLoadedSaveMap, std::string FileName)
+    {
         std::ifstream inputFile(FileName);
 
         if (!inputFile.is_open()) {
@@ -17,9 +18,19 @@ public:
         std::string line;
             try {
 
-                while (std::getline(inputFile, line, char(255))) { //what if theres 255 of some block in a row and it appears in the datablock
+                while (std::getline(inputFile, line )) {
                     std::stringstream ss;
                     glm::ivec2 Pos;
+
+                    while (!(line[line.size() - 1] == char(255) && line[line.size() - 2] == char(255))) //ending sequence is char(255) char(255) \n
+                    {
+                        std::string tempstr;
+                        std::getline(inputFile, tempstr);
+                        line += tempstr;
+                    }
+                    line.pop_back();// - char(225)
+                    line.pop_back();// and the other one
+
                     ss << line;
                     ss >> Pos.x;
                     ss >> Pos.y;
@@ -41,8 +52,9 @@ public:
                     {
                         BlockData.push_back(*(unsigned int*)&data[i]);
                     }
+                   int a = BlockData.size()* sizeof(float);
+                   int b = data.size(); 
 
-                    //here BlockData contains data ints that can be put in pairs : (Int,Int)(Int,Int)
                 }
 
             }
@@ -75,11 +87,11 @@ public:
                 auto& blockVec = ChunkCol.second->m_Chunks[i]->getBlocksVector();
                 std::vector<unsigned int> compressedBlockVector = compressBlocks(blockVec);
 
-                outputFile.write((const char*)compressedBlockVector.data(),  // char = (char)10 daje nam newline, wiec blocki ID 10 psuja outfile
+                outputFile.write((const char*)compressedBlockVector.data(),
                     compressedBlockVector.size() * sizeof(unsigned int));
 
             }
-            outputFile << '\n';
+            outputFile << char(255) <<char(255)<<'\n'; //ending sequence is char(255) char(255) \n
 
         }
 
@@ -89,7 +101,8 @@ public:
 
     }
 
-    static std::vector<unsigned int> compressBlocks(const std::vector<unsigned int>& blocks) {
+    static std::vector<unsigned int> compressBlocks(const std::vector<unsigned int>& blocks) 
+    {
         std::vector<unsigned int> compressedData;
 
         // Check if the input vector is empty
@@ -124,5 +137,23 @@ public:
         compressedData.push_back(currentStreakLength);
 
         return compressedData;
+    }
+    static void decompressBlocks(std::vector<unsigned int>& compressedBlocks, std::shared_ptr<ChunkColumn>& targetChunkColumn)
+    {
+        if (compressedBlocks.empty()) {
+            std::cerr << "Compressed vector is empty." << std::endl;
+            return;
+        }
+        
+        int blocksLoadedAlready = 0;
+        for (size_t i = 0; i < compressedBlocks.size(); i += 2) {
+            unsigned int value = compressedBlocks[i];
+            unsigned int length = compressedBlocks[i + 1];
+
+            for (unsigned int j = 0; j < length; ++j) { //err at  i == 32 & j ==16
+                targetChunkColumn->m_Chunks[blocksLoadedAlready/4096]->blocks[blocksLoadedAlready% 4096] = value; //already reserved to 4096 by the Chunks constructor 
+                blocksLoadedAlready += 1;
+            }
+        }
     }
 };

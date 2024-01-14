@@ -38,7 +38,7 @@ public:
 	#endif	
 		
 
-		FileLoader::LoadWorldFile(CompressedLoadedSaveMap, "TestWorldSave.txt");
+		FileLoader::LoadWorldFile(CompressedLoadedSaveMap, "OutputSave.txt");
 
 
 		selfSmartPointer.reset(this);
@@ -50,6 +50,8 @@ public:
 
 	void GenerateChunksFromQueue(int amount);
 	void MeshChunksFromQueue(int amount);
+
+	void AsyncDecompressColumn(glm::ivec2 Pos);
 
 	void AsyncGenerateChunks(std::list<glm::ivec2> List, bool& isChunkGenerationThreadDoneFlag);
 	void AsyncMeshChunks(std::list<glm::ivec3> List, bool& isChunkMeshThreadDoneFlag);

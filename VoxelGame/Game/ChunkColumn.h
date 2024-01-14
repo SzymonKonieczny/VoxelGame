@@ -18,6 +18,8 @@ public:
 		return m_Chunks[index];
 	}
 	
+	std::vector<std::shared_ptr<Chunk>>  m_Chunks;
+	glm::ivec2 m_Position;
 	BlockName getBlockInColumn(glm::vec3 Pos) 
 	{
 		int chunkIndex = Pos.y / ChunkSize;
@@ -37,8 +39,6 @@ public:
 
 
 	}
-	glm::ivec2 m_Position;
-	std::vector<std::shared_ptr<Chunk>>  m_Chunks;
 };
 
 
