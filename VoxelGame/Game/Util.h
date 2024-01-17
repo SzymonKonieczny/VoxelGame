@@ -11,7 +11,8 @@ enum class CommandType {
 	PrintPosition,
 	DrawShadowMap,
 	RenderDistance,
-	LightRendering
+	LightRendering,
+	StartMeasuring
 
 
 };
@@ -27,4 +28,6 @@ public:
 	static glm::vec3 WorldPosToLocalPos(glm::vec3 WorldPos);
 	static CommandType ParseCommand(std::string command, std::vector<float>& args);
 	
+
+
 };

@@ -4,6 +4,7 @@
 #include <glm/gtx/rotate_vector.hpp>
 #include "UI/UIHUD.h"
 #include <limits>
+#include <locale>
 //int Game::CHUNK_SIZE = 16;
 std::shared_ptr<Texture> Game::BlockTextureAtlas;
 std::shared_ptr<Texture> Game::ItemTextureAtlas;
@@ -39,12 +40,14 @@ void Game::Start()
 	Util::gen = std::mt19937(rd());
 
 
+
 	WorldSeed = Util::random(std::numeric_limits<int>::min(), std::numeric_limits<int>::max());
 	while (!glfwWindowShouldClose(Renderer::window.GetHandle()))
 	{
 		currentTime = glfwGetTime();
 		deltaTime = currentTime - previousTime;
 		previousTime = currentTime;
+	
 		{
 			std::string FPS = std::to_string((1.0 / deltaTime));
 			std::string newTitle = "Voxel Game  " + FPS + " FPS";
@@ -60,7 +63,12 @@ void Game::Start()
 		Renderer::window.SwapBuffers();
 
 		Renderer::window.PullEvents();
+
 	}
+
+
+
+
 
 }
 

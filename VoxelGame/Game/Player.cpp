@@ -12,6 +12,9 @@
 #include "ChunkManager.h"
 Player::Player() :  Rot(45,0,0)
 {
+
+
+
 	Pos = glm::vec3(2000, 150, 2000);
 	velocity = glm::vec3(0, 0, 0);
 	minAABB = glm::vec3(-0.4f, -1.7f, -0.4f);
@@ -188,28 +191,49 @@ void Player::DrawUI()
 
 }
 
-void Player::handleCollisions(std::shared_ptr<ChunkManager>& chunkManager)
+bool Player::handleCollisions(std::shared_ptr<ChunkManager>& chunkManager)
 {
 	//PointCollider::isBlockAtCollidable()
 		//cant get a reference to chunkManager due to the structure
 		//Maybe somehow thru the action system?
 
+	bool didCollid = false;
 	if (CheckCollisionSide(glm::vec3(velocity.x, 0, 0), chunkManager))
 	{
 		velocity.x = 0;
-
+		didCollid = true;
 	}
 	if (CheckCollisionSide(glm::vec3(0, velocity.y, 0), chunkManager))
 	{
 		velocity.y = 0;
+		didCollid = true;
+
 	}
 	if (CheckCollisionSide(glm::vec3(0, 0, velocity.z), chunkManager))
 	{
 		velocity.z = 0;
+		didCollid = true;
+
 	}
 
 	isOnGround = CheckCollisionSide(glm::vec3(0, -0.2, 0), chunkManager);
+	return didCollid;
+}
 
+bool Player::isColliding(std::shared_ptr<ChunkManager>& chunkManager)
+{
+	bool didCollid = false;
+	didCollid |= (CheckCollisionSide(glm::vec3(velocity.x, 0, 0), chunkManager));
+	
+
+	didCollid |= (CheckCollisionSide(glm::vec3(0, velocity.y, 0), chunkManager));
+	
+	
+	
+	didCollid |= (CheckCollisionSide(glm::vec3(0, 0, velocity.z), chunkManager));
+
+
+	return didCollid;
 }
 
 bool Player::CheckCollisionSide(glm::vec3 dir, std::shared_ptr<ChunkManager>& chunkManager)

@@ -145,7 +145,7 @@ void ChunkManager::MeshChunksFromQueue(int amount)
 #endif	
 }
 
-void ChunkManager::AsyncDecompressColumn(glm::ivec2 Pos)
+void ChunkManager::AsyncDecompressLoadColumn(glm::ivec2 Pos)
 {
 	for (auto& chunk : ChunkMap.at(Pos)->m_Chunks)
 			chunk->blockMutex.lock();
@@ -158,7 +158,34 @@ void ChunkManager::AsyncDecompressColumn(glm::ivec2 Pos)
 	for (auto& chunk : ChunkMap.at(Pos)->m_Chunks)
 			chunk->blockMutex.unlock();
 }
+void ChunkManager::AsyncLoadDecompressedColumn(glm::ivec2 Pos)
+{
+	for (auto& chunk : ChunkMap.at(Pos)->m_Chunks)
+		chunk->blockMutex.lock();
 
+
+	FileLoader::loadDecompressedBlocksToChunk(CompressedLoadedSaveMap[Pos], ChunkMap[Pos]);
+	AddColumnToMeshQueue(Pos);
+
+
+	for (auto& chunk : ChunkMap.at(Pos)->m_Chunks)
+		chunk->blockMutex.unlock();
+}
+void ChunkManager::AsyncLoadColumnToVectorMap(glm::ivec2 Pos)
+{
+	for (auto& chunk : ChunkMap.at(Pos)->m_Chunks)
+		chunk->blockMutex.lock();
+
+
+	FileLoader::loadDecompressedBlocksToVector(ChunkMap[Pos],CompressedLoadedSaveMap[Pos]);
+
+
+	for (auto& chunk : ChunkMap.at(Pos)->m_Chunks)
+		chunk->blockMutex.unlock();
+
+	 ChunkMap.erase(Pos);
+
+}
 void ChunkManager::AsyncGenerateChunks(std::list<glm::ivec2> List, bool& isChunkGenerationThreadDoneFlag)
 {
 	//isChunkGenerationThreadDoneFlag = false; Jest robione przed wywolaniem GenerateChunksFromQueue
@@ -233,18 +260,27 @@ void ChunkManager::UpdateLoadedChunkMap(glm::vec2 CenterPoint)
 			{
 				if (UncompressedDataToSave.contains(glm::ivec2(x, z)))
 				{
-
+#if  SAVE_UNLOADED_CHUNKS
+					ChunkMap.emplace(glm::ivec2(x, z), new ChunkColumn(glm::ivec2(x, z), selfSmartPointer));
+					std::thread ChunkMeshThread(&ChunkManager::AsyncLoadDecompressedColumn, this, glm::ivec2(x, z));
+					ChunkMeshThread.detach();
+#endif
 				}
 				else
 				{
 					if (CompressedLoadedSaveMap.contains(glm::ivec2(x, z)))
 					{
+
+#if  SAVE_UNLOADED_CHUNKS
+
 						//uncompress and put in ChunkMap
 						ChunkMap.emplace(glm::ivec2(x, z), new ChunkColumn(glm::ivec2(x, z), selfSmartPointer));
-						FileLoader::decompressBlocks(CompressedLoadedSaveMap[glm::ivec2(x, z)], ChunkMap[glm::ivec2(x, z)]);
-						std::thread ChunkMeshThread(&ChunkManager::AsyncDecompressColumn, this, glm::ivec2(x, z));
+						//FileLoader::decompressBlocks(CompressedLoadedSaveMap[glm::ivec2(x, z)], ChunkMap[glm::ivec2(x, z)]);
+						std::thread ChunkMeshThread(&ChunkManager::AsyncDecompressLoadColumn, this, glm::ivec2(x, z));
 						ChunkMeshThread.join();//make it work in batches, like generation or meshing
 	//##################################################################################################################################
+#endif
+
 					}
 					else { //if its not in either map, generate a new one
 					ChunkMap.emplace( glm::ivec2(x, z), new ChunkColumn(glm::ivec2(x, z), selfSmartPointer));
@@ -272,9 +308,22 @@ void ChunkManager::UpdateLoadedChunkMap(glm::vec2 CenterPoint)
 
 				WaitingBlockMap.erase(it->first);
 			}
-			//put to UncompressedDataToSave map
+#if  SAVE_UNLOADED_CHUNKS //Save unloaded chunks or discard them 
+			it++;
+
+			std::thread ChunkMeshThread(&ChunkManager::AsyncLoadColumnToVectorMap, this, ColPos);
+			ChunkMeshThread.join();
+#else
+
 			it = ChunkMap.erase(it);
-	
+
+#endif
+			//put to UncompressedDataToSave map, and then delete it from the ChunkMap
+
+
+
+			//it = ChunkMap.erase(it);
+
 		}
 		else it++;
 	}

@@ -12,6 +12,7 @@ class ChunkManager;
 class Player : public IEntity{
 
 public:
+
 	Player();
 	void setItemInHUD(int ItemID);
 	void Update(float dt);
@@ -25,7 +26,9 @@ public:
 	float lastActionTime = 0;
 	float FOV = 90.0f;
 	bool noClip = true;
-	void handleCollisions(std::shared_ptr<ChunkManager>& chunkManager);
+	bool handleCollisions(std::shared_ptr<ChunkManager>& chunkManager); //handles the collision by changing the Velocity. Returns true if there was a collision
+	bool isColliding(std::shared_ptr<ChunkManager>& chunkManager); 
+
 	float drag = 0.2f;
 private:
 	bool CheckCollisionSide(glm::vec3 dir, std::shared_ptr<ChunkManager>& chunkManager);

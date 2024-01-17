@@ -3,6 +3,7 @@
 #define GLOBAL_H
 
 #define LightPropagationInChunkManager true
+#define SAVE_UNLOADED_CHUNKS false
 extern bool WindowResized;
 extern int WorldSeed;
 extern  int ChunkSize;		// = 16;

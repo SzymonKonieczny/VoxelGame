@@ -53,7 +53,7 @@ public:
                         BlockData.push_back(*(unsigned int*)&data[i]);
                     }
                    int a = BlockData.size()* sizeof(float);
-                   int b = data.size(); 
+                   int b = data.size(); //those values should match, but they dont xd
 
                 }
 
@@ -155,5 +155,30 @@ public:
                 blocksLoadedAlready += 1;
             }
         }
+    }
+    static void loadDecompressedBlocksToChunk(std::vector<unsigned int>& blocks, std::shared_ptr<ChunkColumn>& targetChunkColumn)
+    {
+       
+
+
+        int blocksLoadedAlready = 0;
+        for (size_t i = 0; i < blocks.size(); i++) {
+
+            
+           targetChunkColumn->m_Chunks[blocksLoadedAlready / 4096]->blocks[blocksLoadedAlready % 4096] = blocks[i]; //already reserved to 4096 by the Chunks constructor 
+                blocksLoadedAlready += 1;
+        }
+    }
+    static void loadDecompressedBlocksToVector(std::shared_ptr<ChunkColumn>& chunkColumn, std::vector<unsigned int>& target)
+    {
+
+        target.reserve(ChunkSize * ChunkSize * ChunkSize * ChunksInColumn);
+        for (auto& chunk : chunkColumn->m_Chunks)
+        {
+            for (auto& block : chunk->getBlocksVector())
+                target.push_back(block);
+            
+        }
+
     }
 };

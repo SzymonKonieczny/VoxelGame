@@ -13,6 +13,13 @@ void World::SetBlockOnPosition(glm::vec3 Pos, BlockName name)
 
 void World::TickWorld(double deltaTime)
 {
+	if (countFrames)
+	{
+		FrameTimes.push_back(deltaTime);
+
+	}
+
+
 	HandleActionQueue(1);
 	player.Update(deltaTime); //GIVE WORLD IN THE ARGUMENT !
 	
@@ -57,7 +64,12 @@ void World::HandleActionQueue(int amount)
 				if (!info.Miss)
 				{
 
+
 					SetBlockOnPosition(info.HitFromPos, action.blockName);
+					if (player.isColliding(chunkManager)) {
+						SetBlockOnPosition(info.HitFromPos, BlockName::Air);
+
+					}
 
 				}
 			}
@@ -127,6 +139,12 @@ void World::HandleActionQueue(int amount)
 					case CommandType::LightRendering:
 
 						LightRendering = !LightRendering;
+
+						break;
+
+					case CommandType::StartMeasuring:
+
+						countFrames = true;
 
 						break;
 					default:
