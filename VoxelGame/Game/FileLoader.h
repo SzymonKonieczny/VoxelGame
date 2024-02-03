@@ -42,7 +42,7 @@ public:
                         data.push_back(temp);
                     }
 
-                    if ((data.size() / sizeof(float)) / 2 % 2 != 0)
+                    if (data.size()  % 2 != 0) //gotta be even, and in the format of pairs of 4byte data
                            throw std::runtime_error("Invalid size of the datablock");
 
                     CompressedLoadedSaveMap.emplace(Pos, std::vector<unsigned int>()); //add the new entry to the map of mapped chunk columns to data

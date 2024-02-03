@@ -224,15 +224,15 @@ void Renderer::EndScene()
 }
 void Renderer::SubmitChunk(Mesh& m)
 {
-	ChunkMeshes.push_back(&m); //Break it up to ChunkMeshes, and other meshes to keep  i made optimalizations later on
+	ChunkMeshes.push_back(&m);
 }
 void Renderer::SubmitGeneral(Mesh& m)
 {
-	GeneralMeshes.push_back(&m); //Break it up to ChunkMeshes, and other meshes to keep  i made optimalizations later on
+	GeneralMeshes.push_back(&m);
 }
 void Renderer::SubmitUI(Mesh& m)
 {
-	UIMeshes.push_back(&m); //Break it up to ChunkMeshes, and other meshes to keep  i made optimalizations later on
+	UIMeshes.push_back(&m); 
 }
 void Renderer::RenderGeneralMeshes()
 {
