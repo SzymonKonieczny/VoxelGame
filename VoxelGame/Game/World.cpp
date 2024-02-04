@@ -24,9 +24,13 @@ void World::TickWorld(double deltaTime)
 	player.Update(deltaTime); //GIVE WORLD IN THE ARGUMENT !
 	
 	
-	
-	if (!player.noClip) player.handleCollisions(chunkManager);
+	if (!player.noClip) {
+		player.velocity.y -= 0.8 * deltaTime;
+		player.handleCollisions(chunkManager);
+	}
+
 	player.Pos += player.velocity;
+
 	player.velocity.x *= player.drag * deltaTime;
 	player.velocity.z *= player.drag * deltaTime;
 	if (player.noClip) player.velocity.y *= player.drag * deltaTime;

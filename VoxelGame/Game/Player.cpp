@@ -123,7 +123,6 @@ void Player::Move(float dt)
 		actionQueue.push(ActionBuilder::OpenConsoleAction());
 
 	}
-	if (!noClip) velocity.y -= 0.8f * dt;
 
 
 	
