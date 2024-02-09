@@ -256,19 +256,19 @@ bool Player::CheckCollisionSide(glm::vec3 dir, std::shared_ptr<ChunkManager>& ch
 	//------------------------------------
 
 	 pointPos = Pos + maxAABB;
-	ret = ret || PointCollider::isBlockAtCollidable(pointPos + dir, *chunkManager, false); // min min min
+	ret = ret || PointCollider::isBlockAtCollidable(pointPos + dir, *chunkManager, false); // max max max
 
 
 	 pointPos = Pos + glm::vec3(maxAABB.x, minAABB.y, maxAABB.z);
-	ret = ret || PointCollider::isBlockAtCollidable(pointPos + dir, *chunkManager, false); // min min max
+	ret = ret || PointCollider::isBlockAtCollidable(pointPos + dir, *chunkManager, false); // max min max
 
 
 	 pointPos = Pos + glm::vec3(maxAABB.x, maxAABB.y, minAABB.z);
 	ret = ret || PointCollider::isBlockAtCollidable(pointPos + dir, *chunkManager, false);// min max min
 
 
-	 pointPos = Pos + glm::vec3(maxAABB.x, maxAABB.y, maxAABB.z);
-	ret = ret || PointCollider::isBlockAtCollidable(pointPos + dir, *chunkManager, false);// min max max
+	 pointPos = Pos + glm::vec3(maxAABB.x, minAABB.y, minAABB.z);
+	ret = ret || PointCollider::isBlockAtCollidable(pointPos + dir, *chunkManager, false);// max min min
 
 	return ret;
 }

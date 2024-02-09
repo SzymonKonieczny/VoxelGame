@@ -35,7 +35,7 @@ void Game::Start()
 	double previousTime = glfwGetTime();
 	double deltaTime;
 	double currentTime = 0;
-	glfwSwapInterval(0);
+	glfwSwapInterval(1);
 	std::random_device rd;
 	Util::gen = std::mt19937(rd());
 

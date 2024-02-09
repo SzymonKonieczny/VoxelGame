@@ -151,6 +151,9 @@ void World::HandleActionQueue(int amount)
 						countFrames = true;
 
 						break;
+					case CommandType::SetSeed:
+						WorldSeed = args[0];
+						break;
 					default:
 						std::cout << "Invalid command \n";
 						break;

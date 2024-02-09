@@ -12,7 +12,8 @@ enum class CommandType {
 	DrawShadowMap,
 	RenderDistance,
 	LightRendering,
-	StartMeasuring
+	StartMeasuring,
+	SetSeed
 
 
 };

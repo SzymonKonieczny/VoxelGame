@@ -116,6 +116,8 @@ CommandType Util::ParseCommand(std::string command, std::vector<float>& args)
 	if (commandType == "render")ret = CommandType::RenderDistance;
 	if (commandType == "light")ret = CommandType::LightRendering;
 	if (commandType == "measure")ret = CommandType::StartMeasuring;
+	if (commandType == "setseed")ret = CommandType::SetSeed;
+
 
 	
 
