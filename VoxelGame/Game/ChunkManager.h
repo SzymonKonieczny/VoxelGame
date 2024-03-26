@@ -38,7 +38,7 @@ public:
 	#endif	
 		
 
-		//FileLoader::LoadWorldFile(CompressedLoadedSaveMap, "OutputSave.txt");
+		FileLoader::LoadWorldFile(CompressedLoadedSaveMap, "OutputSave.txt");
 
 
 		selfSmartPointer.reset(this);

@@ -24,9 +24,9 @@ public:
 
                     while (!(line[line.size() - 1] == char(255) && line[line.size() - 2] == char(255))) //ending sequence is char(255) char(255) \n
                     {
-                        std::string tempstr;
+                        std::string tempstr; //byc moze ze trzeba dodac na poczatku /n ktore ucina getline?
                         std::getline(inputFile, tempstr);
-                        line += tempstr;
+                        line += '\n'+tempstr;
                     }
                     line.pop_back();// - char(225)
                     line.pop_back();// and the other one
@@ -37,9 +37,14 @@ public:
                     std::vector<char> data;
                     data.reserve(ChunkSize * ChunkSize * ChunkSize * 2); //worst case secenario where every block is diffrent.
                     char temp;
-                    while (ss >> temp)  //shove bytes into the data vector
-                    {
-                        data.push_back(temp);
+                    
+                    int DataBlockStart = ss.tellg(); 
+                    DataBlockStart += 1; //here we skip one space that separates the coordinates from the datablock (125 125 [datablock])
+                    //this space shown here -------------------------->                                                     ^ this here space
+
+                    for (auto it = line.begin() + DataBlockStart; it != line.end(); ++it) {
+
+                        data.push_back(*it);
                     }
 
                     if (data.size()  % 2 != 0) //gotta be even, and in the format of pairs of 4byte data
@@ -52,6 +57,7 @@ public:
                     {
                         BlockData.push_back(*(unsigned int*)&data[i]);
                     }
+
                    int a = BlockData.size()* sizeof(float);
                    int b = data.size(); //those values should match, but they dont xd
 

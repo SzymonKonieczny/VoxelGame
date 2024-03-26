@@ -241,11 +241,13 @@ void ChunkManager::AsyncMeshChunks(std::list<glm::ivec3> List, bool& isChunkMesh
 }
 void ChunkManager::UpdateLoadedChunkMap(glm::vec2 CenterPoint)
 {
-	int minX = CenterPoint.x - RenderDistance;
+	int minX = CenterPoint.x - RenderDistance; //commented out for testing, safe to uncomment
 	int minZ = CenterPoint.y - RenderDistance;
-
+							 
 	int maxX = CenterPoint.x + RenderDistance;
 	int maxZ = CenterPoint.y + RenderDistance;
+
+
 
 
 	for (int x = minX; x <= maxX; x++)
