@@ -273,7 +273,7 @@ void ChunkManager::UpdateLoadedChunkMap(glm::vec2 CenterPoint)
 					if (CompressedLoadedSaveMap.contains(glm::ivec2(x, z)))
 					{
 
-#if  SAVE_UNLOADED_CHUNKS
+
 
 						//uncompress and put in ChunkMap
 						ChunkMap.emplace(glm::ivec2(x, z), new ChunkColumn(glm::ivec2(x, z), selfSmartPointer));
@@ -281,7 +281,7 @@ void ChunkManager::UpdateLoadedChunkMap(glm::vec2 CenterPoint)
 						std::thread ChunkMeshThread(&ChunkManager::AsyncDecompressLoadColumn, this, glm::ivec2(x, z));
 						ChunkMeshThread.join();//make it work in batches, like generation or meshing
 	//##################################################################################################################################
-#endif
+
 
 					}
 					else { //if its not in either map, generate a new one

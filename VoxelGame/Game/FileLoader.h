@@ -21,12 +21,11 @@ public:
                 while (std::getline(inputFile, line )) {
                     std::stringstream ss;
                     glm::ivec2 Pos;
-
                     while (!(line[line.size() - 1] == char(255) && line[line.size() - 2] == char(255))) //ending sequence is char(255) char(255) \n
                     {
-                        std::string tempstr; //byc moze ze trzeba dodac na poczatku /n ktore ucina getline?
+                        std::string tempstr; 
                         std::getline(inputFile, tempstr);
-                        line += '\n'+tempstr;
+                        line += '\n'+tempstr; //newline zjedzony przez getline
                     }
                     line.pop_back();// - char(225)
                     line.pop_back();// and the other one
@@ -58,8 +57,6 @@ public:
                         BlockData.push_back(*(unsigned int*)&data[i]);
                     }
 
-                   int a = BlockData.size()* sizeof(float);
-                   int b = data.size(); //those values should match, but they dont xd
 
                 }
 
