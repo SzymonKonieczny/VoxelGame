@@ -23,7 +23,7 @@ public:
                     glm::ivec2 Pos;
                     while (!(line[line.size() - 1] == char(255) && line[line.size() - 2] == char(255))) //ending sequence is char(255) char(255) \n
                     {
-                        std::string tempstr; 
+                        std::string tempstr="";
                         std::getline(inputFile, tempstr);
                         line += '\n'+tempstr; //newline zjedzony przez getline
                     }

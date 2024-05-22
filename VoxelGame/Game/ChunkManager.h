@@ -31,7 +31,7 @@ public:
 	{
 
 	#ifndef _DEBUG
-		Generator.reset(new EarthyTerrainGenerator(std::shared_ptr<ChunkManager>(this)));
+		Generator.reset(new HeavenTerrainGenerator(std::shared_ptr<ChunkManager>(this)));
 	
 	#else
 		Generator.reset(new TerrainGeneratorTest(std::shared_ptr<ChunkManager>(this)));
